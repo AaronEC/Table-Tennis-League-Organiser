@@ -8,20 +8,16 @@ import javafx.scene.Scene;
 
 
 public class User extends Application {
-	@Override
-	public void start(Stage primaryStage) {
-		try {
-			//BorderPane root = new BorderPane();
-			Parent root =FXMLLoader.load(getClass().getResource("Main.fxml"));
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
-			primaryStage.setTitle("Login");
-                        primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("User.fxml"));
+
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        stage.setTitle("Login");
+        stage.show();
+    }
 	
     public static void main(String[] args) {
             launch(args);
