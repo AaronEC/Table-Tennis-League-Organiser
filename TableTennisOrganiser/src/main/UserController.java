@@ -1,49 +1,58 @@
 package main;
 
 import java.io.IOException;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
-
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
-public class UserController {
-    /*
-    @FXML
-    private Label myMessage;
-    public void generateRandom(ActionEvent event) {
-            Random rand = new Random();
-            int myRand = rand.nextInt(50) + 1;
-            myMessage.setText(Integer.toString(myRand));
-            //System.out.println(Integer.toString(myRand));
-    }
-    */
+public class UserController extends User {
 
     @FXML private TextArea userInput;
     @FXML private TextArea passwordInput;
 
     /**
-    * This method opens the main program scene with the user logged in as 
+    * Opens the main program scene with the user logged in as 
     * either a 'viewer' or an 'admin'
     * @param event 
     */
     public void login(ActionEvent event) throws IOException {
-
-        System.out.println("User: " + userInput.getText() + 
-                "\nPassword: " + passwordInput.getText());
         
-        Parent viewerParent = FXMLLoader.load(getClass().getResource("Viewer.fxml"));
+        loginVerify(userInput.getText(), passwordInput.getText());
+        
+        if(super.getLoginType().equals("Viewer")) {
+           createViewer(event); 
+        }
+        
+        if(super.getLoginType().equals("Admin")) {
+           createAdmin(event); 
+        }
+    }
+        
+        protected void createAdmin(ActionEvent event) throws IOException {
+        
+        Parent viewerParent = FXMLLoader.load(getClass().getResource("Admin.fxml"));
         Scene viewerScene = new Scene(viewerParent);
-        
+
         //Gets the stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        
+
+        window.setScene(viewerScene);
+        window.setTitle("Admin");
+        window.show();
+    }
+
+    protected void createViewer(ActionEvent event) throws IOException    {
+        Parent viewerParent = FXMLLoader.load(getClass().getResource("Viewer.fxml"));
+        Scene viewerScene = new Scene(viewerParent);
+
+        //Gets the stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
         window.setScene(viewerScene);
         window.setTitle("Viewer");
         window.show();

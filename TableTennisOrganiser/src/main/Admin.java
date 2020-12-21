@@ -1,7 +1,7 @@
 package main;
 
 public class Admin extends Viewer {
-/*
+
 	private String adminName;
 
 	void startAdmin() {
@@ -31,5 +31,4 @@ public class Admin extends Viewer {
 	private void registerPlayer(String name, Team team, League league) {
 
 	}
-*/
 }

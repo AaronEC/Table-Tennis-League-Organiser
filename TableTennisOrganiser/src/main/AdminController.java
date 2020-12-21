@@ -9,9 +9,7 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
-import javafx.scene.control.TextArea;
-
-public class ViewerController {
+public class AdminController {
    
     /**
     * This method logs the user out and opens the login scene
