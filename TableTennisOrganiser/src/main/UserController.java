@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 
 import javafx.scene.control.TextArea;
 
-public class MainController {
+public class UserController {
 	/*
         @FXML
 	private Label myMessage;

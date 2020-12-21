@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300" prefWidth="600" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
+<AnchorPane prefHeight="300" prefWidth="600" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.UserController">
    <children>
       <Label fx:id="myMessage" layoutX="171.0" layoutY="39.0" prefHeight="38.0" prefWidth="66.0" text="Username" />
       <Button fx:id="sayHello" layoutX="293.0" layoutY="137.0" mnemonicParsing="false" onAction="#login" text="Login" />
