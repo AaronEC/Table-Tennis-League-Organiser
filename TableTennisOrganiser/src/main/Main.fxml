@@ -11,7 +11,7 @@
       <Button fx:id="sayHello" layoutX="293.0" layoutY="137.0" mnemonicParsing="false" onAction="#login" text="Login" />
       <TextArea fx:id="userInput" layoutX="254.0" layoutY="39.0" prefHeight="0.0" prefWidth="124.0" />
       <TextArea fx:id="passwordInput" layoutX="254.0" layoutY="86.0" prefHeight="6.0" prefWidth="124.0" />
-      <Label fx:id="myMessage1" layoutX="171.0" layoutY="86.0" prefHeight="38.0" prefWidth="66.0" text="Passwrod" />
+      <Label fx:id="myMessage1" layoutX="171.0" layoutY="86.0" prefHeight="38.0" prefWidth="66.0" text="Password" />
 
    </children>
 </AnchorPane>
