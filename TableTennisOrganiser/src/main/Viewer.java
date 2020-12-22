@@ -1,5 +1,9 @@
 package main;
 
+/**
+ * Class which implements all high level Viewer functions
+ * @author Aaron
+ */
 public class Viewer extends Timer {
 
 	private String viewerName;

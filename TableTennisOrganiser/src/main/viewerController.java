@@ -2,20 +2,22 @@ package main;
 
 import java.io.IOException;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
-import javafx.scene.control.TextArea;
-
+/**
+ * Controls FMXL GUI elements for Viewer class
+ * @author Aaron
+ */
 public class ViewerController {
    
     /**
     * This method logs the user out and opens the login scene
     * @param event 
+    * @throws
     */
     public void logout(ActionEvent event) throws IOException {
         

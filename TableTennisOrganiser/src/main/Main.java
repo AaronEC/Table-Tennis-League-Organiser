@@ -7,6 +7,10 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+/**
+ * Contains main() and starts the program (launches GUI here)
+ * @author Aaron
+ */
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {

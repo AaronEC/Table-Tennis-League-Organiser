@@ -10,6 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
+/**
+ * Controls FMXL GUI elements for User class
+ * @author Aaron
+ */
 public class UserController extends User {
 
     @FXML private TextArea userInput;
@@ -19,6 +23,7 @@ public class UserController extends User {
     * Opens the main program scene with the user logged in as 
     * either a 'viewer' or an 'admin'
     * @param event 
+    * @throws
     */
     public void login(ActionEvent event) throws IOException {
         

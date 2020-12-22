@@ -1,5 +1,9 @@
 package main;
 
+/**
+ * Class which implements all high level Admin functions
+ * @author Aaron
+ */
 public class Admin extends Viewer {
 
 	private String adminName;

@@ -1,5 +1,9 @@
 package main;
 
+/**
+ * Not yet implemented
+ * @author Aaron
+ */
 public class Fixture {
 
 	private String winner;

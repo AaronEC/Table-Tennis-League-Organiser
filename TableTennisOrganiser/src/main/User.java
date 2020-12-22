@@ -1,5 +1,9 @@
 package main;
 
+/**
+ * Landing point for users, from here they will log in as Admin or User
+ * @author Aaron
+ */
 public class User   {
     
     private String userId;
