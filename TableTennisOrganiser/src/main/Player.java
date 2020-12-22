@@ -6,10 +6,9 @@ package main;
  */
 public class Player {
 
-	private String name;
+    private String name;
 
-	String getName() {
-		return null;
-	}
-
+    String getName() {
+            return null;
+    }
 }

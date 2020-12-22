@@ -6,30 +6,29 @@ package main;
  */
 public class Viewer extends Timer {
 
-	private String viewerName;
+    private String viewerName;
 
-	void startViewer() {
+    void startViewer() {
 
-	}
+    }
 
-	protected void viewFixtures(League league) {
+    protected void viewFixtures(League league) {
 
-	}
+    }
 
-	protected void viewTeamStats(League league) {
+    protected void viewTeamStats(League league) {
 
-	}
+    }
 
-	protected void viewTeamRankings(League league) {
+    protected void viewTeamRankings(League league) {
 
-	}
+    }
 
-	protected void viewMatchScore(League league, Fixture fixture) {
+    protected void viewMatchScore(League league, Fixture fixture) {
 
-	}
+    }
 
-	protected void viewTeams(League league) {
+    protected void viewTeams(League league) {
 
-	}
-
+    }
 }
