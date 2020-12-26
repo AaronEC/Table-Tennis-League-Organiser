@@ -11,8 +11,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
-import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 
@@ -52,13 +52,9 @@ public class UserController extends User {
      * @throws IOException 
      */
     protected void createAdmin(ActionEvent event) throws IOException {
-        
         Parent adminParent = FXMLLoader.load(getClass().getResource("Admin.fxml"));
         Scene adminScene = new Scene(adminParent);
-
-        //Gets the stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
         window.setScene(adminScene);
         window.setTitle("Secretary");
         window.show();
@@ -72,10 +68,7 @@ public class UserController extends User {
     protected void createViewer(ActionEvent event) throws IOException    {
         Parent viewerParent = FXMLLoader.load(getClass().getResource("Viewer.fxml"));
         Scene viewerScene = new Scene(viewerParent);
-
-        //Gets the stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
         window.setScene(viewerScene);
         window.setTitle("Player");
         window.show();
@@ -86,17 +79,22 @@ public class UserController extends User {
      * include variable inputs if popups are needed in other parts of program.
      */
     protected void popupWindow()    {
-        Stage popupwindow=new Stage();
-        popupwindow.initModality(Modality.APPLICATION_MODAL);
-        popupwindow.setTitle("Login Error");
-        Label label1= new Label("Please enter correct login details");
-        Button button1= new Button("OK");
-        button1.setOnAction(e -> popupwindow.close());
+        //Initialise scene
+        Stage popUpWindow=new Stage();
+        popUpWindow.getIcons().add(new Image(Main.class.getResourceAsStream("ErrorIcon.png")));
+        popUpWindow.initModality(Modality.APPLICATION_MODAL);
+        //Labels and button text
+        popUpWindow.setTitle("Error");
+        Label messageLabel= new Label("Please enter correct login details");
+        Button OK= new Button("OK");
+        //Logic and layout
+        OK.setOnAction(e -> popUpWindow.close());
         VBox layout= new VBox(10);
-        layout.getChildren().addAll(label1, button1);
+        layout.getChildren().addAll(messageLabel, OK);
         layout.setAlignment(Pos.CENTER);
-        Scene scene1= new Scene(layout, 300, 250);
-        popupwindow.setScene(scene1);
-        popupwindow.showAndWait();
+        //Create scene
+        Scene window= new Scene(layout, 200, 100);
+        popUpWindow.setScene(window);
+        popUpWindow.showAndWait();
     }
 }
