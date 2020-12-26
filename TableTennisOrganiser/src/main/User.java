@@ -30,10 +30,14 @@ public class User   {
             System.out.println("Viewer Login");
             loginType = "Viewer";
         }
+        else    {
+            System.out.println("Incorrect login details");
+            loginType = "Error";
+        }
     }
     
     String getLoginType() {
-        return loginType;
+            return loginType;
     }
 
     private void createTimer() {
