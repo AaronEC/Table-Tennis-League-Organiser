@@ -7,7 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -16,8 +17,8 @@ import javafx.stage.Stage;
  */
 public class UserController extends User {
 
-    @FXML private TextArea userInput;
-    @FXML private TextArea passwordInput;
+    @FXML private TextField userInput;
+    @FXML private PasswordField passwordInput;
 
     /**
     * Opens the main program scene with the user logged in as 
@@ -29,25 +30,25 @@ public class UserController extends User {
         
         loginVerify(userInput.getText(), passwordInput.getText());
         
-        if(super.getLoginType().equals("Viewer")) {
+        if(super.getLoginType().equalsIgnoreCase("Viewer")) {
            createViewer(event); 
         }
         
-        if(super.getLoginType().equals("Admin")) {
+        if(super.getLoginType().equalsIgnoreCase("Admin")) {
            createAdmin(event); 
         }
     }
         
         protected void createAdmin(ActionEvent event) throws IOException {
         
-        Parent viewerParent = FXMLLoader.load(getClass().getResource("Admin.fxml"));
-        Scene viewerScene = new Scene(viewerParent);
+        Parent adminParent = FXMLLoader.load(getClass().getResource("Admin.fxml"));
+        Scene adminScene = new Scene(adminParent);
 
         //Gets the stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
-        window.setScene(viewerScene);
-        window.setTitle("Admin");
+        window.setScene(adminScene);
+        window.setTitle("Secretary");
         window.show();
     }
 
@@ -59,7 +60,7 @@ public class UserController extends User {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
         window.setScene(viewerScene);
-        window.setTitle("Viewer");
+        window.setTitle("Player");
         window.show();
     }
 }

@@ -22,11 +22,11 @@ public class User   {
     protected void loginVerify(String userName, String password) {
         System.out.println("User: " + userName + 
             "\nPassword: " + password);
-        if (userName.equals("Admin"))    {
+        if (userName.equalsIgnoreCase("Secretary"))    {
             System.out.println("Admin Login");
             loginType = "Admin";
         }
-        else if (userName.equals("Viewer"))    {
+        else if (userName.equalsIgnoreCase("Player"))    {
             System.out.println("Viewer Login");
             loginType = "Viewer";
         }

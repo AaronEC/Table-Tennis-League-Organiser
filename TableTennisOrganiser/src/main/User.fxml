@@ -2,16 +2,24 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300" prefWidth="600" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.UserController">
+<AnchorPane prefHeight="480" prefWidth="720" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.UserController">
    <children>
-      <Label fx:id="myMessage" layoutX="171.0" layoutY="39.0" prefHeight="38.0" prefWidth="66.0" text="Username" />
-      <Button fx:id="sayHello" layoutX="293.0" layoutY="137.0" mnemonicParsing="false" onAction="#login" text="Login" />
-      <TextArea fx:id="userInput" layoutX="254.0" layoutY="39.0" prefHeight="0.0" prefWidth="124.0" />
-      <TextArea fx:id="passwordInput" layoutX="254.0" layoutY="86.0" prefHeight="6.0" prefWidth="124.0" />
-      <Label fx:id="myMessage1" layoutX="171.0" layoutY="86.0" prefHeight="38.0" prefWidth="66.0" text="Password" />
+      <Label fx:id="myMessage" layoutX="215.0" layoutY="328.0" prefHeight="38.0" prefWidth="66.0" text="Username" />
+      <Button fx:id="sayHello" defaultButton="true" layoutX="328.0" layoutY="418.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="79.0" text="Login" />
+      <Label fx:id="myMessage1" layoutX="217.0" layoutY="367.0" prefHeight="38.0" prefWidth="66.0" text="Password" />
+      <TextField fx:id="userInput" layoutX="292.0" layoutY="334.0" promptText="&quot;Player&quot; or Secretary&quot;" />
+      <ImageView fitHeight="284.0" fitWidth="690.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/Logo.png" />
+         </image>
+      </ImageView>
+      <PasswordField fx:id="passwordInput" layoutX="293.0" layoutY="373.0" promptText="Please Enter Password" />
 
    </children>
 </AnchorPane>
