@@ -37,8 +37,12 @@ public class User   {
     }
     
     String getLoginType() {
-            return loginType;
+        return loginType;
     }
+    
+    protected void logout()    {
+        loginType = null;
+    } 
 
     private void createTimer() {
 

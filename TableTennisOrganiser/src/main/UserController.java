@@ -45,6 +45,10 @@ public class UserController extends User {
             popupWindow();
         }
     }
+    
+    public void logout()    {
+        
+    }
     /**
      * Creates the JavaFX scene and class which will contain and control the 
      * functions needed by the 'Admin' (club secretary) user.
@@ -97,4 +101,16 @@ public class UserController extends User {
         popUpWindow.setScene(window);
         popUpWindow.showAndWait();
     }
+    
+    public void logout(ActionEvent event) throws IOException {
+        
+        Parent viewerParent = FXMLLoader.load(getClass().getResource("User.fxml"));
+        Scene viewerScene = new Scene(viewerParent);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(viewerScene);
+        window.setTitle("Login");
+        window.show();
+        super.logout();
+    }
+    
 }
