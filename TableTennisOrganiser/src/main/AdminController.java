@@ -1,14 +1,13 @@
 package main;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
+import javafx.fxml.Initializable;
 
 /**
  * Controls FMXL GUI elements for Admin class
  * @author Aaron
  */
-public class AdminController extends UserController{
-   
-    @FXML ListView<String> teamView;
+public class AdminController extends ViewerController implements Initializable{
+       
+    
     
 }

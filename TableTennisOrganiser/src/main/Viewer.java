@@ -9,7 +9,7 @@ public class Viewer extends Timer {
     private String viewerName;
 
     void startViewer() {
-
+        System.out.println("Viewer Created");
     }
 
     protected void viewFixtures(League league) {

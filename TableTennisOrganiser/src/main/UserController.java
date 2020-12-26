@@ -1,14 +1,16 @@
 package main;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -20,11 +22,18 @@ import javafx.stage.*;
  * Controls FMXL GUI elements for User class
  * @author Aaron
  */
-public class UserController extends User {
+public class UserController implements Initializable{
 
-    @FXML private TextField userInput;
     @FXML private PasswordField passwordInput;
+    @FXML private ChoiceBox<String> loginSelect;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        loginSelect.getItems().add("Secretary");
+        loginSelect.getItems().add("Player");
+        loginSelect.setValue("Secretary");
+    }
+    
     /**
     * Opens the main program scene with the user logged in as 
     * either a 'viewer' or an 'admin'
@@ -33,22 +42,21 @@ public class UserController extends User {
     */
     public void login(ActionEvent event) throws IOException {
         
-        loginVerify(userInput.getText(), passwordInput.getText());
+        User user = new User();
         
-        if(super.getLoginType().equalsIgnoreCase("Viewer")) {
+        user.loginVerify(loginSelect.getValue().toString(), passwordInput.getText());
+        
+        if(user.getLoginType().equalsIgnoreCase("Viewer")) {
             createViewer(event); 
         }
-        else if(super.getLoginType().equalsIgnoreCase("Admin")) {
+        else if(user.getLoginType().equalsIgnoreCase("Admin")) {
             createAdmin(event); 
         }
-        else if(super.getLoginType().equalsIgnoreCase("Error")) {
+        else if(user.getLoginType().equalsIgnoreCase("Error")) {
             popupWindow();
         }
     }
     
-    public void logout()    {
-        
-    }
     /**
      * Creates the JavaFX scene and class which will contain and control the 
      * functions needed by the 'Admin' (club secretary) user.
@@ -110,7 +118,6 @@ public class UserController extends User {
         window.setScene(viewerScene);
         window.setTitle("Login");
         window.show();
-        super.logout();
     }
     
 }
