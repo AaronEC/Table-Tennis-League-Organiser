@@ -56,7 +56,7 @@ public class UserController extends User {
         Scene adminScene = new Scene(adminParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(adminScene);
-        window.setTitle("Secretary");
+        window.setTitle("Secretary View");
         window.show();
     }
     /**
@@ -70,7 +70,7 @@ public class UserController extends User {
         Scene viewerScene = new Scene(viewerParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(viewerScene);
-        window.setTitle("Player");
+        window.setTitle("Player View");
         window.show();
     }
     

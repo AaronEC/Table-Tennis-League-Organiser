@@ -23,10 +23,7 @@ public class AdminController {
         
         Parent viewerParent = FXMLLoader.load(getClass().getResource("User.fxml"));
         Scene viewerScene = new Scene(viewerParent);
-        
-        //Gets the stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        
         window.setScene(viewerScene);
         window.setTitle("Login");
         window.show();
