@@ -1,5 +1,10 @@
 package main;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  * Landing point for users, from here they will log in as Admin or User
  * @author Aaron
@@ -11,6 +16,8 @@ public class User   {
     private String password;
 
     private String loginType;
+    
+    private ArrayList<League> leagues = new ArrayList<League>();
 
     /**
      * Checks username and password and verifies if login is an Admin or Viewer,
@@ -35,6 +42,18 @@ public class User   {
             loginType = "Error";
         }
     }
+    protected void initializeLeagues() throws IOException {
+        Scanner s = new Scanner(new File("leagues.csv"));
+        ArrayList<String> database = new ArrayList<String>();
+        while (s.hasNextLine()){
+                database.add(s.nextLine().replaceAll("[{}]", ""));
+        }
+        s.close();
+        
+        leagues.add(new League(database.get(0)));
+        System.out.println("League: " + leagues.get(0).getName());
+        leagues.get(0).initialize();
+    }
     
     String getLoginType() {
         return loginType;
@@ -46,5 +65,9 @@ public class User   {
 
     private void createTimer() {
 
+    }
+    
+    ArrayList<League> getLeagues() {
+        return leagues;
     }
 }
