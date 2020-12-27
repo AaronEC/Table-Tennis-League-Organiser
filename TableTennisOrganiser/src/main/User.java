@@ -6,19 +6,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Landing point for users, from here they will log in as Admin or User
+ * Landing point for all users, from here they will log in as either Admin or 
+ * User class.
  * @author Aaron
  */
 public class User   {
     
     private String userId;
-
     private String password;
-
     private String loginType;
-    
     private ArrayList<League> leagues = new ArrayList<League>();
-
+    
     /**
      * Checks username and password and verifies if login is an Admin or Viewer,
      * TODO: - Error on incorrect login
@@ -42,9 +40,12 @@ public class User   {
             loginType = "Error";
         }
     }
+    /**
+     * Loads leagues from database file "leagues.csv" in main directory.
+     * @throws IOException 
+     */
     protected void initializeLeagues() throws IOException {
         ArrayList<String> database = Main.loadFile("leagues.csv");
-        
         leagues.add(new League(database.get(0)));
         System.out.println("League: " + leagues.get(0).getName());
         leagues.get(0).initialize();
@@ -61,7 +62,10 @@ public class User   {
     private void createTimer() {
 
     }
-    
+    /**
+     * Returns all leagues as an ArrayList of League class.
+     * @return 
+     */
     ArrayList<League> getLeagues() {
         return leagues;
     }

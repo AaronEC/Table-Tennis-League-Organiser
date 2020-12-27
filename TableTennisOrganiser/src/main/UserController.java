@@ -19,7 +19,8 @@ import javafx.scene.layout.*;
 import javafx.stage.*;
 
 /**
- * Controls FMXL GUI elements for User class
+ * GUI controller class for controlling the user login screen.
+ * Also contains global static GUI methods (such as pop up boxes).
  * @author Aaron
  */
 public class UserController extends User implements Initializable{
@@ -31,36 +32,29 @@ public class UserController extends User implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         loginSelect.getItems().add("Secretary");
         loginSelect.getItems().add("Player");
+        loginSelect.getItems().add("incorrect password test");
         loginSelect.setValue("Secretary");
     }
     
     /**
-    * Opens the main program scene with the user logged in as 
-    * either a 'viewer' or an 'admin'
+    * Handles login events and creation of 'Admin' or 'Viewer' interfaces.
     * @param event 
     * @throws
     */
     public void login(ActionEvent event) throws IOException {
-        
-        //Create new user class at logon
-        User user = new User();
-        //Check login type
-        user.loginVerify(loginSelect.getValue().toString(), passwordInput.getText());
-        //Open coresponding scene
+        User user = new User();     //Create new user class at logon
+        //Verify login type **extend to include password check here**
+        user.loginVerify(loginSelect.getValue(), passwordInput.getText());
         if(user.getLoginType().equalsIgnoreCase("Viewer")) {
-            createViewer(event); 
-        }
+            createViewer(event);    }
         else if(user.getLoginType().equalsIgnoreCase("Admin")) {
-            createAdmin(event); 
-        }
+            createAdmin(event);     }
         else if(user.getLoginType().equalsIgnoreCase("Error")) {
-            popupWindow();
+            popupWindow("Error", "Please enter correct login details", "OK");
         }
     }
-    
     /**
-     * Creates the JavaFX scene and class which will contain and control the 
-     * functions needed by the 'Admin' (club secretary) user.
+     * Creates the 'Admin' interface for the club secretary user.
      * @param event
      * @throws IOException 
      */
@@ -73,8 +67,7 @@ public class UserController extends User implements Initializable{
         window.show();        
     }
     /**
-     * Creates the JavaFX scene and class which will contain and control the 
-     * functions needed by the 'Viewer' (league players) user.
+     * Creates the 'Viewer' interface for the player users.
      * @param event
      * @throws IOException 
      */
@@ -86,35 +79,38 @@ public class UserController extends User implements Initializable{
         window.setTitle("Player View");
         window.show();
     }
-    
     /**
      * Creates a pop up window with the specified text. May extend method to 
      * include variable inputs if popups are needed in other parts of program.
      */
-    protected void popupWindow()    {
+    protected void popupWindow(String title, String message, String buttonText)    {
         //Initialise scene
         Stage popUpWindow=new Stage();
         popUpWindow.getIcons().add(new Image(Main.class.getResourceAsStream("ErrorIcon.png")));
         popUpWindow.initModality(Modality.APPLICATION_MODAL);
-        //Labels and button text
-        popUpWindow.setTitle("Error");
-        Label messageLabel= new Label("Please enter correct login details");
-        Button OK= new Button("OK");
-        //Logic and layout
+        //Add labels and button text
+        popUpWindow.setTitle(title);
+        Label messageLabel= new Label(message);
+        Button OK= new Button(buttonText);
+        //set logic and layout
         OK.setOnAction(e -> popUpWindow.close());
         VBox layout= new VBox(10);
         layout.getChildren().addAll(messageLabel, OK);
         layout.setAlignment(Pos.CENTER);
-        //Create scene
+        //Open scene
         Scene window= new Scene(layout, 200, 100);
         popUpWindow.setScene(window);
         popUpWindow.showAndWait();
     }
-    
+    /**
+     * Called from Admin or Viewer scenes. Returns user to the login screen.
+     * @param event
+     * @throws IOException 
+     */
     public void logout(ActionEvent event) throws IOException {
-        
         Parent viewerParent = FXMLLoader.load(getClass().getResource("User.fxml"));
         Scene viewerScene = new Scene(viewerParent);
+        //Recalls login screen scene information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(viewerScene);
         window.setTitle("Login");

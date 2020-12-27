@@ -29,11 +29,14 @@ public class Team {
     public Team(String name)    {
     
         this.name = name;
-//        this.players = players;
-//        this.venue = venue;
-    
+        //this.players = players;
+        //this.venue = venue;
     }
-    
+    /**
+     * Should be run when class object is created, to load data into class data 
+     * structures from database. Otherwise will be an empty class.
+     * @throws IOException 
+     */
     void initialize() throws IOException {
         //System.out.println("Initializing league 1");
         loadPlayers();
@@ -87,7 +90,11 @@ public class Team {
     int getSetsWon() {
             return 0;
     }
-    
+    /**
+     * Loads players from database file "players.csv" and stores them to 
+     * ArrayList<String> players.
+     * @throws IOException 
+     */
     void loadPlayers() throws IOException {
         ArrayList<String> database = Main.loadFile("players.csv");
         for(int i = 0; i < database.size(); i++)    {

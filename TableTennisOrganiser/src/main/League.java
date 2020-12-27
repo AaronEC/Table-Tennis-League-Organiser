@@ -2,6 +2,7 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,13 +17,14 @@ public class League {
     //private ArrayList<Fixture> fixture;
 
     public League(String name)    {
-    
-        this.name = name;
-        //this.teams = new ArrayList<Team>();
-    
+        this.name = name;    
     }
-    
-    void initialize() throws FileNotFoundException {
+    /**
+     * Should be run when class object is created, to load data into class data 
+     * structures from database. Otherwise will be an empty class.
+     * @throws FileNotFoundException 
+     */
+    void initialize() throws FileNotFoundException, IOException {
         loadTeams();
     }
         
@@ -66,10 +68,16 @@ public class League {
     void orderTeams() {
 
     }
-    
-    void loadTeams() throws FileNotFoundException    {
+    /**
+     * Loads teams from database file "teams.csv" and stores them to 
+     * ArrayList<Team> teams.
+     * ONLY loads team names, players must be added later by user or from 
+     * database.
+     * @throws IOException 
+     */
+    void loadTeams() throws FileNotFoundException, IOException    {
         Scanner s = new Scanner(new File("teams.csv"));
-        ArrayList<String> database = new ArrayList<String>();
+        ArrayList<String> database = new ArrayList<>();
         while (s.hasNextLine()){
                 database.add(s.nextLine().replaceAll("[{}]", ""));
         }

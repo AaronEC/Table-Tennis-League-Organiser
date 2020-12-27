@@ -21,28 +21,20 @@ public class ViewerController extends UserController implements Initializable{
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Initialise the Teams view
-        Viewer viewer = new Viewer();
         try {
+            //Initialise the Teams view
+            Viewer viewer = new Viewer();
             viewer.startViewer();
-        } catch (IOException ex) {
-            Logger.getLogger(ViewerController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            //Create Viewer class
             start();
+            teamView.getItems().addAll(viewer.viewTeams());
+            //Add listener for Teams view selections
+            teamView.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                // Your action here
+                System.out.println("Selected item: " + newValue);
+            });
         } catch (IOException ex) {
             Logger.getLogger(ViewerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ArrayList<League> league = viewer.getLeagues();
-        ArrayList<Team> teams = league.get(0).getTeams();
-        System.out.print(teams.get(0).getName());
-        teamView.getItems().addAll("UWE", "Filton", "Page");
-        //Add listener for Teams view selections
-        teamView.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            // Your action here
-            System.out.println("Selected item: " + newValue);
-        });
     }
     
     public void start() throws IOException
