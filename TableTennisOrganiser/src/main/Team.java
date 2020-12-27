@@ -2,6 +2,7 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Team {
     
     }
     
-    void initialize() throws FileNotFoundException {
+    void initialize() throws IOException {
         //System.out.println("Initializing league 1");
         loadPlayers();
         
@@ -87,13 +88,8 @@ public class Team {
             return 0;
     }
     
-    void loadPlayers() throws FileNotFoundException  {
-        Scanner s = new Scanner(new File("players.csv"));
-        ArrayList<String> database = new ArrayList<String>();
-        while (s.hasNextLine()){
-                database.add(s.nextLine().replaceAll("[{}]", ""));
-        }
-        s.close();
+    void loadPlayers() throws IOException {
+        ArrayList<String> database = Main.loadFile("players.csv");
         for(int i = 0; i < database.size(); i++)    {
             String newPlayer = database.get(i).toString();
             if(newPlayer.contains(name))    {
@@ -103,7 +99,6 @@ public class Team {
                 }
             }
         }
-        System.out.println("PLAYERS: " + getPlayers().toString());
-        
+    System.out.println("PLAYERS: " + getPlayers().toString());
     }
 }

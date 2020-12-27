@@ -43,12 +43,7 @@ public class User   {
         }
     }
     protected void initializeLeagues() throws IOException {
-        Scanner s = new Scanner(new File("leagues.csv"));
-        ArrayList<String> database = new ArrayList<String>();
-        while (s.hasNextLine()){
-                database.add(s.nextLine().replaceAll("[{}]", ""));
-        }
-        s.close();
+        ArrayList<String> database = Main.loadFile("leagues.csv");
         
         leagues.add(new League(database.get(0)));
         System.out.println("League: " + leagues.get(0).getName());
