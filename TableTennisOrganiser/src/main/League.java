@@ -37,7 +37,6 @@ public class League {
     }
 
     ArrayList<Team> getTeams() {
-        //teams.forEach(System.out::println);
             return this.teams;
     }
 

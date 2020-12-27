@@ -45,11 +45,11 @@ public class AdminController extends UserController implements Initializable{
                     Level.SEVERE, null, ex);
         }
         //Populate league choicebox with league names.
-        ArrayList<String> leagueNames = admin.viewLeagues();
-        for (String choices : leagueNames)  {
-            leagueChoiceBox.getItems().add(choices);
-            leagueChoiceBox.setValue(choices);
-        }
+//        ArrayList<String> leagueNames = admin.viewLeagues();
+//        for (String choices : leagueNames)  {
+//            leagueChoiceBox.getItems().add(choices);
+//            leagueChoiceBox.setValue(choices);
+//        }
     }
 
 }

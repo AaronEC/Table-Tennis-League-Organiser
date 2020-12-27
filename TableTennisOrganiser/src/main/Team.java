@@ -1,12 +1,11 @@
 package main;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  * Not yet implemented
@@ -14,21 +13,24 @@ import java.util.Scanner;
  */
 public class Team {
 
-    private String name ;
+    public SimpleStringProperty name;
+    public SimpleIntegerProperty rank;
+    public SimpleIntegerProperty points;
 
     private ArrayList<String> players = new ArrayList<String>();
     
     private String venue;
+    private int gamesWon;
+    private int gamesPlayed;
 
-    //private int matchesPlayed;
-
-    //private int matchesWon;
-
-    //private int setsWon;
-    
     public Team(String name)    {
     
-        this.name = name;
+        this.name = new SimpleStringProperty(name);
+        this.points = new SimpleIntegerProperty((int) (Math.random() * 49 + 1));
+        this.rank = new SimpleIntegerProperty(0);
+        this.venue = "Sports Hall";
+        this.gamesWon = ((int)(Math.random() * 8 + 1));
+        this.gamesPlayed = ((int)(Math.random() * 12 + 1));
         //this.players = players;
         //this.venue = venue;
     }
@@ -47,49 +49,39 @@ public class Team {
         players.add(name);
     }
 
-    void setPlayers(String name) {
-
-    }
-
-    void setMatchesPlayed(String name) {
-
-    }
-
-    void setMatchesWon(String name) {
-
-    }
-
-    void setSetsWon(String name) {
-
-    }
-    
-    void setVenue(String name) {
-
-    }
-
-    void getVenue(String name) {
-
-    }
-
-    String getName() {
-            return name;
-    }
 
     ArrayList<String> getPlayers() {
             return players;
     }
 
-    int getMatchesPlayed() {
-            return 0;
+    public void setName(SimpleStringProperty name) {
+        this.name = name;
     }
 
-    int getMatchesWon() {
-            return 0;
+    public String getName() {
+        return name.get();
     }
 
-    int getSetsWon() {
-            return 0;
+    public int getRank() {
+        return rank.get();
     }
+
+    public int getPoints() {
+        return points.get();
+    }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public int getGamesWon() {
+        return gamesWon;
+    }
+
+    public int getGamesPlayed() {
+        return gamesPlayed;
+    }
+
     /**
      * Loads players from database file "players.csv" and stores them to 
      * ArrayList<String> players.
@@ -98,8 +90,8 @@ public class Team {
     void loadPlayers() throws IOException {
         ArrayList<String> database = Main.loadFile("players.csv");
         for(int i = 0; i < database.size(); i++)    {
-            String newPlayer = database.get(i).toString();
-            if(newPlayer.contains(name))    {
+            String newPlayer = database.get(i);
+            if(newPlayer.contains(name.get()))    {
                 List<String> playerNames = Arrays.asList(newPlayer.split("\\s*,\\s*"));
                 for(int j = 1; j < playerNames.size(); j++) {
                     addPlayer(playerNames.get(j));
