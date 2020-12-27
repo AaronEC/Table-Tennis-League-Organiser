@@ -22,7 +22,7 @@ import javafx.stage.*;
  * Controls FMXL GUI elements for User class
  * @author Aaron
  */
-public class UserController implements Initializable{
+public class UserController extends User implements Initializable{
 
     @FXML private PasswordField passwordInput;
     @FXML private ChoiceBox<String> loginSelect;
@@ -42,10 +42,11 @@ public class UserController implements Initializable{
     */
     public void login(ActionEvent event) throws IOException {
         
+        //Create new user class at logon
         User user = new User();
-        
+        //Check login type
         user.loginVerify(loginSelect.getValue().toString(), passwordInput.getText());
-        
+        //Open coresponding scene
         if(user.getLoginType().equalsIgnoreCase("Viewer")) {
             createViewer(event); 
         }
@@ -69,7 +70,7 @@ public class UserController implements Initializable{
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(adminScene);
         window.setTitle("Secretary View");
-        window.show();
+        window.show();        
     }
     /**
      * Creates the JavaFX scene and class which will contain and control the 

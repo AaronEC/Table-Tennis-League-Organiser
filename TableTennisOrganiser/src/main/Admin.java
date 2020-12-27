@@ -1,5 +1,7 @@
 package main;
 
+import java.io.IOException;
+
 /**
  * Class which implements all high level Admin functions
  * @author Aaron
@@ -8,8 +10,9 @@ public class Admin extends Viewer {
 
 	private String adminName;
 
-	void startAdmin() {
-
+	void startAdmin() throws IOException {
+            System.out.println("Admin Created");
+            initializeLeagues();
 	}
 
 	private void createLeague(String name) {

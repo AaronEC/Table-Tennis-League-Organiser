@@ -1,5 +1,6 @@
 package main;
 
+import java.io.IOException;
 import javafx.fxml.Initializable;
 
 /**
@@ -8,6 +9,11 @@ import javafx.fxml.Initializable;
  */
 public class AdminController extends ViewerController implements Initializable{
        
-    
-    
+    @Override
+    public void start() throws IOException
+    {
+        //Create new viewer class at logon
+        Admin admin = new Admin();
+        admin.startAdmin();
+    }
 }
