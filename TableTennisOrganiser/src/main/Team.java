@@ -20,17 +20,20 @@ public class Team {
     private ArrayList<String> players = new ArrayList<String>();
     
     private String venue;
-    private int gamesWon;
-    private int gamesPlayed;
+    private int matchesPlayed;
+    private int matchesWon;
+    private int matchesLost;
+    private int matchesDrawn;
 
-    public Team(String name)    {
+    public Team(String name, String venue, int wins, int draws, int losses)    {
     
         this.name = new SimpleStringProperty(name);
         this.points = new SimpleIntegerProperty((int) (Math.random() * 49 + 1));
         this.rank = new SimpleIntegerProperty(0);
-        this.venue = "Sports Hall";
-        this.gamesWon = ((int)(Math.random() * 8 + 1));
-        this.gamesPlayed = ((int)(Math.random() * 12 + 1));
+        this.venue = venue;
+        this.matchesWon = wins;
+        this.matchesLost = losses;
+        this.matchesDrawn = draws;
         //this.players = players;
         //this.venue = venue;
     }
@@ -74,12 +77,28 @@ public class Team {
         return venue;
     }
 
-    public int getGamesWon() {
-        return gamesWon;
+    public int getMatchesWon() {
+        return matchesWon;
     }
 
-    public int getGamesPlayed() {
-        return gamesPlayed;
+    public int getMatchesPlayed() {
+        return matchesPlayed;
+    }
+
+    public int getMatchesLost() {
+        return matchesLost;
+    }
+
+    public int getMatchesDrawn() {
+        return matchesDrawn;
+    }
+
+    public void setMatchesLost(int matchesLost) {
+        this.matchesLost = matchesLost;
+    }
+
+    public void setMatchesDrawn(int matchesDrawn) {
+        this.matchesDrawn = matchesDrawn;
     }
 
     /**

@@ -22,7 +22,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class ViewerController extends UserController implements Initializable{
    
-    @FXML private Label teamView;
+    @FXML private Label teamInfoLabels;
+    @FXML private Label teamInfoData;
+    @FXML private Label teamStatsLabels;
+    @FXML private Label teamStatsData;
     @FXML private ChoiceBox<String> leagueChoiceBox;
     @FXML private TableView <Team> leagueTable;
     @FXML private TableColumn <Team, String> leagueRank;
@@ -56,6 +59,7 @@ public class ViewerController extends UserController implements Initializable{
         leagueName.setCellValueFactory(new PropertyValueFactory<>("name"));
         leagueRank.setCellValueFactory(new PropertyValueFactory<>("rank"));
         leaguePoints.setCellValueFactory(new PropertyValueFactory<>("points"));
+        
         leagueTable.setItems(listTeams(viewer.getLeagues().get(0)));
 
         leagueTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -74,14 +78,20 @@ public class ViewerController extends UserController implements Initializable{
     }
     
     private void showTeamInfo(Team input)   {
-        teamView.setText("Team Name: " + input.getName() + "\n\nHome Venue: " + 
-                input.getVenue() + "\n\nPlayers: " + input.getPlayers().toString() +
-                "\n\nGames Played: " + input.getGamesPlayed() + "\n\nGames Won: " + 
-                input.getGamesWon() + "\n\nRank: " + input.getRank());
+        teamInfoLabels.setText("Team Name: \nHome Venue: \nPlayers: ");
+        teamInfoData.setText(input.getName() + "\n" + input.getVenue() + "\n" +
+                input.getPlayers().toString());
+        teamStatsLabels.setText("Matches Won: \nMatches Lost: \nMatches Drawn: ");
+        teamStatsData.setText(input.getMatchesWon() + "\n" + 
+                input.getMatchesLost() + "\n" + input.getMatchesDrawn());
     }
-    
+    /**
+     * Converts a League class object into and ObservableList<Teams> for use 
+     * within the TableView GUI.
+     * @param input
+     * @return 
+     */
     private ObservableList<Team> listTeams(League input)    {
-
         ObservableList<Team> output = FXCollections.observableArrayList(input.getTeams());
         return output;
     }

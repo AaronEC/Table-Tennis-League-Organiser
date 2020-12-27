@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -60,8 +62,8 @@ public class League {
      * @param input 
      */
     void addTeam(String input) {
-        Team team = new Team(input);
-        teams.add(team);
+        //Team team = new Team(input);
+        //teams.add(team);
     }
 
     void orderTeams() {
@@ -81,11 +83,12 @@ public class League {
                 database.add(s.nextLine().replaceAll("[{}]", ""));
         }
         s.close();
-        for(int i = 0; i < database.size(); i++)    {
-            Team newTeam = new Team(database.get(i).toString());
-            teams.add(newTeam);
-            System.out.println("TEAM: " + teams.get(i).getName());
+        for(String temp : database)    {
+            List<String> tempTeam = new ArrayList<String>(Arrays.asList(temp.split(",")));
+            tempTeam.forEach(System.out::println);
+            Team newTeam = new Team(tempTeam.get(0), tempTeam.get(1), Integer.parseInt(tempTeam.get(2)), Integer.parseInt(tempTeam.get(3)), Integer.parseInt(tempTeam.get(4)));
             newTeam.initialize();
+            teams.add(newTeam);         
         }
     }
 }
