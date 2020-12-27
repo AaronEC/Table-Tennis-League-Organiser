@@ -6,11 +6,15 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * Controls FMXL GUI elements for Viewer class
@@ -18,8 +22,13 @@ import javafx.scene.control.ListView;
  */
 public class ViewerController extends UserController implements Initializable{
    
-    @FXML private ListView<String> teamView;
+    @FXML private Label teamView;
     @FXML private ChoiceBox<String> leagueChoiceBox;
+    @FXML private TableView <Team> leagueTable;
+    @FXML private TableColumn <Team, String> leagueRank;
+    @FXML private TableColumn <Team, String> leagueName;
+    @FXML private TableColumn <Team, String> leaguePoints;
+    
     /**
      * initialises the UI elements and associated class data structures with
      * data from the database files.
@@ -33,13 +42,6 @@ public class ViewerController extends UserController implements Initializable{
         try {
             viewer.startViewer();
             start();
-            teamView.getItems().addAll(viewer.viewTeams());
-            //Add listener for Teams view selections
-            teamView.getSelectionModel().selectedItemProperty().addListener(
-                    (ObservableValue<? extends String> observable, 
-                            String oldValue, String newValue) -> {
-                System.out.println("Selected item: " + newValue);
-            });
         } catch (IOException ex) {
             Logger.getLogger(ViewerController.class.getName()).log(
                     Level.SEVERE, null, ex);
@@ -50,11 +52,37 @@ public class ViewerController extends UserController implements Initializable{
             leagueChoiceBox.getItems().add(choices);
             leagueChoiceBox.setValue(choices);
         }
+        //Populate TableView with League data
+        leagueName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        leagueRank.setCellValueFactory(new PropertyValueFactory<>("rank"));
+        leaguePoints.setCellValueFactory(new PropertyValueFactory<>("points"));
+        leagueTable.setItems(listTeams(viewer.getLeagues().get(0)));
+
+        leagueTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                Team selected = leagueTable.getSelectionModel().getSelectedItem();
+                System.out.println(selected.getName());
+                showTeamInfo(selected);
+            }
+        });
     }
     
     public void start() throws IOException
     {
         //Create new viewer class at logon
         
+    }
+    
+    private void showTeamInfo(Team input)   {
+        teamView.setText("Team Name: " + input.getName() + "\n\nHome Venue: " + 
+                input.getVenue() + "\n\nPlayers: " + input.getPlayers().toString() +
+                "\n\nGames Played: " + input.getGamesPlayed() + "\n\nGames Won: " + 
+                input.getGamesWon() + "\n\nRank: " + input.getRank());
+    }
+    
+    private ObservableList<Team> listTeams(League input)    {
+
+        ObservableList<Team> output = FXCollections.observableArrayList(input.getTeams());
+        return output;
     }
 }
