@@ -33,7 +33,7 @@ public class Viewer extends Timer {
 
     }
     /**
-     * Returns team names as an ArrayList. **Currently only handles one League**
+     * Returns team names as an ArrayList<String>. **Currently only handles one League**
      * @return 
      */
     protected ArrayList<String> viewTeams() {
@@ -46,5 +46,17 @@ public class Viewer extends Timer {
             }
         }
         return teamNames;
+    }
+    /**
+     * Returns names of leagues as an ArrayList<String>.
+     * @return 
+     */
+    protected ArrayList<String> viewLeagues() {
+        ArrayList<String> leagueNames = new ArrayList<>();
+        ArrayList<League> leagues = getLeagues();
+            for (League tempLeagues : leagues) {
+                leagueNames.add(tempLeagues.getName());
+            }
+        return leagueNames;
     }
 }

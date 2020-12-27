@@ -12,6 +12,7 @@ public class Admin extends Viewer {
 
 	void startAdmin() throws IOException {
             System.out.println("Admin Created");
+            initializeLeagues();
 	}
 
 	private void createLeague(String name) {
