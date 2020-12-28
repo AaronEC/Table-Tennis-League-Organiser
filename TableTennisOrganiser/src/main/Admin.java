@@ -59,4 +59,10 @@ public class Admin extends Viewer {
     void registerPlayer(String name, Team team, League league) {
 
     }
+    
+    void countTeams()   {
+        for (League temp : getLeagues()) {
+            temp.countTeams();
+        }
+    }
 }

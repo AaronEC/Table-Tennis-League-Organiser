@@ -11,7 +11,8 @@ import java.util.List;
  * @author Aaron
  */
 public class Team implements Serializable{
-
+    
+    private static final long serialVersionUID = 8604642400555460346L;
     public String name;
     public int rank;
     public int points;

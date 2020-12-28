@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class League implements Serializable{
     
+    private static final long serialVersionUID = 8604642400555460345L;
     private String name;
     private int teamsCount;
     ArrayList<Team> teams = new ArrayList<Team>();
@@ -17,7 +18,6 @@ public class League implements Serializable{
 
     public League(String name)    {
         this.name = name;
-        this.teamsCount = countTeams();
     }
     /**
      * Should be run when class object is created, to load data into class data 
@@ -70,8 +70,8 @@ public class League implements Serializable{
         this.teams.remove(team);
     }
 
-    int countTeams() {
-        return teams.size();
+    void countTeams() {
+        this.teamsCount = teams.size();
     }
     /**
      * Loads teams from database file "teams.csv" and stores them to 

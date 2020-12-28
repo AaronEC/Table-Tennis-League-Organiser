@@ -62,6 +62,7 @@ public class AdminController extends UserController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         try {
             admin.loadLeagues();
+            admin.countTeams();
             initializeLeaguesTab();
             initializeTeamsTab();
         } catch (IOException ex) {
@@ -170,6 +171,7 @@ public class AdminController extends UserController implements Initializable{
         admin.addTeam(leagueSelection, teamNameIn.getText());
         System.out.println("Adding team: " + teamNameIn.getText());
         teamNameIn.clear();
+        countTeams();
         admin.saveLeagues();
         updateTeamsTableView();
     }
@@ -187,6 +189,7 @@ public class AdminController extends UserController implements Initializable{
         if (selection == null) { popupWindow(); return;}
         if (popupWindowChoice(("Delete " + selection.getName() +"?"), "WARNING: This Action Cannot be Undone!", "This will also delete all players in this team!"))   {
             admin.removeTeam(leagueSelection, selection);
+            countTeams();
             admin.saveLeagues();
             updateTeamsTableView();
         }
@@ -198,6 +201,11 @@ public class AdminController extends UserController implements Initializable{
     }
     
     /** Other Methods**/
+    void countTeams() throws IOException   {
+        admin.countTeams();
+        updateLeaguesTableView();
+    }
+    
     boolean isEmptyError(String in) {
         boolean error;
         if (in.trim().length() > 0)   {
