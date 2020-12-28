@@ -28,30 +28,29 @@ public class Team {
     public Team(String name, String venue, int wins, int draws, int losses)    {
     
         this.name = new SimpleStringProperty(name);
-        this.points = new SimpleIntegerProperty((int) (Math.random() * 49 + 1));
         this.rank = new SimpleIntegerProperty(0);
         this.venue = venue;
         this.matchesWon = wins;
         this.matchesLost = losses;
         this.matchesDrawn = draws;
+        this.points = calculatePoints();
         //this.players = players;
         //this.venue = venue;
     }
     /**
      * Should be run when class object is created, to load data into class data 
-     * structures from database. Otherwise will be an empty class.
+     * structures from database.
      * @throws IOException 
      */
     void initialize() throws IOException {
         //System.out.println("Initializing league 1");
         loadPlayers();
-        
+        calculatePoints();
     }
 
     void addPlayer(String name) {
         players.add(name);
     }
-
 
     ArrayList<String> getPlayers() {
             return players;
@@ -100,7 +99,11 @@ public class Team {
     public void setMatchesDrawn(int matchesDrawn) {
         this.matchesDrawn = matchesDrawn;
     }
-
+    
+    private SimpleIntegerProperty calculatePoints() {
+        return new SimpleIntegerProperty((this.matchesWon * 3) 
+                + (this.matchesDrawn * 1));
+    }
     /**
      * Loads players from database file "players.csv" and stores them to 
      * ArrayList<String> players.

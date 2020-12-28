@@ -77,12 +77,7 @@ public class League {
      * @throws IOException 
      */
     void loadTeams() throws FileNotFoundException, IOException    {
-        Scanner s = new Scanner(new File("teams.csv"));
-        ArrayList<String> database = new ArrayList<>();
-        while (s.hasNextLine()){
-                database.add(s.nextLine().replaceAll("[{}]", ""));
-        }
-        s.close();
+        ArrayList<String> database = Main.loadFile("teams.csv");
         for(String temp : database)    {
             List<String> tempTeam = new ArrayList<String>(Arrays.asList(temp.split(",")));
             tempTeam.forEach(System.out::println);

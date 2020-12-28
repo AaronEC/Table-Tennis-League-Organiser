@@ -33,7 +33,7 @@ public class UserController extends User implements Initializable{
         loginSelect.getItems().add("Secretary");
         loginSelect.getItems().add("Player");
         loginSelect.getItems().add("incorrect password test");
-        loginSelect.setValue("Player");
+        loginSelect.setValue("Secretary");
     }
     
     /**

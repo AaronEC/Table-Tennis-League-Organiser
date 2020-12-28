@@ -55,13 +55,13 @@ public class ViewerController extends UserController implements Initializable{
             leagueChoiceBox.getItems().add(choices);
             leagueChoiceBox.setValue(choices);
         }
-        //Populate TableView with League data
+        //Populate TableView with League data.
         leagueName.setCellValueFactory(new PropertyValueFactory<>("name"));
         leagueRank.setCellValueFactory(new PropertyValueFactory<>("rank"));
         leaguePoints.setCellValueFactory(new PropertyValueFactory<>("points"));
-        
+        //**Needs to be updated to support multiple Leagues**
         leagueTable.setItems(listTeams(viewer.getLeagues().get(0)));
-
+        //Listener to show team stats when a team is selected in TableView.
         leagueTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 Team selected = leagueTable.getSelectionModel().getSelectedItem();
@@ -69,6 +69,7 @@ public class ViewerController extends UserController implements Initializable{
                 showTeamInfo(selected);
             }
         });
+        leagueTable.getSelectionModel().selectFirst();
     }
     
     public void start() throws IOException

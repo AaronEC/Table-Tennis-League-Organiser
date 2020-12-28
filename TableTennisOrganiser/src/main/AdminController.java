@@ -29,27 +29,9 @@ public class AdminController extends UserController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Admin admin = new Admin();   //Create object of class to control
-        //Load lsit view with team names.
-        try {
-            admin.startAdmin();
-            teamView.getItems().addAll(admin.viewTeams());
-            //Add listener for Teams view selections
-            teamView.getSelectionModel().selectedItemProperty().addListener(
-                    (ObservableValue<? extends String> observable, 
-                            String oldValue, String newValue) -> {
-                System.out.println("Selected item: " + newValue);
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(AdminController.class.getName()).log(
-                    Level.SEVERE, null, ex);
-        }
-        //Populate league choicebox with league names.
-//        ArrayList<String> leagueNames = admin.viewLeagues();
-//        for (String choices : leagueNames)  {
-//            leagueChoiceBox.getItems().add(choices);
-//            leagueChoiceBox.setValue(choices);
-//        }
+        //Create and initialise Admin object
+        Admin admin = new Admin();
+        
     }
-
 }
+
