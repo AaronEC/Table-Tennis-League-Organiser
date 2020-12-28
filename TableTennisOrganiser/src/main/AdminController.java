@@ -30,6 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class AdminController extends UserController implements Initializable{
     
+    /** Leagues Tab **/
     @FXML private TextField leagueEditName;
     @FXML private TextField leagueNameIn;
     @FXML private Button addleague;
@@ -38,7 +39,18 @@ public class AdminController extends UserController implements Initializable{
     @FXML private TableColumn <League, String> leagueNameAdmin;
     @FXML private TableColumn <League, Integer> leagueTeamsAdmin;
     
+    /** Teams Tab **/
+    @FXML private ChoiceBox<String> leagueChoiceBox;
+    @FXML private TextField teamEditName;
+    @FXML private TextField teamNameIn;
+    @FXML private Button addteam;
+    @FXML private Button changeteamName;
+    @FXML private TableView <Team> teamTableAdmin;
+    @FXML private TableColumn <Team, String> teamNameAdmin;
+    @FXML private TableColumn <Team, Integer> teamPointsAdmin;
+    
     private Admin admin = new Admin();
+    League leagueSelection = null;
 
     /**
      * initialises the UI elements and associated class data structures with
@@ -49,6 +61,11 @@ public class AdminController extends UserController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
+
+    }
+    
+    /** Leagues Tab **/
+    public void initializeLeaguesTab()  {
         leagueTeamsAdmin.setCellValueFactory(new PropertyValueFactory<>("teamsCount"));
         leagueNameAdmin.setCellValueFactory(new PropertyValueFactory<>("name"));
         
@@ -68,6 +85,12 @@ public class AdminController extends UserController implements Initializable{
                 System.out.println(selected.getName());
             }
         });
+    }
+    
+    public void updateLeaguesTableView() throws IOException {
+        leagueTableAdmin.getItems().clear();
+        leagueTableAdmin.setItems(listLeagues(admin.getLeagues()));
+        admin.saveLeagues(admin.getLeagues());
     }
     
     public void addLeague(ActionEvent event) throws IOException    {
@@ -93,17 +116,88 @@ public class AdminController extends UserController implements Initializable{
         }
     }
     
-    public void updateLeaguesTableView() throws IOException {
-        leagueTableAdmin.getItems().clear();
-        leagueTableAdmin.setItems(listLeagues(admin.getLeagues()));
-        admin.saveLeagues(admin.getLeagues());
-    }
-    
     private ObservableList<League> listLeagues(ArrayList<League> input)    {
         ObservableList<League> output = FXCollections.observableArrayList(input);
         return output;
     }
+    
+    /** Teams Tab **/
+    public void initializeTeamsTab() throws IOException {
+        leagueChoiceBox.getSelectionModel().selectFirst();
+        teamNameAdmin.setCellValueFactory(new PropertyValueFactory<>("name"));
+        teamPointsAdmin.setCellValueFactory(new PropertyValueFactory<>("points"));
+        leagueChoiceBox.getItems().clear();
+        for (String choices : admin.viewLeagues())  {
+            leagueChoiceBox.getItems().add(choices);
+        }
+        if (admin.viewLeagues().get(0) != null) {
+            leagueChoiceBox.setValue(admin.viewLeagues().get(0));
+        }
+        
+        //Listener for League selection in Choice Box.
+        leagueChoiceBox.setOnAction((event) -> {
+            int selectedIndex = leagueChoiceBox.getSelectionModel().getSelectedIndex();
+            Object selectedItem = leagueChoiceBox.getSelectionModel().getSelectedItem();
 
+            System.out.println("Selected League: " + leagueChoiceBox.getValue());
+            try {
+                updateTeamsTableView();
+            } catch (IOException ex) {
+                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        updateTeamsTableView();
+    }
+    
+        
+    public void updateTeamsTableView() throws IOException {
+        teamTableAdmin.getItems().clear();
+        String leagueChoiceBoxSelection = leagueChoiceBox.getSelectionModel().getSelectedItem();
+        ArrayList<League> leagues = admin.getLeagues();
+        if (leagueChoiceBoxSelection!=null) {
+            for (League temp : leagues) {
+                if (leagueChoiceBoxSelection.equals(temp.getName()))
+                {
+                    leagueSelection = temp;
+                    System.out.println("League is " + temp.getName());
+                }
+            }
+            
+            teamTableAdmin.setItems(listTeams(leagueSelection.getTeams()));
+        }
+        admin.saveLeagues(admin.getLeagues());
+    }
+        
+    public void addTeam(ActionEvent event) throws IOException    {
+        if (isEmptyError(teamNameIn.getText()))   {  return;  }
+        admin.addTeam(leagueSelection, teamNameIn.getText());
+        System.out.println("Adding team: " + teamNameIn.getText());
+        teamNameIn.clear();
+        updateTeamsTableView();
+    }
+    
+    public void editTeamName(ActionEvent event) throws IOException, FileNotFoundException, ClassNotFoundException  {
+        if (isEmptyError(teamEditName.getText()))   {  return;  }
+        teamTableAdmin.getSelectionModel().getSelectedItem().setName(teamEditName.getText());
+        teamNameIn.clear();
+        updateTeamsTableView();
+    }
+    
+    public void deleteTeam(ActionEvent event) throws IOException    {
+        Team selection = teamTableAdmin.getSelectionModel().getSelectedItem();
+        if (selection == null) { popupWindow(); return;}
+        if (popupWindowChoice(("Delete " + selection.getName() +"?"), "WARNING: This Action Cannot be Undone!", "This will also delete all players in this team!"))   {
+            admin.removeTeam(leagueSelection, selection);
+            updateTeamsTableView();
+        }
+    }
+    
+    private ObservableList<Team> listTeams(ArrayList<Team> input)    {
+        ObservableList<Team> output = FXCollections.observableArrayList(input);
+        return output;
+    }
+    
+    /** Other Methods**/
     boolean isEmptyError(String in) {
         boolean error;
         if (in.trim().length() > 0)   {

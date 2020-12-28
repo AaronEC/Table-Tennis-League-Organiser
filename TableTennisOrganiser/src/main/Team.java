@@ -1,6 +1,7 @@
 package main;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,11 +12,11 @@ import javafx.beans.property.SimpleStringProperty;
  * Not yet implemented
  * @author Aaron
  */
-public class Team {
+public class Team implements Serializable{
 
-    public SimpleStringProperty name;
-    public SimpleIntegerProperty rank;
-    public SimpleIntegerProperty points;
+    public String name;
+    public int rank;
+    public int points;
 
     private ArrayList<String> players = new ArrayList<String>();
     
@@ -25,15 +26,15 @@ public class Team {
     private int matchesLost;
     private int matchesDrawn;
 
-    public Team(String name, String venue, int wins, int draws, int losses)    {
+    public Team(String name)    {
     
-        this.name = new SimpleStringProperty(name);
-        this.rank = new SimpleIntegerProperty(0);
-        this.venue = venue;
-        this.matchesWon = wins;
-        this.matchesLost = losses;
-        this.matchesDrawn = draws;
-        this.points = calculatePoints();
+        this.name = name;
+//        this.rank = 0;
+//        this.venue = venue;
+//        this.matchesWon = wins;
+//        this.matchesLost = losses;
+//        this.matchesDrawn = draws;
+        this.points = 0;
         //this.players = players;
         //this.venue = venue;
     }
@@ -56,24 +57,24 @@ public class Team {
             return players;
     }
 
-    public void setName(SimpleStringProperty name) {
+    public void setName(String name) {
         this.name = name;
     }
 
     public String getName() {
-        return name.get();
+        return this.name;
     }
 
     public int getRank() {
-        return rank.get();
+        return this.rank;
     }
 
     public int getPoints() {
-        return points.get();
+        return this.points;
     }
 
     public String getVenue() {
-        return venue;
+        return this.venue;
     }
 
     public int getMatchesWon() {
@@ -100,9 +101,8 @@ public class Team {
         this.matchesDrawn = matchesDrawn;
     }
     
-    private SimpleIntegerProperty calculatePoints() {
-        return new SimpleIntegerProperty((this.matchesWon * 3) 
-                + (this.matchesDrawn * 1));
+    private int calculatePoints() {
+        return ((this.matchesWon * 3) + (this.matchesDrawn * 1));
     }
     /**
      * Loads players from database file "players.csv" and stores them to 
@@ -113,7 +113,7 @@ public class Team {
         ArrayList<String> database = Main.loadFile("players.csv");
         for(int i = 0; i < database.size(); i++)    {
             String newPlayer = database.get(i);
-            if(newPlayer.contains(name.get()))    {
+            if(newPlayer.contains(name))    {
                 List<String> playerNames = Arrays.asList(newPlayer.split("\\s*,\\s*"));
                 for(int j = 1; j < playerNames.size(); j++) {
                     addPlayer(playerNames.get(j));

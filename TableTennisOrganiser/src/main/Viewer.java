@@ -35,21 +35,11 @@ public class Viewer extends Timer {
     protected void viewMatchScore(League league, Fixture fixture) {
 
     }
-    /**
-     * Returns team names as an ArrayList<String>. **Currently only handles one League**
-     * @return 
-     */
-    protected ArrayList<String> viewTeams() {
-        ArrayList<String> teamNames = new ArrayList<>();
-        ArrayList<League> leagues = getLeagues();
-        for (League tempLeagues : leagues) {
-            ArrayList<Team> teams = tempLeagues.getTeams();
-            for (Team tempTeams : teams) {
-                teamNames.add(tempTeams.getName());
-            }
-        }
-        return teamNames;
-    }
+
+//    protected ArrayList<Team> viewTeams(League input) {
+//        
+//       
+//    }
     /**
      * Returns names of leagues as an ArrayList<String>.
      * @return 

@@ -21,7 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author Aaron
  */
 public class ViewerController extends UserController implements Initializable{
-   
+    
     @FXML private Label teamInfoLabels;
     @FXML private Label teamInfoData;
     @FXML private Label teamStatsLabels;

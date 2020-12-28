@@ -32,8 +32,16 @@ public class Admin extends Viewer {
         System.out.println("Leagues loaded from: " + super.getFileName());
     }
 
-    void addTeam(League league, Team team) {
-
+    public void addTeam(League league, String name) {
+        System.out.println("Adding Team to League: " + league.getName());
+        league.addTeam(name);
+        //System.out.println(leagues.get(leagues.size() - 1).getName() + " added.");
+    }
+    
+    public void removeTeam(League league, Team team) {
+        System.out.println("Removing team : " + league.getName());
+        league.removeTeam(team);
+        //System.out.println(leagues.get(leagues.size() - 1).getName() + " added.");
     }
 
     void modifyScoreSheet(League league, Fixture fixture) {

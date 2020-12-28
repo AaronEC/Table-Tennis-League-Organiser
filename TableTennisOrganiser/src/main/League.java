@@ -2,15 +2,10 @@ package main;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 /**
  * This class contains the data structure for each league.
  * @author Aaron
@@ -32,7 +27,7 @@ public class League implements Serializable{
      * @throws FileNotFoundException 
      */
     void initialize() throws FileNotFoundException, IOException {
-        loadTeams();
+        //loadTeams();
     }
         
     void setName(String name) {
@@ -61,16 +56,20 @@ public class League implements Serializable{
     }
 
     void addTeam(Team input) {
-
+        System.out.println("Team added: " + input.getName());
+        this.teams.add(input);
     }
     /**
      * Overload method for adding a blank team with no players.
      * @param input 
      */
     void addTeam(String input) {
-        //Team team = new Team(input);
-        //teams.add(team);
-        countTeams();
+        Team newTeam = new Team(input);
+        this.teams.add(newTeam);
+    }
+    
+    void removeTeam(Team team)  {
+        this.teams.remove(team);
     }
 
     int countTeams() {
@@ -83,14 +82,14 @@ public class League implements Serializable{
      * database.
      * @throws IOException 
      */
-    void loadTeams() throws FileNotFoundException, IOException    {
-        ArrayList<String> database = Main.loadFile("teams.csv");
-        for(String temp : database)    {
-            List<String> tempTeam = new ArrayList<String>(Arrays.asList(temp.split(",")));
-            tempTeam.forEach(System.out::println);
-            Team newTeam = new Team(tempTeam.get(0), tempTeam.get(1), Integer.parseInt(tempTeam.get(2)), Integer.parseInt(tempTeam.get(3)), Integer.parseInt(tempTeam.get(4)));
-            newTeam.initialize();
-            teams.add(newTeam);         
-        }
-    }
+//    void loadTeams() throws FileNotFoundException, IOException    {
+//        ArrayList<String> database = Main.loadFile("teams.csv");
+//        for(String temp : database)    {
+//            List<String> tempTeam = new ArrayList<String>(Arrays.asList(temp.split(",")));
+//            tempTeam.forEach(System.out::println);
+//            Team newTeam = new Team(tempTeam.get(0), tempTeam.get(1), Integer.parseInt(tempTeam.get(2)), Integer.parseInt(tempTeam.get(3)), Integer.parseInt(tempTeam.get(4)));
+//            newTeam.initialize();
+//            teams.add(newTeam);         
+//        }
+//    }
 }
