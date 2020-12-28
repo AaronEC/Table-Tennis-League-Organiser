@@ -8,31 +8,25 @@ import java.io.IOException;
  */
 public class Admin extends Viewer {
 
-	private String adminName;
+	String adminName;
 
-
-
-	private void createLeague(String name) {
+	void addTeam(League league, Team team) {
 
 	}
 
-	private void addTeam(League league, Team team) {
+	void modifyScoreSheet(League league, Fixture fixture) {
 
 	}
 
-	private void modifyScoreSheet(League league, Fixture fixture) {
+	void generateFixtures(League league) {
 
 	}
 
-	private void generateFixtures(League league) {
+	void saveLeagueToDatabase(League league) {
 
 	}
 
-	private void saveLeagueToDatabase(League league) {
-
-	}
-
-	private void registerPlayer(String name, Team team, League league) {
+	void registerPlayer(String name, Team team, League league) {
 
 	}
 }

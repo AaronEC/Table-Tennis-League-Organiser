@@ -1,12 +1,12 @@
 package main;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  * This class contains the data structure for each league.
@@ -14,12 +14,14 @@ import java.util.Scanner;
  */
 public class League {
     
-    private String name;
+    private SimpleStringProperty name;
+    private SimpleIntegerProperty teamsCount;
     ArrayList<Team> teams = new ArrayList<Team>();
     //private ArrayList<Fixture> fixture;
 
     public League(String name)    {
-        this.name = name;    
+        this.name = new SimpleStringProperty(name);
+        this.teamsCount = countTeams();
     }
     /**
      * Should be run when class object is created, to load data into class data 
@@ -34,8 +36,8 @@ public class League {
 
     }
 
-    String getName() {
-            return this.name;
+    public String getName() {
+        return name.get();
     }
 
     ArrayList<Team> getTeams() {
@@ -46,16 +48,16 @@ public class League {
             return null;
     }
 
+    public int getTeamsCount() {
+        return teamsCount.get();
+    }
+
     void setFixtures(Fixture fixtures) {
 
     }
 
     void addTeam(Team input) {
-        //System.out.println(input);
 
-        //Team myObj = new Team(newTeam[0], newTeam[1], newTeam[2]);
-        
-        //teams.add(input);
     }
     /**
      * Overload method for adding a blank team with no players.
@@ -64,10 +66,11 @@ public class League {
     void addTeam(String input) {
         //Team team = new Team(input);
         //teams.add(team);
+        countTeams();
     }
 
-    void orderTeams() {
-
+    SimpleIntegerProperty countTeams() {
+        return new SimpleIntegerProperty(teams.size());
     }
     /**
      * Loads teams from database file "teams.csv" and stores them to 
