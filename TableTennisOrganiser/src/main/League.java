@@ -2,6 +2,9 @@ package main;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,15 +15,15 @@ import javafx.beans.property.SimpleStringProperty;
  * This class contains the data structure for each league.
  * @author Aaron
  */
-public class League {
+public class League implements Serializable{
     
-    private SimpleStringProperty name;
-    private SimpleIntegerProperty teamsCount;
+    private String name;
+    private int teamsCount;
     ArrayList<Team> teams = new ArrayList<Team>();
     //private ArrayList<Fixture> fixture;
 
     public League(String name)    {
-        this.name = new SimpleStringProperty(name);
+        this.name = name;
         this.teamsCount = countTeams();
     }
     /**
@@ -33,23 +36,24 @@ public class League {
     }
         
     void setName(String name) {
-
+        System.out.println("Changed name");
+        this.name = name;
     }
 
     public String getName() {
-        return name.get();
+        return name;
     }
 
     ArrayList<Team> getTeams() {
-            return this.teams;
+        return this.teams;
     }
 
     Fixture[] getFixtures() {
-            return null;
+        return null;
     }
 
     public int getTeamsCount() {
-        return teamsCount.get();
+        return teamsCount;
     }
 
     void setFixtures(Fixture fixtures) {
@@ -69,8 +73,8 @@ public class League {
         countTeams();
     }
 
-    SimpleIntegerProperty countTeams() {
-        return new SimpleIntegerProperty(teams.size());
+    int countTeams() {
+        return teams.size();
     }
     /**
      * Loads teams from database file "teams.csv" and stores them to 

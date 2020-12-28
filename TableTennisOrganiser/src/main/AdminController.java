@@ -1,12 +1,16 @@
 package main;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,9 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class AdminController extends UserController implements Initializable{
     
-    @FXML private ChoiceBox<String> leagueChoiceBox;
-    @FXML private Button addLeague;
-    @FXML private Button deleteLeague;
+    @FXML private TextField leagueEditName;
     @FXML private TextField leagueNameIn;
     @FXML private TableView <League> leagueTableAdmin;
     @FXML private TableColumn <League, String> leagueNameAdmin;
@@ -44,6 +46,19 @@ public class AdminController extends UserController implements Initializable{
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        
+        leagueTeamsAdmin.setCellValueFactory(new PropertyValueFactory<>("teamsCount"));
+        leagueNameAdmin.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+        try {
+            admin.loadLeagues();
+            updateLeaguesTableView();
+        } catch (IOException ex) {
+            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         //Listener to show team stats when a team is selected in TableView.
         leagueTableAdmin.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -54,7 +69,16 @@ public class AdminController extends UserController implements Initializable{
     }
     
     public void addLeague(ActionEvent event) throws IOException    {
-        admin.addLeague(leagueNameIn.getText());
+        if (leagueNameIn.getText().trim().length() > 0)   {
+            admin.addLeague(leagueNameIn.getText());
+            updateLeaguesTableView();
+        }   else {
+            popupWindow("No Name", "Please enter a league name", "OK");
+        }
+    }
+    
+    public void editLeagueName(ActionEvent event) throws IOException, FileNotFoundException, ClassNotFoundException  {
+        leagueTableAdmin.getSelectionModel().getSelectedItem().setName(leagueEditName.getText());
         updateLeaguesTableView();
     }
     
@@ -65,21 +89,15 @@ public class AdminController extends UserController implements Initializable{
     }
     
     public void updateLeaguesTableView() throws IOException {
-        leagueTeamsAdmin.setCellValueFactory(new PropertyValueFactory<>("teamsCount"));
-        leagueNameAdmin.setCellValueFactory(new PropertyValueFactory<>("name"));
+        leagueTableAdmin.getItems().clear();
         leagueTableAdmin.setItems(listLeagues(admin.getLeagues()));
-        //saveAdmin();
+
+        admin.saveLeagues(admin.getLeagues());
     }
     
     private ObservableList<League> listLeagues(ArrayList<League> input)    {
         ObservableList<League> output = FXCollections.observableArrayList(input);
         return output;
-    }
-    
-    public void saveAdmin() throws FileNotFoundException, IOException {
-        String fileName = "data.bin";
-        ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
-        os.writeObject(admin);
-    }
+    }    
 }
 

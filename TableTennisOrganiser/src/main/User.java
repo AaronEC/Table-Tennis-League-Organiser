@@ -22,6 +22,7 @@ public class User implements Serializable{
     private String password;
     private String loginType;
     private ArrayList<League> leagues = new ArrayList<League>();
+    private String fileName = "data.bin";
 
     /**
      * Checks username and password and verifies if login is an Admin or Viewer,
@@ -56,6 +57,10 @@ public class User implements Serializable{
         System.out.println("League: " + leagues.get(0).getName());
         leagues.get(0).initialize();
     }
+
+    public String getFileName() {
+        return fileName;
+    }
     
     String getLoginType() {
         return loginType;
@@ -67,6 +72,10 @@ public class User implements Serializable{
 
     private void createTimer() {
 
+    }
+
+    public void setLeagues(ArrayList<League> leagues) {
+        this.leagues = leagues;
     }
 
     public void addLeague(String name) {
