@@ -60,23 +60,24 @@ public class AdminController extends UserController implements Initializable{
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
-
-    }
-    
-    /** Leagues Tab **/
-    public void initializeLeaguesTab()  {
-        leagueTeamsAdmin.setCellValueFactory(new PropertyValueFactory<>("teamsCount"));
-        leagueNameAdmin.setCellValueFactory(new PropertyValueFactory<>("name"));
-        
         try {
             admin.loadLeagues();
-            updateLeaguesTableView();
+            initializeLeaguesTab();
+            initializeTeamsTab();
         } catch (IOException ex) {
             Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+    }
+    
+    /** Leagues Tab **/
+    public void initializeLeaguesTab() throws IOException  {
+        leagueTeamsAdmin.setCellValueFactory(new PropertyValueFactory<>("teamsCount"));
+        leagueNameAdmin.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        updateLeaguesTableView();
 
         //Listener to show team stats when a team is selected in TableView.
         leagueTableAdmin.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -90,13 +91,13 @@ public class AdminController extends UserController implements Initializable{
     public void updateLeaguesTableView() throws IOException {
         leagueTableAdmin.getItems().clear();
         leagueTableAdmin.setItems(listLeagues(admin.getLeagues()));
-        admin.saveLeagues(admin.getLeagues());
     }
     
     public void addLeague(ActionEvent event) throws IOException    {
         if (isEmptyError(leagueNameIn.getText()))   {  return;  }
         admin.addLeague(leagueNameIn.getText());
         leagueNameIn.clear();
+        admin.saveLeagues();
         updateLeaguesTableView();
     }
     
@@ -104,6 +105,7 @@ public class AdminController extends UserController implements Initializable{
         if (isEmptyError(leagueEditName.getText()))   {  return;  }
         leagueTableAdmin.getSelectionModel().getSelectedItem().setName(leagueEditName.getText());
         leagueNameIn.clear();
+        admin.saveLeagues();
         updateLeaguesTableView();
     }
     
@@ -112,6 +114,7 @@ public class AdminController extends UserController implements Initializable{
         if (selection == null) { popupWindow(); return;}
         if (popupWindowChoice(("Delete " + selection.getName() +"?"), "WARNING: This Action Cannot be Undone!", "This will delete all teams, players & fixtures in this league!"))   {
             admin.removeLeague(selection);
+            admin.saveLeagues();
             updateLeaguesTableView();
         }
     }
@@ -136,10 +139,6 @@ public class AdminController extends UserController implements Initializable{
         
         //Listener for League selection in Choice Box.
         leagueChoiceBox.setOnAction((event) -> {
-            int selectedIndex = leagueChoiceBox.getSelectionModel().getSelectedIndex();
-            Object selectedItem = leagueChoiceBox.getSelectionModel().getSelectedItem();
-
-            System.out.println("Selected League: " + leagueChoiceBox.getValue());
             try {
                 updateTeamsTableView();
             } catch (IOException ex) {
@@ -159,13 +158,11 @@ public class AdminController extends UserController implements Initializable{
                 if (leagueChoiceBoxSelection.equals(temp.getName()))
                 {
                     leagueSelection = temp;
-                    System.out.println("League is " + temp.getName());
+                    //System.out.println("League is " + temp.getName());
                 }
             }
-            
             teamTableAdmin.setItems(listTeams(leagueSelection.getTeams()));
         }
-        admin.saveLeagues(admin.getLeagues());
     }
         
     public void addTeam(ActionEvent event) throws IOException    {
@@ -173,6 +170,7 @@ public class AdminController extends UserController implements Initializable{
         admin.addTeam(leagueSelection, teamNameIn.getText());
         System.out.println("Adding team: " + teamNameIn.getText());
         teamNameIn.clear();
+        admin.saveLeagues();
         updateTeamsTableView();
     }
     
@@ -180,6 +178,7 @@ public class AdminController extends UserController implements Initializable{
         if (isEmptyError(teamEditName.getText()))   {  return;  }
         teamTableAdmin.getSelectionModel().getSelectedItem().setName(teamEditName.getText());
         teamNameIn.clear();
+        admin.saveLeagues();
         updateTeamsTableView();
     }
     
@@ -188,6 +187,7 @@ public class AdminController extends UserController implements Initializable{
         if (selection == null) { popupWindow(); return;}
         if (popupWindowChoice(("Delete " + selection.getName() +"?"), "WARNING: This Action Cannot be Undone!", "This will also delete all players in this team!"))   {
             admin.removeTeam(leagueSelection, selection);
+            admin.saveLeagues();
             updateTeamsTableView();
         }
     }

@@ -16,7 +16,7 @@
       <children>
       <TabPane prefHeight="480.0" prefWidth="720.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab onSelectionChanged="#initializeLeaguesTab" text="Leagues">
+            <Tab text="Leagues">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

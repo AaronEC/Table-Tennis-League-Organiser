@@ -91,7 +91,6 @@ public class UserController extends User implements Initializable{
         alert.setTitle(title);
         alert.setHeaderText(messageLarge);
         alert.setContentText(messageSmall);
-
         alert.showAndWait();
     }
     

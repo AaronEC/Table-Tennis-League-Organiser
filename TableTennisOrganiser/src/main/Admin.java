@@ -16,10 +16,10 @@ public class Admin extends Viewer {
 
     String adminName;
         
-    void saveLeagues(ArrayList<League> input) throws FileNotFoundException, IOException {
+    void saveLeagues() throws FileNotFoundException, IOException {
         FileOutputStream fos = new FileOutputStream(super.getFileName());
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(input);
+        oos.writeObject(getLeagues());
         oos.close();
         fos.close();
         System.out.println("Leagues Saved to: " + super.getFileName());
