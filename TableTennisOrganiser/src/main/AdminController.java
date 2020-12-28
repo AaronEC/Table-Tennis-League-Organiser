@@ -32,6 +32,8 @@ public class AdminController extends UserController implements Initializable{
     
     @FXML private TextField leagueEditName;
     @FXML private TextField leagueNameIn;
+    @FXML private Button addleague;
+    @FXML private Button changeleagueName;
     @FXML private TableView <League> leagueTableAdmin;
     @FXML private TableColumn <League, String> leagueNameAdmin;
     @FXML private TableColumn <League, Integer> leagueTeamsAdmin;
@@ -69,35 +71,48 @@ public class AdminController extends UserController implements Initializable{
     }
     
     public void addLeague(ActionEvent event) throws IOException    {
-        if (leagueNameIn.getText().trim().length() > 0)   {
-            admin.addLeague(leagueNameIn.getText());
-            updateLeaguesTableView();
-        }   else {
-            popupWindow("No Name", "Please enter a league name", "OK");
-        }
+        if (isEmptyError(leagueNameIn.getText()))   {  return;  }
+        admin.addLeague(leagueNameIn.getText());
+        leagueNameIn.clear();
+        updateLeaguesTableView();
     }
     
     public void editLeagueName(ActionEvent event) throws IOException, FileNotFoundException, ClassNotFoundException  {
+        if (isEmptyError(leagueEditName.getText()))   {  return;  }
         leagueTableAdmin.getSelectionModel().getSelectedItem().setName(leagueEditName.getText());
+        leagueNameIn.clear();
         updateLeaguesTableView();
     }
     
     public void deleteLeague(ActionEvent event) throws IOException    {
-        System.out.println("Deleting League: " + leagueTableAdmin.getSelectionModel().getSelectedItem());
-        admin.removeLeague(leagueTableAdmin.getSelectionModel().getSelectedItem());
-        updateLeaguesTableView();
+        League selection = leagueTableAdmin.getSelectionModel().getSelectedItem();
+        if (selection == null) { popupWindow(); return;}
+        if (popupWindowChoice(("Delete " + selection.getName() +"?"), "WARNING: This Action Cannot be Undone!", "This will delete all teams, players & fixtures in this league!"))   {
+            admin.removeLeague(selection);
+            updateLeaguesTableView();
+        }
     }
     
     public void updateLeaguesTableView() throws IOException {
         leagueTableAdmin.getItems().clear();
         leagueTableAdmin.setItems(listLeagues(admin.getLeagues()));
-
         admin.saveLeagues(admin.getLeagues());
     }
     
     private ObservableList<League> listLeagues(ArrayList<League> input)    {
         ObservableList<League> output = FXCollections.observableArrayList(input);
         return output;
-    }    
+    }
+
+    boolean isEmptyError(String in) {
+        boolean error;
+        if (in.trim().length() > 0)   {
+            error = false;
+        }   else {
+            popupWindow();
+            error = true;
+        }
+        return error;
+    }
 }
 

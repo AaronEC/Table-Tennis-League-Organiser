@@ -2,6 +2,7 @@ package main;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.*;
@@ -50,7 +52,7 @@ public class UserController extends User implements Initializable{
         else if(user.getLoginType().equalsIgnoreCase("Admin")) {
             createAdmin(event);     }
         else if(user.getLoginType().equalsIgnoreCase("Error")) {
-            popupWindow("Error", "Please enter correct login details", "OK");
+            popupWindow("Error", "Incorrect Login", "Please enter correct login details.");
         }
     }
     /**
@@ -83,24 +85,37 @@ public class UserController extends User implements Initializable{
      * Creates a pop up window with the specified text. May extend method to 
      * include variable inputs if popups are needed in other parts of program.
      */
-    protected void popupWindow(String title, String message, String buttonText)    {
-        //Initialise scene
-        Stage popUpWindow=new Stage();
-        popUpWindow.getIcons().add(new Image(Main.class.getResourceAsStream("ErrorIcon.png")));
-        popUpWindow.initModality(Modality.APPLICATION_MODAL);
-        //Add labels and button text
-        popUpWindow.setTitle(title);
-        Label messageLabel= new Label(message);
-        Button OK= new Button(buttonText);
-        //set logic and layout
-        OK.setOnAction(e -> popUpWindow.close());
-        VBox layout= new VBox(10);
-        layout.getChildren().addAll(messageLabel, OK);
-        layout.setAlignment(Pos.CENTER);
-        //Open scene
-        Scene window= new Scene(layout, 200, 100);
-        popUpWindow.setScene(window);
-        popUpWindow.showAndWait();
+    protected void popupWindow(String title, String messageLarge, String messageSmall)    {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle(title);
+        alert.setHeaderText(messageLarge);
+        alert.setContentText(messageSmall);
+
+        alert.showAndWait();
+    }
+    
+    protected void popupWindow()    {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Error");
+        alert.setHeaderText("No value entered");
+        alert.setContentText("Please input a value");
+        alert.showAndWait();
+    }
+    
+    protected boolean popupWindowChoice(String title, String messageLarge, String messageSmall)    {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle(title);
+        alert.setHeaderText(messageLarge);
+        alert.setContentText(messageSmall);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            return true;
+        } else {
+            return false;
+        }
     }
     /**
      * Called from Admin or Viewer scenes. Returns user to the login screen.
