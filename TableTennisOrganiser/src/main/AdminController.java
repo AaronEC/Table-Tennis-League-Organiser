@@ -169,7 +169,6 @@ public class AdminController extends UserController implements Initializable{
     public void addTeam(ActionEvent event) throws IOException    {
         if (isEmptyError(teamNameIn.getText()))   {  return;  }
         admin.addTeam(leagueSelection, teamNameIn.getText());
-        System.out.println("Adding team: " + teamNameIn.getText());
         teamNameIn.clear();
         countTeams();
         admin.saveLeagues();
