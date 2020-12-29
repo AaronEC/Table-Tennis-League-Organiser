@@ -59,10 +59,12 @@ public class Team implements Serializable{
 
     void addPlayer(Player player) {
         teamPlayers.add(player);
+        countPlayers();
     }
     
     void removePlayer(Player player)  {
         this.teamPlayers.remove(player);
+        countPlayers();
     }
 
     ArrayList<Player> getPlayers() {

@@ -1,9 +1,6 @@
 package main;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +14,6 @@ public class Viewer extends Timer {
     
     void startViewer() throws IOException {
         System.out.println("Viewer Created");
-        initializeLeagues();
     }
 
     protected void viewFixtures(League league) {
@@ -36,10 +32,9 @@ public class Viewer extends Timer {
 
     }
 
-//    protected ArrayList<Team> viewTeams(League input) {
-//        
-//       
-//    }
+    protected ArrayList<Team> viewTeams(League input) {
+        return null;   
+    }
     /**
      * Returns names of leagues as an ArrayList<String>.
      * @return 

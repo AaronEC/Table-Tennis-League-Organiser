@@ -68,8 +68,7 @@ public class AdminController extends UserController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         try {
             admin.loadLeagues();
-            admin.countTeams();
-            admin.countPlayers();
+            //admin.countPlayers();
             admin.countFixtures();
             initializeLeaguesTab();
             initializeTeamsTab();
@@ -194,9 +193,9 @@ public class AdminController extends UserController implements Initializable{
         if (isEmptyError(teamNameIn.getText()))   {  return;  }
         admin.addTeam(leagueSelection, teamNameIn.getText());
         teamNameIn.clear();
-        countTeams();
         admin.saveLeagues();
         updateTeamsTableView();
+        updateLeaguesTableView();
     }
     
     public void editTeamName(ActionEvent event) throws IOException, FileNotFoundException, ClassNotFoundException  {
@@ -212,9 +211,9 @@ public class AdminController extends UserController implements Initializable{
         if (selection == null) { popupWindow(); return;}
         if (popupWindowChoice(("Delete " + selection.getName() +"?"), "WARNING: This Action Cannot be Undone!", "This will also delete all players in this team!"))   {
             admin.removeTeam(leagueSelection, selection);
-            countTeams();
             admin.saveLeagues();
             updateTeamsTableView();
+            updateLeaguesTableView();
         }
     }
     
@@ -270,12 +269,10 @@ public class AdminController extends UserController implements Initializable{
         if (isEmptyError(playerNameIn.getText()))   {  return;  }
         admin.addPlayer(teamSelection, playerNameIn.getText());
         teamNameIn.clear();
-        admin.countPlayers();
         admin.saveLeagues();
+        displayTeamInfo(teamSelection);
         updateTeamsTableView();
         playerNameIn.clear();
-        displayTeamInfo(teamSelection);
-        admin.saveLeagues();
     }
     
     public void deletePlayer(ActionEvent event) throws IOException    {
@@ -291,19 +288,12 @@ public class AdminController extends UserController implements Initializable{
                 ("Are you sure you want to delete player " + 
                 playerSelection.getName() + "?")))   {
             admin.removePlayer(teamSelection, playerSelection);
-            admin.countPlayers();
-            admin.saveLeagues();
             displayTeamInfo(teamSelection);
+            updateTeamsTableView();
             admin.saveLeagues();
         }
     }
-    
-    /** Other Methods**/
-    void countTeams() throws IOException   {
-        admin.countTeams();
-        updateLeaguesTableView();
-    }
-    
+      
     boolean isEmptyError(String in) {
         boolean error;
         if (in.trim().length() > 0)   {

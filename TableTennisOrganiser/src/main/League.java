@@ -62,9 +62,10 @@ public class League implements Serializable{
 
     }
 
-    void addTeam(Team input) {
-        System.out.println("Team added: " + input.getName());
-        this.teams.add(input);
+    void addTeam(Team team) {
+        System.out.println("Team added: " + team.getName());
+        this.teams.add(team);
+        countTeams();
     }
     /**
      * Overload method for adding a blank team with no players.
@@ -73,10 +74,13 @@ public class League implements Serializable{
     void addTeam(String input) {
         Team newTeam = new Team(input);
         this.teams.add(newTeam);
+        countTeams();
     }
     
     void removeTeam(Team team)  {
+        System.out.println("Removed team: " + team.getName());
         this.teams.remove(team);
+        countTeams();
     }
 
     void countTeams() {
