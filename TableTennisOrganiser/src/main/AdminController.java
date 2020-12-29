@@ -42,8 +42,10 @@ public class AdminController extends UserController implements Initializable{
     
     /** Teams Tab **/
     @FXML private ChoiceBox<String> leagueChoiceBox;
+    @FXML private ChoiceBox<String> playerChoiceBox;
     @FXML private TextField teamEditName;
     @FXML private TextField teamNameIn;
+    @FXML private TextField playerNameIn;
     @FXML private TableView <Team> teamTableAdmin;
     @FXML private TableColumn <Team, String> teamNameAdmin;
     @FXML private TableColumn <Team, Integer> teamPointsAdmin;
@@ -52,7 +54,8 @@ public class AdminController extends UserController implements Initializable{
     @FXML private Label teamInfoVariables;
     
     private Admin admin = new Admin();
-    League leagueSelection = null;
+    private League leagueSelection;
+    private Team teamSelection;
 
     /**
      * initialises the UI elements and associated class data structures with
@@ -138,6 +141,8 @@ public class AdminController extends UserController implements Initializable{
         teamNameAdmin.setCellValueFactory(new PropertyValueFactory<>("name"));
         teamPointsAdmin.setCellValueFactory(new PropertyValueFactory<>("points"));
         teamPlayersAdmin.setCellValueFactory(new PropertyValueFactory<>("playersCount"));
+        
+        //Populate League choice box from League ArrayList
         leagueChoiceBox.getItems().clear();
         for (String choices : admin.viewLeagues())  {
             leagueChoiceBox.getItems().add(choices);
@@ -159,9 +164,9 @@ public class AdminController extends UserController implements Initializable{
         //Listener for when a Team is selected in TableView.
         teamTableAdmin.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                Team selected = teamTableAdmin.getSelectionModel().getSelectedItem();
-                System.out.println(selected.getName());
-                displayTeamInfo(selected);
+                teamSelection = teamTableAdmin.getSelectionModel().getSelectedItem();
+                System.out.println(teamSelection.getName());
+                displayTeamInfo(teamSelection);
             }
         });
     }
@@ -175,7 +180,6 @@ public class AdminController extends UserController implements Initializable{
                 if (leagueChoiceBoxSelection.equals(temp.getName()))
                 {
                     leagueSelection = temp;
-                    //System.out.println("League is " + temp.getName());
                 }
             }
             teamTableAdmin.setItems(listTeams(leagueSelection.getTeams()));
@@ -222,6 +226,19 @@ public class AdminController extends UserController implements Initializable{
                 team.getPoints()  + "\n" + 
                 team.getPlayers().toString()
                 );
+        
+        //Populate Player ChoiceBox
+        playerChoiceBox.getItems().clear();
+        for (String choices : team.getPlayers())  {
+            playerChoiceBox.getItems().add(choices);
+        }
+        if (!team.getPlayers().isEmpty()) {
+            playerChoiceBox.setValue(team.getPlayers().get(0));
+        }
+        else {
+            playerChoiceBox.setValue("No Players in Team");
+        }
+        
     }
     
     private ObservableList<Team> listTeams(ArrayList<Team> input)    {
@@ -231,7 +248,28 @@ public class AdminController extends UserController implements Initializable{
     /********************/
     /** Player Methods **/
     /********************/
+    public void addPlayer(ActionEvent event) throws IOException    {
+        if (isEmptyError(playerNameIn.getText()))   {  return;  }
+        System.out.println("Adding player to team: " + teamSelection.getName());
+        admin.addPlayer(teamSelection, playerNameIn.getText());
+        teamNameIn.clear();
+        admin.countPlayers();
+        admin.saveLeagues();
+        updateTeamsTableView();
+        playerNameIn.clear();
+        displayTeamInfo(teamSelection);
+    }
     
+    public void deletePlayer(ActionEvent event) throws IOException    {
+        String selection = playerChoiceBox.getSelectionModel().getSelectedItem();
+        if (selection == null) { popupWindow(); return;}
+        if (popupWindowChoice(("Delete " + selection +"?"), "WARNING: This Action Cannot be Undone!", "This will also delete all players in this team!"))   {
+            admin.removePlayer(leagueSelection, selection);
+            countPlayers();
+            admin.saveLeagues();
+            updatePlayersTableView();
+        }
+    }
     
     /** Other Methods**/
     void countTeams() throws IOException   {
