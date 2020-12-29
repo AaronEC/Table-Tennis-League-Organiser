@@ -1,5 +1,6 @@
 package main;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -32,7 +33,7 @@ public class Admin extends Viewer {
             System.out.println("Leagues Saved to: " + super.getFileName());
         } catch (FileNotFoundException ex) {
             System.err.println("ERROR: File " + super.getFileName() + 
-                    "not found");
+                    " not found");
         } catch (IOException ex) {
             System.err.println("ERROR: Incorrect output");
         }
@@ -51,8 +52,9 @@ public class Admin extends Viewer {
             setLeagues((ArrayList<League>) ois.readObject());
             System.out.println("Leagues loaded from: " + super.getFileName());
         } catch (FileNotFoundException ex) {
+            new File("data.bat");
             System.err.println("ERROR: File " + super.getFileName() + 
-                    "not found");               
+                    " not found");               
         } catch (IOException ex) {
             System.err.println("ERROR: Incorrect input loaded");
         }
@@ -123,6 +125,7 @@ public class Admin extends Viewer {
      * Force updates ALL fixturesCount int parameters in ALL 'Team' objects 
      * currently assigned to the Admin user. For use after adding or removing
      * fixtures, to update Teams TableView fixtures column.
+     * **WILL BE REMOVED FOR EFFICIENCY REASONS EVENTUALLY**
      */
     void countFixtures()   {
         for (League temp : getLeagues()) {

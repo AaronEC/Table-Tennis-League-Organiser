@@ -3,7 +3,7 @@ package main;
 import java.io.Serializable;
 
 /**
- * Not yet implemented
+ * This class contains the data structure for each player.
  * @author Aaron
  */
 public class Player implements Serializable{

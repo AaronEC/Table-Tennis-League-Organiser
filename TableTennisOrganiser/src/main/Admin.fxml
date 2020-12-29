@@ -79,8 +79,8 @@
                         <TextField fx:id="playerNameIn" alignment="CENTER" layoutX="540.0" layoutY="283.0" onAction="#addPlayer" prefHeight="26.0" prefWidth="158.0" promptText="Enter Player Name" />
                         <Button fx:id="logout" layoutX="651.0" layoutY="410.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
                         <Button layoutX="380.0" layoutY="310.0" mnemonicParsing="false" onAction="#deletePlayer" prefHeight="26.0" prefWidth="160.0" text="Delete Player" />
-                        <Button layoutX="380.0" layoutY="337.0" mnemonicParsing="false" onAction="#updateVenueName" prefHeight="26.0" prefWidth="160.0" text="Update Venue" />
-                        <TextField fx:id="venueNameIn" alignment="CENTER" layoutX="540.0" layoutY="336.0" onAction="#updateVenueName" prefHeight="26.0" prefWidth="158.0" promptText="Enter Venue Name" />
+                        <Button layoutX="380.0" layoutY="337.0" mnemonicParsing="false" onAction="#updateVenue" prefHeight="26.0" prefWidth="160.0" text="Update Venue" />
+                        <TextField fx:id="venueNameIn" alignment="CENTER" layoutX="540.0" layoutY="336.0" onAction="#updateVenue" prefHeight="26.0" prefWidth="158.0" promptText="Enter Venue Name" />
                         <Label fx:id="teamInfoLabels" alignment="TOP_LEFT" layoutX="389.0" layoutY="88.0" prefHeight="178.0" prefWidth="142.0" />
                         <Label fx:id="teamInfoVariables" alignment="TOP_LEFT" layoutX="546.0" layoutY="88.0" prefHeight="177.0" prefWidth="146.0" wrapText="true" />
                         <ChoiceBox fx:id="playerChoiceBox" layoutX="539.0" layoutY="310.0" prefHeight="26.0" prefWidth="160.0" />
