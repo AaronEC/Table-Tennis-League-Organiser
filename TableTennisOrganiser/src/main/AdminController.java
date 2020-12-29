@@ -215,6 +215,12 @@ public class AdminController extends UserController implements Initializable{
     }
     
     public void displayTeamInfo(Team team)   {
+        ArrayList<Player> players = team.getPlayers();
+        ArrayList<String> names = new ArrayList<>();
+        for(Player player : players) {
+            names.add(player.getName());
+        }
+        
         teamInfoLabels.setText("Name:\nMatches Played:\nMatches Won:\n"
                 + "Matches Lost:\nMatches Drawn:\nTotal Points:\nPlayers:");
         teamInfoVariables.setText(
@@ -224,16 +230,16 @@ public class AdminController extends UserController implements Initializable{
                 team.getMatchesLost()  + "\n" +
                 team.getMatchesLost()  + "\n" +
                 team.getPoints()  + "\n" + 
-                team.getPlayers().toString()
+                names.toString()
                 );
         
         //Populate Player ChoiceBox
         playerChoiceBox.getItems().clear();
-        for (String choices : team.getPlayers())  {
-            playerChoiceBox.getItems().add(choices);
+        for (Player chosenPlayer : team.getPlayers())  {
+            playerChoiceBox.getItems().add(chosenPlayer.getName());
         }
         if (!team.getPlayers().isEmpty()) {
-            playerChoiceBox.setValue(team.getPlayers().get(0));
+            playerChoiceBox.setValue(team.getPlayers().get(0).getName());
         }
         else {
             playerChoiceBox.setValue("No Players in Team");
@@ -250,7 +256,6 @@ public class AdminController extends UserController implements Initializable{
     /********************/
     public void addPlayer(ActionEvent event) throws IOException    {
         if (isEmptyError(playerNameIn.getText()))   {  return;  }
-        System.out.println("Adding player to team: " + teamSelection.getName());
         admin.addPlayer(teamSelection, playerNameIn.getText());
         teamNameIn.clear();
         admin.countPlayers();
@@ -261,13 +266,21 @@ public class AdminController extends UserController implements Initializable{
     }
     
     public void deletePlayer(ActionEvent event) throws IOException    {
-        String selection = playerChoiceBox.getSelectionModel().getSelectedItem();
-        if (selection == null) { popupWindow(); return;}
-        if (popupWindowChoice(("Delete " + selection +"?"), "WARNING: This Action Cannot be Undone!", "This will also delete all players in this team!"))   {
-            admin.removePlayer(leagueSelection, selection);
-            countPlayers();
+        Player playerSelection = null;
+        for (Player player : teamSelection.getPlayers()) {
+            if (player.getName() == playerChoiceBox.getSelectionModel().getSelectedItem()) {
+                playerSelection = player;
+            }
+        }
+        if (playerSelection == null) { popupWindow(); return;}
+        if (popupWindowChoice(("Delete player " + playerSelection.getName() +
+                "?"), "WARNING: This Action Cannot be Undone!", 
+                ("Are you sure you want to delete player " + 
+                playerSelection.getName() + "?")))   {
+            admin.removePlayer(teamSelection, playerSelection);
+            admin.countPlayers();
             admin.saveLeagues();
-            updatePlayersTableView();
+            displayTeamInfo(teamSelection);
         }
     }
     

@@ -17,7 +17,7 @@ public class Team implements Serializable{
     public int rank;
     public int points;
 
-    private ArrayList<String> players = new ArrayList<String>();
+    private ArrayList<Player> players;
     
     private String venue;
     private int matchesPlayed;
@@ -45,7 +45,7 @@ public class Team implements Serializable{
      */
     void initialize() throws IOException {
         //System.out.println("Initializing league 1");
-        loadPlayers();
+        //loadPlayers();
         calculatePoints();
     }
 
@@ -58,12 +58,16 @@ public class Team implements Serializable{
         else { this.playersCount = players.size(); }
     }
 
-    void addPlayer(String name) {
-        players.add(name);
+    void addPlayer(Player player) {
+        players.add(player);
+    }
+    
+    void removePlayer(Player player)  {
+        this.players.remove(player);
     }
 
-    ArrayList<String> getPlayers() {
-            return players;
+    ArrayList<Player> getPlayers() {
+        return players;
     }
 
     public void setName(String name) {
@@ -118,17 +122,17 @@ public class Team implements Serializable{
      * ArrayList<String> players.
      * @throws IOException 
      */
-    void loadPlayers() throws IOException {
-        ArrayList<String> database = Main.loadFile("players.csv");
-        for(int i = 0; i < database.size(); i++)    {
-            String newPlayer = database.get(i);
-            if(newPlayer.contains(name))    {
-                List<String> playerNames = Arrays.asList(newPlayer.split("\\s*,\\s*"));
-                for(int j = 1; j < playerNames.size(); j++) {
-                    addPlayer(playerNames.get(j));
-                }
-            }
-        }
-    System.out.println("PLAYERS: " + getPlayers().toString());
-    }
+//    void loadPlayers() throws IOException {
+//        ArrayList<String> database = Main.loadFile("players.csv");
+//        for(int i = 0; i < database.size(); i++)    {
+//            String newPlayer = database.get(i);
+//            if(newPlayer.contains(name))    {
+//                List<String> playerNames = Arrays.asList(newPlayer.split("\\s*,\\s*"));
+//                for(int j = 1; j < playerNames.size(); j++) {
+//                    addPlayer(playerNames.get(j));
+//                }
+//            }
+//        }
+//    System.out.println("PLAYERS: " + getPlayers().toString());
+//    }
 }

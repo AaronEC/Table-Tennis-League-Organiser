@@ -43,8 +43,13 @@ public class Admin extends Viewer {
     }
     
     public void addPlayer(Team team, String name) {
-        System.out.println("Adding Plyaer " + name + " to Team " + team.getName());
-        team.addPlayer(name);
+        System.out.println("Adding Player " + name + " to Team " + team.getName());
+        team.addPlayer(new Player(name));
+    }
+    
+    public void removePlayer(Team team, Player player) {
+        System.out.println("Removing player "  + player.getName() + " from team "+ team.getName());
+        team.removePlayer(player);
     }
 
     void modifyScoreSheet(League league, Fixture fixture) {
