@@ -13,17 +13,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
 import javafx.stage.*;
 
 /**
- * GUI controller class for controlling the user login screen.
- * Also contains global static GUI methods (such as pop up boxes).
- * @author Aaron
+ * <h1>User GUI Controller Class</h1>
+ * Controls FMXL GUI elements for User super class, including login page.
+ * @author  Aaron Cardwell 13009941
+ * @version 0.1
+ * @since 06/12/2020
  */
 public class UserController extends User implements Initializable{
 

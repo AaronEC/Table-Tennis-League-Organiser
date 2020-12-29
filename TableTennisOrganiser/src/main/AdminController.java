@@ -117,6 +117,7 @@ public class AdminController extends UserController implements Initializable{
      */
     public void editLeagueName(ActionEvent event) {
         if (isEmptyError(leagueEditName.getText()))   {  return;  }
+        if (leagueTableAdmin.getSelectionModel().getSelectedItem() == null) {popupWindow("Error", "No league Selected.","Please select a league to change name."); return; }
         leagueTableAdmin.getSelectionModel().getSelectedItem().setName(leagueEditName.getText());
         leagueEditName.clear();
         admin.saveLeagues();
@@ -133,12 +134,7 @@ public class AdminController extends UserController implements Initializable{
         //Check input is present
         if (selection == null) { 
             popupWindow(); 
-            return;}
-        //Check if last team, cannot delete last team!
-        if (admin.getLeagues().size() <= 1) {
-            popupWindow("Error", "Must have at least 1 league", "Please create a new league before deleting this one");
-            return;
-        }
+            return; }
         //Confirm delete
         if (popupWindowChoice(("Delete " + selection.getName() +"?"), "WARNING: This Action Cannot be Undone!", "This will delete all teams, players & fixtures in this league!"))   {
             admin.removeLeague(selection);
@@ -198,23 +194,22 @@ public class AdminController extends UserController implements Initializable{
         String leagueChoiceBoxSelection = leagueChoiceBox.getSelectionModel().getSelectedItem();
         ArrayList<League> leagues = admin.getLeagues();
         if (leagueChoiceBoxSelection!=null) {
-            for (League temp : leagues) {
-                if (leagueChoiceBoxSelection.equals(temp.getName()))
-                {
-                    leagueSelection = temp;
-                }
-            }
+            leagues.stream().filter(temp -> (leagueChoiceBoxSelection.equals(temp.getName()))).forEachOrdered(temp -> {
+                leagueSelection = temp;
+            });
             teamTableAdmin.setItems(listTeams(leagueSelection.getTeams()));
         }
     }
     //Populate League choice box from League ArrayList
     public void updateleagueChoiceBox() {
         leagueChoiceBox.getItems().clear();
-        for (String choices : admin.viewLeagues())  {
+        admin.viewLeagues().forEach(choices -> {
             leagueChoiceBox.getItems().add(choices);
-        }
-        if (admin.viewLeagues().get(0) != null) {
+        });
+        try{
             leagueChoiceBox.setValue(admin.viewLeagues().get(0));
+        } catch (IndexOutOfBoundsException ex) {
+            System.err.println("No leagues to load");            
         }
     }
     
@@ -239,6 +234,7 @@ public class AdminController extends UserController implements Initializable{
     public void editTeamName(ActionEvent event) {
         if (isEmptyError(teamEditName.getText()))   {  return;  }
         teamTableAdmin.getSelectionModel().getSelectedItem().setName(teamEditName.getText());
+        
         teamEditName.clear();
         admin.saveLeagues();
         updateTeamsTableView();
@@ -267,14 +263,20 @@ public class AdminController extends UserController implements Initializable{
         ArrayList<Player> players = team.getPlayers();
         ArrayList<String> names = new ArrayList<>();
         if (players != null) {
-            for(Player player : players) {
+            players.forEach(player -> {
                 names.add(player.getName());
-            }
+            });
         }
         
-        teamInfoLabels.setText("Name:\nMatches Played:\nMatches Won:\n"
-                + "Matches Lost:\nMatches Drawn:\nTotal Points:\nHome Venue:"
-                + "\nPlayers:" ); 
+        teamInfoLabels.setText("""
+                Name:
+                Matches Played:
+                Matches Won:
+                Matches Lost:
+                Matches Drawn:
+                Total Points:
+                Home Venue:
+                Players:"""); 
         teamInfoVariables.setText(
                 team.getName() + "\n" +
                 team.getMatchesPlayed() + "\n" +
@@ -288,15 +290,15 @@ public class AdminController extends UserController implements Initializable{
         
         //Populate Player ChoiceBox
         playerChoiceBox.getItems().clear();
-            for (Player chosenPlayer : team.getPlayers())  {
-                playerChoiceBox.getItems().add(chosenPlayer.getName());
-            }
-            if (!team.getPlayers().isEmpty()) {
-                playerChoiceBox.setValue(team.getPlayers().get(0).getName());
-            }
-            else {
-            playerChoiceBox.setValue("No Players in Team");
-            }
+        team.getPlayers().forEach(chosenPlayer -> {
+            playerChoiceBox.getItems().add(chosenPlayer.getName());
+        });
+        if (!team.getPlayers().isEmpty()) {
+            playerChoiceBox.setValue(team.getPlayers().get(0).getName());
+        }
+        else {
+        playerChoiceBox.setValue("No Players in Team");
+        }
     }
     /**
      * Updates the selected team's (in teamTableAdmin Table View) venue string
@@ -342,7 +344,7 @@ public class AdminController extends UserController implements Initializable{
     public void deletePlayer(ActionEvent event) {
         Player playerSelection = null;
         for (Player player : teamSelection.getPlayers()) {
-            if (player.getName() == playerChoiceBox.getSelectionModel().getSelectedItem()) {
+            if (playerChoiceBox.getSelectionModel().getSelectedItem().equals(player.getName())) {
                 playerSelection = player;
             }
         }

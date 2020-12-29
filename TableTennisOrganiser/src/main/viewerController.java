@@ -17,8 +17,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
- * Controls FMXL GUI elements for Viewer class
- * @author Aaron
+ * <h1>Viewer GUI Controller Class</h1>
+ * Controls FMXL GUI elements for Viewer class.
+ * @author  Aaron Cardwell 13009941
+ * @version 0.1
+ * @since 06/12/2020
  */
 public class ViewerController extends UserController implements Initializable{
     

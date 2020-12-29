@@ -24,16 +24,11 @@ public class Admin extends Viewer {
      */
     void saveLeagues() {
         System.out.println("Saving leagues to file " + super.getFileName());
-        try {
-            FileOutputStream fos = new FileOutputStream(super.getFileName());
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(getLeagues());
-            oos.close();
-            fos.close();
+        try (FileOutputStream fos = new FileOutputStream(super.getFileName()); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                oos.writeObject(getLeagues());
             System.out.println("Leagues Saved to: " + super.getFileName());
         } catch (FileNotFoundException ex) {
-            System.err.println("ERROR: File " + super.getFileName() + 
-                    " not found");
+            System.err.println(super.getFileName() + " not found");
         } catch (IOException ex) {
             System.err.println("ERROR: Incorrect output");
         }
@@ -52,7 +47,6 @@ public class Admin extends Viewer {
             setLeagues((ArrayList<League>) ois.readObject());
             System.out.println("Leagues loaded from: " + super.getFileName());
         } catch (FileNotFoundException ex) {
-            new File("data.bat");
             System.err.println("ERROR: File " + super.getFileName() + 
                     " not found");               
         } catch (IOException ex) {

@@ -3,8 +3,11 @@ package main;
 import java.io.Serializable;
 
 /**
+ *<h1>Player Data Structure Class</h1>
  * This class contains the data structure for each player.
- * @author Aaron
+ * @author  Aaron Cardwell 13009941
+ * @version 0.1
+ * @since 19/12/2020
  */
 public class Player implements Serializable{
     

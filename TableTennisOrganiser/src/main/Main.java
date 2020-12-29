@@ -1,9 +1,6 @@
 package main;
 	
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -12,18 +9,20 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
 /**
- * Contains main() and starts the program (launches GUI here). 
- * Also contains the package wide static methods such as loadFile().
- * @author Aaron
+ *<h1>Main Logic Class</h1>
+ * Contains main() and starts the program (launches GUI from here). 
+ * @author  Aaron Cardwell 13009941
+ * @version 0.1
+ * @since 06/12/2020
  */
 public class Main extends Application {
     /**
      * Creates main login window.
      * @param stage
-     * @throws Exception 
+     * @throws IOException File will always be here
      */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("User.fxml"));
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image(Main.class.getResourceAsStream("icon.png")));
@@ -34,21 +33,5 @@ public class Main extends Application {
     
     public static void main(String[] args) {
         launch(args);
-    }
-    /**
-     * Package wide static method to load a file from a CSV into an array, also
-     * removes formatting used for this programs storage implementation.
-     * @param fileName
-     * @return ArrayList of lines in file, with formatting removed
-     * @throws IOException 
-     */
-    public static ArrayList<String> loadFile(String fileName) throws IOException {
-        Scanner s = new Scanner(new File(fileName));
-        ArrayList<String> database = new ArrayList<String>();
-        while (s.hasNextLine()){
-            database.add(s.nextLine().replaceAll("[{}]", ""));
-        }
-        s.close();
-        return database;      
     }
 }

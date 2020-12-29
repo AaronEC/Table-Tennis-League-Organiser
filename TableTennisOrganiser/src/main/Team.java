@@ -7,8 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * This class contains the data structure for each Team.
- * @author Aaron
+ *<h1>Team Data Structure Class</h1>
+ * This class contains the data structure for each team.
+ * @author  Aaron Cardwell 13009941
+ * @version 0.1
+ * @since 18/12/2020
  */
 public class Team implements Serializable{
     

@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Class which implements all high level Viewer functions
- * @author Aaron
+ * <h1>Viewer Logic Class</h1>
+ * Class which implements all logic for Viewer functions and use cases.
+ * @author  Aaron Cardwell 13009941
+ * @version 0.1
+ * @since 06/12/2020
  */
 public class Viewer extends Timer {
 

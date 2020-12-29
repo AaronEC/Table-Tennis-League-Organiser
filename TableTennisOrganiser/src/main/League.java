@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 /**
+ *<h1>League Data Structure Class</h1>
  * This class contains the data structure for each league.
- * @author Aaron
+ * @author  Aaron Cardwell 13009941
+ * @version 0.1
+ * @since 06/12/2020
  */
 public class League implements Serializable{
     
@@ -25,16 +28,16 @@ public class League implements Serializable{
         this.fixtures = new ArrayList<>();
     }
     /**
-     * Should be run when class object is created, to load data into class data 
-     * structures from database. Otherwise will be an empty class.
-     * @throws FileNotFoundException 
+     * Currently not used.
+     * @throws FileNotFoundException
+     * @throws IOException 
      */
     void initialize() throws FileNotFoundException, IOException {
         //loadTeams();
     }
-        
+
     void setName(String name) {
-        System.out.println("Changed name");
+        System.out.println("Changed league name to " + this.name);
         this.name = name;
     }
 
@@ -46,8 +49,8 @@ public class League implements Serializable{
         return this.teams;
     }
     
-    Fixture[] getFixtures() {
-        return null;
+    ArrayList<Fixture> getFixtures() {
+        return fixtures;
     }
 
     public int getFixturesCount() {
@@ -61,52 +64,45 @@ public class League implements Serializable{
     void setFixtures(Fixture fixtures) {
 
     }
-
+    /**
+     * Adds team of object type Team to League.
+     * @param team Team to be added.
+     */
     void addTeam(Team team) {
         System.out.println("Team added: " + team.getName());
-        this.teams.add(team);
+        teams.add(team);
         countTeams();
     }
     /**
      * Overload method for adding a blank team with no players.
-     * @param input 
+     * @param name Name of team to be added.
      */
-    void addTeam(String input) {
-        Team newTeam = new Team(input);
-        this.teams.add(newTeam);
+    void addTeam(String name) {
+        teams.add(new Team(name));
         countTeams();
-    }
-    
-    void removeTeam(Team team)  {
-        System.out.println("Removed team: " + team.getName());
-        this.teams.remove(team);
-        countTeams();
-    }
-
-    void countTeams() {
-        if (teams == null) { this.teamsCount = 0; }
-        else { this.teamsCount = teams.size(); }
-    }
-      
-    void countFixtures()    {
-        if (fixtures == null) { this.fixturesCount = 0; }
-        else { this.fixturesCount = fixtures.size(); }
     }
     /**
-     * Loads teams from database file "teams.csv" and stores them to 
-     * ArrayList<Team> teams.
-     * ONLY loads team names, players must be added later by user or from 
-     * database.
-     * @throws IOException 
+     * Deletes a team from this League.
+     * Calls countTeams() to update teamsCount(int).
+     * @param team Team to be removed.
      */
-//    void loadTeams() throws FileNotFoundException, IOException    {
-//        ArrayList<String> database = Main.loadFile("teams.csv");
-//        for(String temp : database)    {
-//            List<String> tempTeam = new ArrayList<String>(Arrays.asList(temp.split(",")));
-//            tempTeam.forEach(System.out::println);
-//            Team newTeam = new Team(tempTeam.get(0), tempTeam.get(1), Integer.parseInt(tempTeam.get(2)), Integer.parseInt(tempTeam.get(3)), Integer.parseInt(tempTeam.get(4)));
-//            newTeam.initialize();
-//            teams.add(newTeam);         
-//        }
-//    }
+    void removeTeam(Team team)  {
+        System.out.println("Removed team: " + team.getName());
+        teams.remove(team);
+        countTeams();
+    }
+    /**
+     * Updates the teamsCount(int) by counting all teams in this League.
+     */
+    void countTeams() {
+        if (teams == null) { teamsCount = 0; }
+        else { teamsCount = teams.size(); }
+    }
+    /**
+     * Updates the fixturesCount(int) by counting all fixtures in this League.
+     */
+    void countFixtures()    {
+        if (fixtures == null) { fixturesCount = 0; }
+        else { fixturesCount = fixtures.size(); }
+    }
 }

@@ -3,10 +3,16 @@ package main;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 /**
+ *<h1>User Logic Super Class</h1>
  * Landing point for all users, from here they will log in as either Admin or 
- * User class.
+ * User class. Contains high level methods used by all users (including login).
+ * @author  Aaron Cardwell 13009941
+ * @version 0.1
+ * @since 06/12/2020
+ */
+/**
+ 
  * @author Aaron
  */
 public class User implements Serializable{
