@@ -29,7 +29,7 @@ public class ViewerController extends UserController implements Initializable{
     @FXML private Label teamInfoData;
     @FXML private Label teamStatsLabels;
     @FXML private Label teamStatsData;
-    @FXML private ChoiceBox<String> leagueChoiceBox;
+    @FXML private ChoiceBox<String> leagueChoiceBoxTeams;
     @FXML private TableView <Team> leagueTable;
     @FXML private TableColumn <Team, String> leagueRank;
     @FXML private TableColumn <Team, String> leagueName;
@@ -55,8 +55,8 @@ public class ViewerController extends UserController implements Initializable{
         //Populate league choicebox with league names.
         ArrayList<String> leagueNames = viewer.viewLeagues();
         for (String choices : leagueNames)  {
-            leagueChoiceBox.getItems().add(choices);
-            leagueChoiceBox.setValue(choices);
+            leagueChoiceBoxTeams.getItems().add(choices);
+            leagueChoiceBoxTeams.setValue(choices);
         }
         //Populate TableView with League data.
         leagueName.setCellValueFactory(new PropertyValueFactory<>("name"));

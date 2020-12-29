@@ -14,11 +14,11 @@ import java.util.ArrayList;
 public class Team implements Serializable{
     
     private static final long serialVersionUID = 8604642400555460346L;
-    public String name;
-    public int rank;
-    public int points;
-    private ArrayList<Player> teamPlayers;
+    private final ArrayList<Player> teamPlayers;
+    private String name;
     private String venue;
+    private int rank;
+    private int points;
     private int matchesPlayed;
     private int matchesWon;
     private int matchesLost;

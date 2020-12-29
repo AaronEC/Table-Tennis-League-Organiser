@@ -1,6 +1,7 @@
 package main;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Not yet implemented
@@ -8,47 +9,45 @@ import java.io.Serializable;
  */
 public class Fixture implements Serializable{
 
-        private static final long serialVersionUID = 8604642400555460347L;
-	private String winner;
-	private SinglesSet[] singlesSets;
-	private DoublesSet doublesSet;
-	private int homeScore;
-	private int awayScore;
-	private Team[] teams;
+    private static final long serialVersionUID = 8604642400555460347L;
+    private int week;
+    private String teams;
+    private char played;
 
+    public Fixture(int week, String teams, char played) {
+        this.week = week;
+        this.teams = teams;
+        this.played = played;
+    }
 
-	Team calculateWinner(DoublesSet[] doublesSet, SinglesSet[] singlesSet) {
-		return null;
-	}
+    Team calculateWinner(DoublesSet[] doublesSet, SinglesSet[] singlesSet) {
+            return null;
+    }
 
-	Team getWinner() {
-		return null;
-	}
+    public void setWeek(int week) {
+        this.week = week;
+    }
 
-	Team[] getTeams() {
-		return null;
-	}
+    public void setTeams(String teams) {
+        this.teams = teams;
+    }
 
-	int getHomeScore() {
-		return 0;
-	}
+    public void setPlayed(char played) {
+        this.played = played;
+    }
 
-	int getAwayScore() {
-		return 0;
-	}
+    public int getWeek() {
+        return week;
+    }
 
-        public void setTeams(Team[] teams) {
-            this.teams = teams;
-        }
- 
-	void setHomeScore(int score) {
+    public String getTeams() {
+        return teams;
+    }
 
-	}
+    public char getPlayed() {
+        return played;
+    }
 
-	void setAwayScore(int score) {
-
-	}
-        
-        
+    
 
 }

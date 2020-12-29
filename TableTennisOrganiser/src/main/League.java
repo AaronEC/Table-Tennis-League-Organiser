@@ -14,12 +14,12 @@ import java.util.ArrayList;
 public class League implements Serializable{
     
     private static final long serialVersionUID = 8604642400555460345L;
+    private final ArrayList<Team> teams;
+    private final ArrayList<Fixture> fixtures;
     private String name;
     private int teamsCount;
-    private final ArrayList<Team> teams;
     private int fixturesCount;
-    private final ArrayList<Fixture> fixtures;
-
+    
     public League(String name)    {
         this.name = name;
         this.teams = new ArrayList<>();
