@@ -18,9 +18,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -33,21 +35,21 @@ public class AdminController extends UserController implements Initializable{
     /** Leagues Tab **/
     @FXML private TextField leagueEditName;
     @FXML private TextField leagueNameIn;
-    @FXML private Button addleague;
-    @FXML private Button changeleagueName;
     @FXML private TableView <League> leagueTableAdmin;
     @FXML private TableColumn <League, String> leagueNameAdmin;
     @FXML private TableColumn <League, Integer> leagueTeamsAdmin;
+    @FXML private TableColumn <League, Integer> leagueFixturesAdmin;
     
     /** Teams Tab **/
     @FXML private ChoiceBox<String> leagueChoiceBox;
     @FXML private TextField teamEditName;
     @FXML private TextField teamNameIn;
-    @FXML private Button addteam;
-    @FXML private Button changeteamName;
     @FXML private TableView <Team> teamTableAdmin;
     @FXML private TableColumn <Team, String> teamNameAdmin;
     @FXML private TableColumn <Team, Integer> teamPointsAdmin;
+    @FXML private TableColumn <Team, Integer> teamPlayersAdmin;
+    @FXML private Label teamInfoLabels;
+    @FXML private Label teamInfoVariables;
     
     private Admin admin = new Admin();
     League leagueSelection = null;
@@ -63,6 +65,8 @@ public class AdminController extends UserController implements Initializable{
         try {
             admin.loadLeagues();
             admin.countTeams();
+            admin.countPlayers();
+            admin.countFixtures();
             initializeLeaguesTab();
             initializeTeamsTab();
         } catch (IOException ex) {
@@ -72,19 +76,21 @@ public class AdminController extends UserController implements Initializable{
         }
         
     }
-    
-    /** Leagues Tab **/
+    /*************************/
+    /** Leagues Tab Methods **/
+    /*************************/
     public void initializeLeaguesTab() throws IOException  {
+        leagueFixturesAdmin.setCellValueFactory(new PropertyValueFactory<>("fixturesCount"));
         leagueTeamsAdmin.setCellValueFactory(new PropertyValueFactory<>("teamsCount"));
         leagueNameAdmin.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         updateLeaguesTableView();
 
-        //Listener to show team stats when a team is selected in TableView.
+        //Listener for when a League is selected in TableView.
         leagueTableAdmin.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 League selected = leagueTableAdmin.getSelectionModel().getSelectedItem();
-                System.out.println(selected.getName());
+                System.out.println(selected.getName());                
             }
         });
     }
@@ -124,12 +130,14 @@ public class AdminController extends UserController implements Initializable{
         ObservableList<League> output = FXCollections.observableArrayList(input);
         return output;
     }
-    
-    /** Teams Tab **/
+    /***********************/
+    /** Teams Tab Methods **/
+    /***********************/
     public void initializeTeamsTab() throws IOException {
         leagueChoiceBox.getSelectionModel().selectFirst();
         teamNameAdmin.setCellValueFactory(new PropertyValueFactory<>("name"));
         teamPointsAdmin.setCellValueFactory(new PropertyValueFactory<>("points"));
+        teamPlayersAdmin.setCellValueFactory(new PropertyValueFactory<>("playersCount"));
         leagueChoiceBox.getItems().clear();
         for (String choices : admin.viewLeagues())  {
             leagueChoiceBox.getItems().add(choices);
@@ -147,9 +155,17 @@ public class AdminController extends UserController implements Initializable{
             }
         });
         updateTeamsTableView();
+        
+        //Listener for when a Team is selected in TableView.
+        teamTableAdmin.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                Team selected = teamTableAdmin.getSelectionModel().getSelectedItem();
+                System.out.println(selected.getName());
+                displayTeamInfo(selected);
+            }
+        });
     }
     
-        
     public void updateTeamsTableView() throws IOException {
         teamTableAdmin.getItems().clear();
         String leagueChoiceBoxSelection = leagueChoiceBox.getSelectionModel().getSelectedItem();
@@ -194,10 +210,28 @@ public class AdminController extends UserController implements Initializable{
         }
     }
     
+    public void displayTeamInfo(Team team)   {
+        teamInfoLabels.setText("Name:\nMatches Played:\nMatches Won:\n"
+                + "Matches Lost:\nMatches Drawn:\nTotal Points:\nPlayers:");
+        teamInfoVariables.setText(
+                team.getName() + "\n" +
+                team.getMatchesPlayed() + "\n" +
+                team.getMatchesWon() + "\n" +
+                team.getMatchesLost()  + "\n" +
+                team.getMatchesLost()  + "\n" +
+                team.getPoints()  + "\n" + 
+                team.getPlayers().toString()
+                );
+    }
+    
     private ObservableList<Team> listTeams(ArrayList<Team> input)    {
         ObservableList<Team> output = FXCollections.observableArrayList(input);
         return output;
     }
+    /********************/
+    /** Player Methods **/
+    /********************/
+    
     
     /** Other Methods**/
     void countTeams() throws IOException   {

@@ -63,4 +63,17 @@ public class Admin extends Viewer {
             temp.countTeams();
         }
     }
+    void countPlayers()   {
+        for (League league : getLeagues()) {
+            for (Team team : league.getTeams())  {
+                team.countPlayers();
+            }
+        }
+    }
+    
+    void countFixtures()   {
+        for (League temp : getLeagues()) {
+            temp.countFixtures();
+        }
+    }
 }

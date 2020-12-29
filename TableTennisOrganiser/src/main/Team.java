@@ -24,6 +24,7 @@ public class Team implements Serializable{
     private int matchesWon;
     private int matchesLost;
     private int matchesDrawn;
+    private int playersCount;
 
     public Team(String name)    {
     
@@ -46,6 +47,15 @@ public class Team implements Serializable{
         //System.out.println("Initializing league 1");
         loadPlayers();
         calculatePoints();
+    }
+
+    public int getPlayersCount() {
+        return playersCount;
+    }
+    
+    void countPlayers()   {
+        if (players == null) { this.playersCount = 0; }
+        else { this.playersCount = players.size(); }
     }
 
     void addPlayer(String name) {

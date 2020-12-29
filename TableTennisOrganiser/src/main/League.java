@@ -13,8 +13,9 @@ public class League implements Serializable{
     private static final long serialVersionUID = 8604642400555460345L;
     private String name;
     private int teamsCount;
-    ArrayList<Team> teams = new ArrayList<Team>();
-    //private ArrayList<Fixture> fixture;
+    private ArrayList<Team> teams;
+    private int fixturesCount;
+    private ArrayList<Fixture> fixtures;
 
     public League(String name)    {
         this.name = name;
@@ -40,9 +41,13 @@ public class League implements Serializable{
     ArrayList<Team> getTeams() {
         return this.teams;
     }
-
+    
     Fixture[] getFixtures() {
         return null;
+    }
+
+    public int getFixturesCount() {
+        return fixturesCount;
     }
 
     public int getTeamsCount() {
@@ -71,7 +76,13 @@ public class League implements Serializable{
     }
 
     void countTeams() {
-        this.teamsCount = teams.size();
+        if (teams == null) { this.teamsCount = 0; }
+        else { this.teamsCount = teams.size(); }
+    }
+      
+    void countFixtures()    {
+        if (fixtures == null) { this.fixturesCount = 0; }
+        else { this.fixturesCount = fixtures.size(); }
     }
     /**
      * Loads teams from database file "teams.csv" and stores them to 

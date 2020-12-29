@@ -1,22 +1,21 @@
 package main;
 
+import java.io.Serializable;
+
 /**
  * Not yet implemented
  * @author Aaron
  */
-public class Fixture {
+public class Fixture implements Serializable{
 
+        private static final long serialVersionUID = 8604642400555460347L;
 	private String winner;
-
 	private SinglesSet[] singlesSets;
-
 	private DoublesSet doublesSet;
-
 	private int homeScore;
-
 	private int awayScore;
-
 	private Team[] teams;
+
 
 	Team calculateWinner(DoublesSet[] doublesSet, SinglesSet[] singlesSet) {
 		return null;
@@ -38,6 +37,10 @@ public class Fixture {
 		return 0;
 	}
 
+        public void setTeams(Team[] teams) {
+            this.teams = teams;
+        }
+ 
 	void setHomeScore(int score) {
 
 	}
@@ -45,5 +48,7 @@ public class Fixture {
 	void setAwayScore(int score) {
 
 	}
+        
+        
 
 }
