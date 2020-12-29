@@ -11,5 +11,4 @@ public class Timer extends User {
 	protected void generateTeamStats(League league) {
 
 	}
-
 }

@@ -75,8 +75,8 @@ public class Admin extends Viewer {
     /**
      * Adds a 'Player' object to the 'Team' object which is passed to the 
      * function, assigns the new player the 'name' passed to function.
-     * @param league
-     * @param name 
+     * @param team
+     * @param name
      */
     public void addPlayer(Team team, String name) {
         System.out.println("Adding Player " + name + " to Team " + team.getName());
@@ -84,8 +84,8 @@ public class Admin extends Viewer {
     }
     /**
      * Removes a 'Player' object from the 'Team' object passed to the function.
-     * @param league
      * @param team 
+     * @param player
      */
     public void removePlayer(Team team, Player player) {
         System.out.println("Removing player "  + player.getName() + " from team "+ team.getName());
@@ -122,8 +122,8 @@ public class Admin extends Viewer {
      * **WILL BE REMOVED FOR EFFICIENCY REASONS EVENTUALLY**
      */
     void countFixtures()   {
-        for (League temp : getLeagues()) {
+        getLeagues().forEach(temp -> {
             temp.countFixtures();
-        }
+        });
     }
 }

@@ -16,9 +16,9 @@ public class League implements Serializable{
     private static final long serialVersionUID = 8604642400555460345L;
     private String name;
     private int teamsCount;
-    private ArrayList<Team> teams;
+    private final ArrayList<Team> teams;
     private int fixturesCount;
-    private ArrayList<Fixture> fixtures;
+    private final ArrayList<Fixture> fixtures;
 
     public League(String name)    {
         this.name = name;

@@ -40,7 +40,7 @@ public class UserController extends User implements Initializable{
     /**
     * Handles login events and creation of 'Admin' or 'Viewer' interfaces.
     * @param event 
-    * @throws
+    * @throws IOException File will always be present
     */
     public void login(ActionEvent event) throws IOException {
         User user = new User();     //Create new user class at logon
@@ -57,7 +57,7 @@ public class UserController extends User implements Initializable{
     /**
      * Creates the 'Admin' interface for the club secretary user.
      * @param event
-     * @throws IOException 
+     * @throws IOException File will always be present
      */
     protected void createAdmin(ActionEvent event) throws IOException {
         Parent adminParent = FXMLLoader.load(getClass().getResource("Admin.fxml"));
@@ -70,7 +70,7 @@ public class UserController extends User implements Initializable{
     /**
      * Creates the 'Viewer' interface for the player users.
      * @param event
-     * @throws IOException 
+     * @throws IOException File will always be present
      */
     protected void createViewer(ActionEvent event) throws IOException    {
         Parent viewerParent = FXMLLoader.load(getClass().getResource("Viewer.fxml"));
@@ -81,8 +81,10 @@ public class UserController extends User implements Initializable{
         window.show();
     }
     /**
-     * Creates a pop up window with the specified text. May extend method to 
-     * include variable inputs if popups are needed in other parts of program.
+     * Creates a pop up window with the specified text.
+     * @param title Popup window title.
+     * @param messageLarge Top message.
+     * @param messageSmall Bottom message.
      */
     protected void popupWindow(String title, String messageLarge, String messageSmall)    {
         Alert alert = new Alert(AlertType.ERROR);
@@ -92,7 +94,9 @@ public class UserController extends User implements Initializable{
         alert.setContentText(messageSmall);
         alert.showAndWait();
     }
-    
+    /**
+     * Creates a default popup window with error for missing text input.
+     */
     protected void popupWindow()    {
         Alert alert = new Alert(AlertType.ERROR);
         alert.initStyle(StageStyle.UTILITY);
@@ -101,7 +105,15 @@ public class UserController extends User implements Initializable{
         alert.setContentText("Please input a value");
         alert.showAndWait();
     }
-    
+    /**
+     * Creates a pop up window with the specified text. The window contains 
+     * "OK" and "Cancel" options. Returns true if "OK" is selected by user, 
+     * false if "Cancel" is selected.
+     * @param title Popup window title.
+     * @param messageLarge Top message.
+     * @param messageSmall Bottom message.
+     * @return OK - true, Cancel - False.
+     */
     protected boolean popupWindowChoice(String title, String messageLarge, String messageSmall)    {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.initStyle(StageStyle.UTILITY);

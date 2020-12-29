@@ -106,9 +106,11 @@ public class AdminController extends UserController implements Initializable{
         if (isEmptyError(leagueNameIn.getText()))   {  return;  }
         admin.addLeague(leagueNameIn.getText());
         leagueNameIn.clear();
+        leagueChoiceBox.getSelectionModel().clearSelection();
         admin.saveLeagues();
         updateLeaguesTableView();
         updateleagueChoiceBox();
+        updateTeamsTableView();
     }
     /**
      * Changes a selected League's name. Selection is from leagueTableAdmin
@@ -199,6 +201,9 @@ public class AdminController extends UserController implements Initializable{
             });
             teamTableAdmin.setItems(listTeams(leagueSelection.getTeams()));
         }
+        else {
+            leagueChoiceBox.setValue("No Leagues Added");
+        }
     }
     //Populate League choice box from League ArrayList
     public void updateleagueChoiceBox() {
@@ -208,6 +213,7 @@ public class AdminController extends UserController implements Initializable{
         });
         try{
             leagueChoiceBox.setValue(admin.viewLeagues().get(0));
+            System.out.println("Selected League " + admin.viewLeagues().get(0) + " in choice box");
         } catch (IndexOutOfBoundsException ex) {
             System.err.println("No leagues to load");            
         }

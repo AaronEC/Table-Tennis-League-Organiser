@@ -39,15 +39,15 @@ public class Viewer extends Timer {
         return null;   
     }
     /**
-     * Returns names of leagues as an ArrayList<String>.
+     * Returns names of leagues as an ArrayList of strings.
      * @return 
      */
     protected ArrayList<String> viewLeagues() {
         ArrayList<String> leagueNames = new ArrayList<>();
         ArrayList<League> leagues = getLeagues();
-            for (League tempLeagues : leagues) {
-                leagueNames.add(tempLeagues.getName());
-            }
+        leagues.forEach(tempLeagues -> {
+            leagueNames.add(tempLeagues.getName());
+        });
         return leagueNames;
     }   
 }
