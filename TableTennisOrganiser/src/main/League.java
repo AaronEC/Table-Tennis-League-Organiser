@@ -19,6 +19,10 @@ public class League implements Serializable{
 
     public League(String name)    {
         this.name = name;
+        this.teams = new ArrayList<>();
+        this.teamsCount = 0;
+        this.fixturesCount = 0;
+        this.fixtures = new ArrayList<>();
     }
     /**
      * Should be run when class object is created, to load data into class data 

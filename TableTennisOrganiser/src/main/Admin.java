@@ -13,8 +13,6 @@ import java.util.ArrayList;
  * @author Aaron
  */
 public class Admin extends Viewer {
-
-    String adminName;
         
     void saveLeagues() throws FileNotFoundException, IOException {
         FileOutputStream fos = new FileOutputStream(super.getFileName());
@@ -50,6 +48,10 @@ public class Admin extends Viewer {
     public void removePlayer(Team team, Player player) {
         System.out.println("Removing player "  + player.getName() + " from team "+ team.getName());
         team.removePlayer(player);
+    }
+    
+    public void updateVenue(Team team, String name)    {
+        team.setVenue(name);
     }
 
     void modifyScoreSheet(League league, Fixture fixture) {

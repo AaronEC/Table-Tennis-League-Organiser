@@ -16,9 +16,7 @@ public class Team implements Serializable{
     public String name;
     public int rank;
     public int points;
-
-    private ArrayList<Player> players;
-    
+    private ArrayList<Player> teamPlayers;
     private String venue;
     private int matchesPlayed;
     private int matchesWon;
@@ -29,14 +27,15 @@ public class Team implements Serializable{
     public Team(String name)    {
     
         this.name = name;
-//        this.rank = 0;
-//        this.venue = venue;
-//        this.matchesWon = wins;
-//        this.matchesLost = losses;
-//        this.matchesDrawn = draws;
+        this.venue = "Please Enter a Venue";
+        this.rank = 0;
+        this.matchesPlayed = 0;
+        this.matchesWon = 0;
+        this.matchesLost = 0;
+        this.matchesDrawn = 0;
         this.points = 0;
-        //this.players = players;
-        //this.venue = venue;
+        this.teamPlayers = new ArrayList<>();
+        this.playersCount = 0;
     }
     /**
      * Should be run when class object is created, to load data into class data 
@@ -54,24 +53,36 @@ public class Team implements Serializable{
     }
     
     void countPlayers()   {
-        if (players == null) { this.playersCount = 0; }
-        else { this.playersCount = players.size(); }
+        if (teamPlayers == null) { this.playersCount = 0; }
+        else { this.playersCount = teamPlayers.size(); }
     }
 
     void addPlayer(Player player) {
-        players.add(player);
+        teamPlayers.add(player);
     }
     
     void removePlayer(Player player)  {
-        this.players.remove(player);
+        this.teamPlayers.remove(player);
     }
 
     ArrayList<Player> getPlayers() {
-        return players;
+        return this.teamPlayers;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public void setMatchesLost(int matchesLost) {
+        this.matchesLost = matchesLost;
+    }
+
+    public void setMatchesDrawn(int matchesDrawn) {
+        this.matchesDrawn = matchesDrawn;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
     }
 
     public String getName() {
@@ -104,14 +115,6 @@ public class Team implements Serializable{
 
     public int getMatchesDrawn() {
         return matchesDrawn;
-    }
-
-    public void setMatchesLost(int matchesLost) {
-        this.matchesLost = matchesLost;
-    }
-
-    public void setMatchesDrawn(int matchesDrawn) {
-        this.matchesDrawn = matchesDrawn;
     }
     
     private int calculatePoints() {
