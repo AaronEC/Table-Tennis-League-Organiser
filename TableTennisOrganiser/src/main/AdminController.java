@@ -124,6 +124,7 @@ public class AdminController extends UserController implements Initializable{
         teamTableAdmin.getSelectionModel().selectFirst();
         updateLeaguesTableView();
         updateleagueChoiceBoxTeamsTab();
+        updateleagueChoiceBoxFixturesTab();
         updateTeamsTableView();
     }
     /**
@@ -157,6 +158,7 @@ public class AdminController extends UserController implements Initializable{
             admin.saveLeagues();
             updateLeaguesTableView();
             updateleagueChoiceBoxTeamsTab();
+            updateleagueChoiceBoxFixturesTab();
         }
     }
     
@@ -443,7 +445,9 @@ public class AdminController extends UserController implements Initializable{
     
     public void generateFixtures(ActionEvent event) {
         if (popupWindowChoice("Overwrite " + leagueSelectionFixturesTab.getName() + " fixtures?", "This will replace ALL current fixtures in this league", "Are you sure?")) {
+            System.out.println("League Selected: " + leagueSelectionFixturesTab.getName());
             admin.generateFixtures(leagueSelectionFixturesTab);
+            updateFixturesTableView();
         }
     }
     

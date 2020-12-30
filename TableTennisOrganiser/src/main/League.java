@@ -52,6 +52,10 @@ public class League implements Serializable{
     ArrayList<Fixture> getFixtures() {
         return fixtures;
     }
+        
+    public void resetFixtures() {
+        this.fixtures.clear();
+    }
 
     public int getFixturesCount() {
         return fixturesCount;

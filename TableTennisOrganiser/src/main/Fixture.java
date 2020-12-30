@@ -16,11 +16,11 @@ public class Fixture implements Serializable{
     private Team awayTeam;
     private char played;
 
-    public Fixture(Team homeTeam, Team awayTeam) {
+    public Fixture(Team homeTeam, Team awayTeam, int week) {
         
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        this.week = 0;
+        this.week = week;
         this.teams = homeTeam.getName() + " vs " + awayTeam.getName();
         this.played = 'n';
     }

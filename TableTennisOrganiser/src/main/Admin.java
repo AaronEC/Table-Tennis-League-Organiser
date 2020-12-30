@@ -104,18 +104,62 @@ public class Admin extends Viewer {
      * @param league 
      */
     void generateFixtures(League league) {
+        System.out.println(league.getTeamsCount());
+        System.out.println(league.getTeamsCount() % 2);
+        ArrayList<Team> notPlayed = new ArrayList<>();
+        //Reset all fixtures in league
+        league.resetFixtures();
+        //Reset the list of teams each team has already played
+        for (Team tempTeam : league.getTeams()) {
+            tempTeam.resetHasPlayed();
+        }
+        //Check if there is an odd number of teams
+        if (league.getTeamsCount() % 2 == 1) {
             
-        for (Team homeTeam : league.getTeams()) {
-            for (Team awayTeam : league.getTeams()) {
-                if (homeTeam.getName() != awayTeam.getName()) {
-                    league.addFixture(new Fixture(homeTeam, awayTeam));
+        }
+        //Calculate how many weeks will be needed to play all fixtures
+        int weeks = league.getTeamsCount() / 2;
+        System.out.println("Weeks " + weeks);
+        //Make each team play all other teams only once, and never play more
+        //than one game a week.
+        for (int i = 0; i <= weeks; i++) {
+            System.out.println("Week " + i);
+            notPlayed.clear();
+            for (Team team : league.getTeams()) {
+                notPlayed.add(team);
+                //System.out.println("Not Played " + team.getName());
+            }    
+            //Every team in the league
+            for (Team homeTeam : league.getTeams()) {
+                System.out.println("Home Team: " + homeTeam.getName());
+                //Can potentially play every team
+                for (Team awayTeam : league.getTeams()) {
+                    System.out.println("Away Team: " + awayTeam.getName());
+                    //IF they are not the same team
+                    if (homeTeam.getName() != awayTeam.getName()) {
+                        //AND they haven't already played a game that week
+                        if (notPlayed.contains(homeTeam) && notPlayed.contains(awayTeam)) {
+                            //AND they haven't already played eachother in the league
+                            if (!homeTeam.getHasPlayed().contains(awayTeam) && (!awayTeam.getHasPlayed().contains(homeTeam))) {
+                                league.addFixture(new Fixture(homeTeam, awayTeam, i + 1));
+                                notPlayed.remove(homeTeam);
+                                notPlayed.remove(awayTeam);
+                                System.out.println(homeTeam.getName() + " & " + awayTeam.getName() + " have played.");
+                                homeTeam.addHasPlayed(awayTeam);
+                                awayTeam.addHasPlayed(homeTeam); 
+                            } else { System.out.println("These teams have already played eachother"); }
+                        } else { System.out.println("Teams have already played this week"); }
+                    }
+                    else { System.out.println("Team is the same"); }
                 }
             }
         }
+        
         for (Fixture fixture : league.getFixtures()) {
-            System.out.println(fixture.getTeams());
+//            System.out.println("Week " + fixture.getWeek());
+//            System.out.println(fixture.getTeams());
         }
-        league.countFixtures();
+
     }
     
     void modifyScoreSheet(League league, Fixture fixture) {

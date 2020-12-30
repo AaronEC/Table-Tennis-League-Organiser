@@ -15,6 +15,7 @@ public class Team implements Serializable{
     
     private static final long serialVersionUID = 8604642400555460346L;
     private final ArrayList<Player> teamPlayers;
+    private ArrayList<Team> hasPlayed;
     private String name;
     private String venue;
     private int rank;
@@ -36,6 +37,7 @@ public class Team implements Serializable{
         this.matchesDrawn = 0;
         this.points = 0;
         this.teamPlayers = new ArrayList<>();
+        this.hasPlayed = new ArrayList<Team>();
         this.playersCount = 0;
     }
     /**
@@ -71,6 +73,7 @@ public class Team implements Serializable{
     ArrayList<Player> getPlayers() {
         return this.teamPlayers;
     }
+    
 
     public void setName(String name) {
         this.name = name;
@@ -86,6 +89,18 @@ public class Team implements Serializable{
 
     public void setVenue(String venue) {
         this.venue = venue;
+    }
+
+    public void addHasPlayed(Team team) {
+        this.hasPlayed.add(team);
+    }
+    
+    public void resetHasPlayed() {
+        this.hasPlayed.clear();
+    }
+
+    public ArrayList<Team> getHasPlayed() {
+        return hasPlayed;
     }
 
     public String getName() {
