@@ -12,12 +12,17 @@ public class Fixture implements Serializable{
     private static final long serialVersionUID = 8604642400555460347L;
     private int week;
     private String teams;
+    private Team homeTeam;
+    private Team awayTeam;
     private char played;
 
-    public Fixture(int week, String teams, char played) {
-        this.week = week;
-        this.teams = teams;
-        this.played = played;
+    public Fixture(Team homeTeam, Team awayTeam) {
+        
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.week = 0;
+        this.teams = homeTeam.getName() + " vs " + awayTeam.getName();
+        this.played = 'n';
     }
 
     Team calculateWinner(DoublesSet[] doublesSet, SinglesSet[] singlesSet) {
@@ -47,6 +52,15 @@ public class Fixture implements Serializable{
     public char getPlayed() {
         return played;
     }
+
+    public Team getHomeTeam() {
+        return homeTeam;
+    }
+
+    public Team getAwayTeam() {
+        return awayTeam;
+    }
+    
 
     
 

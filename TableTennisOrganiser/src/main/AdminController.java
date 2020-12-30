@@ -380,9 +380,9 @@ public class AdminController extends UserController implements Initializable{
         }
     }
     
-    /***********************/
-    /** Teams Tab Methods **/
-    /***********************/
+    /**************************/
+    /** Fixtures Tab Methods **/
+    /**************************/
     
     public void initializeFixturesTab() {
         //Set values for TableView
@@ -438,6 +438,12 @@ public class AdminController extends UserController implements Initializable{
         }
         else {
             leagueChoiceBoxTeamsTab.setValue("No Leagues Added");
+        }
+    }
+    
+    public void generateFixtures(ActionEvent event) {
+        if (popupWindowChoice("Overwrite " + leagueSelectionFixturesTab.getName() + " fixtures?", "This will replace ALL current fixtures in this league", "Are you sure?")) {
+            admin.generateFixtures(leagueSelectionFixturesTab);
         }
     }
     

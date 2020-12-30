@@ -91,6 +91,9 @@ public class League implements Serializable{
         teams.remove(team);
         countTeams();
     }
+    void addFixture(Fixture fixture) {
+        fixtures.add(fixture);
+    }
     /**
      * Updates the teamsCount(int) by counting all teams in this League.
      */

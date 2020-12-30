@@ -13,6 +13,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 
 <AnchorPane prefHeight="480" prefWidth="720" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.AdminController">
       <children>
@@ -96,6 +97,7 @@
                            <children>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="451.0" prefWidth="720.0">
                                  <children>
+                                    <Line endX="100.0" layoutX="359.0" layoutY="43.0" startX="-100.0" />
                                     <ChoiceBox fx:id="leagueChoiceBoxFixturesTab" layoutX="34.0" layoutY="30.0" prefHeight="26.0" prefWidth="292.0" />
                                     <TableView layoutX="379.0" layoutY="83.0" prefHeight="200.0" prefWidth="317.0">
                                        <columns>
@@ -131,6 +133,11 @@
                                     <Label fx:id="fixtureInfoLabels" alignment="TOP_LEFT" layoutX="388.0" layoutY="114.0" prefHeight="178.0" prefWidth="142.0" />
                                     <Label fx:id="fixtureInfoVariables" alignment="TOP_LEFT" layoutX="545.0" layoutY="114.0" prefHeight="177.0" prefWidth="146.0" wrapText="true" />
                                     <ChoiceBox layoutX="537.0" layoutY="336.0" prefHeight="26.0" prefWidth="160.0" />
+                                    <Button layoutX="379.0" layoutY="31.0" mnemonicParsing="false" onAction="#generateFixtures" prefHeight="26.0" prefWidth="318.0" text="Generate Fixtures">
+                                       <effect>
+                                          <ColorAdjust hue="0.74" saturation="0.19" />
+                                       </effect>
+                                    </Button>
                                  </children>
                               </AnchorPane>
                            </children>

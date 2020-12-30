@@ -99,12 +99,26 @@ public class Admin extends Viewer {
     public void updateVenue(Team team, String name)    {
         team.setVenue(name);
     }
-
-    void modifyScoreSheet(League league, Fixture fixture) {
-
-    }
-
+    /**
+     * Generates and REPLACES all fixtures for the league passed.
+     * @param league 
+     */
     void generateFixtures(League league) {
+            
+        for (Team homeTeam : league.getTeams()) {
+            for (Team awayTeam : league.getTeams()) {
+                if (homeTeam.getName() != awayTeam.getName()) {
+                    league.addFixture(new Fixture(homeTeam, awayTeam));
+                }
+            }
+        }
+        for (Fixture fixture : league.getFixtures()) {
+            System.out.println(fixture.getTeams());
+        }
+        league.countFixtures();
+    }
+    
+    void modifyScoreSheet(League league, Fixture fixture) {
 
     }
 
