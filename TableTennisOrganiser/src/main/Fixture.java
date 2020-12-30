@@ -89,8 +89,4 @@ public class Fixture implements Serializable{
     public String getVenue() {
         return venue;
     }
-    
-
-    
-
 }

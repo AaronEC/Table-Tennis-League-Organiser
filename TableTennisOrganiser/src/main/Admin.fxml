@@ -99,13 +99,13 @@
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="451.0" prefWidth="720.0">
                                  <children>
                                     <Line endX="100.0" layoutX="359.0" layoutY="43.0" startX="-100.0" />
-                                    <ChoiceBox fx:id="leagueChoiceBoxFixturesTab" layoutX="34.0" layoutY="30.0" prefHeight="26.0" prefWidth="292.0" />
+                                    <ChoiceBox fx:id="leagueChoiceBoxFixturesTab" layoutX="44.0" layoutY="30.0" prefHeight="26.0" prefWidth="282.0" />
                                     <TableView layoutX="379.0" layoutY="83.0" prefHeight="200.0" prefWidth="317.0">
                                        <columns>
                                           <TableColumn editable="false" prefWidth="317.6000122070312" sortable="false" text="Fixture Information" />
                                        </columns>
                                     </TableView>
-                                    <TableView fx:id="fixtureTableAdmin" layoutX="35.0" layoutY="83.0" prefHeight="244.0" prefWidth="329.0">
+                                    <TableView fx:id="fixtureTableAdmin" layoutX="21.0" layoutY="83.0" prefHeight="306.0" prefWidth="330.0">
                                        <columns>
                                           <TableColumn fx:id="fixtureWeekAdmin" prefWidth="36.000064849853516" text="Week" />
                                           <TableColumn fx:id="fixtureHomeTeamAdmin" minWidth="0.0" prefWidth="76.0" text="Home" />
@@ -117,26 +117,19 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </TableView>
-                                    <Button layoutX="35.0" layoutY="364.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Rename Team" />
-                                    <Button layoutX="111.0" layoutY="409.0" mnemonicParsing="false" onAction="#deleteFixtures" prefHeight="26.0" prefWidth="147.0" text="Delete Fixtures">
+                                    <Button layoutX="126.0" layoutY="396.0" mnemonicParsing="false" onAction="#deleteFixtures" prefHeight="26.0" prefWidth="147.0" text="Delete All Fixtures">
                                        <effect>
                                           <ColorAdjust brightness="0.02" contrast="0.04" hue="-0.02" saturation="0.48" />
                                        </effect>
                                     </Button>
-                                    <TextField alignment="CENTER" layoutX="185.0" layoutY="364.0" prefHeight="26.0" prefWidth="140.0" promptText="Enter New Team Name" />
-                                    <Button layoutX="35.0" layoutY="336.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Add Team" />
-                                    <TextField alignment="CENTER" layoutX="185.0" layoutY="336.0" prefHeight="26.0" prefWidth="140.0" promptText="Enter Team Name" />
-                                    <TextArea editable="false" layoutX="378.0" layoutY="105.0" prefHeight="198.0" prefWidth="321.0" />
-                                    <Button layoutX="378.0" layoutY="310.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Add New Player" />
-                                    <TextField alignment="CENTER" layoutX="538.0" layoutY="309.0" onAction="#addPlayer" prefHeight="26.0" prefWidth="158.0" promptText="Enter Player Name" />
+                                    <TextArea editable="false" layoutX="378.0" layoutY="105.0" prefHeight="243.0" prefWidth="322.0" />
+                                    <Button layoutX="379.0" layoutY="355.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Add As NEW Fixture" />
                                     <Button fx:id="logout1" layoutX="651.0" layoutY="410.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
-                                    <Button layoutX="378.0" layoutY="336.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Delete Player" />
-                                    <Button layoutX="378.0" layoutY="363.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Update Venue" />
-                                    <TextField alignment="CENTER" layoutX="538.0" layoutY="362.0" prefHeight="26.0" prefWidth="158.0" promptText="Enter Venue Name" />
+                                    <Button layoutX="539.0" layoutY="355.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Update Selected Fixture" />
+                                    <Button layoutX="460.0" layoutY="397.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Clear Form" />
                                     <Label fx:id="fixtureInfoLabels" alignment="TOP_LEFT" layoutX="388.0" layoutY="114.0" prefHeight="178.0" prefWidth="142.0" />
                                     <Label fx:id="fixtureInfoVariables" alignment="TOP_LEFT" layoutX="545.0" layoutY="114.0" prefHeight="177.0" prefWidth="146.0" wrapText="true" />
-                                    <ChoiceBox layoutX="537.0" layoutY="336.0" prefHeight="26.0" prefWidth="160.0" />
-                                    <Button layoutX="379.0" layoutY="31.0" mnemonicParsing="false" onAction="#generateFixtures" prefHeight="26.0" prefWidth="271.0" text="Generate Fixtures">
+                                    <Button layoutX="401.0" layoutY="31.0" mnemonicParsing="false" onAction="#generateFixtures" prefHeight="26.0" prefWidth="230.0" text="Generate Fixtures">
                                        <effect>
                                           <ColorAdjust hue="0.74" saturation="0.19" />
                                        </effect>
@@ -144,7 +137,7 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </Button>
-                                    <Button layoutX="649.0" layoutY="30.0" mnemonicParsing="false" onAction="#fixturesHelp" prefHeight="28.0" prefWidth="50.0" text="Help?">
+                                    <Button layoutX="631.0" layoutY="30.0" mnemonicParsing="false" onAction="#fixturesHelp" prefHeight="28.0" prefWidth="50.0" text="Help?">
                                        <effect>
                                           <ColorAdjust hue="-0.82" saturation="0.17" />
                                        </effect>
@@ -152,7 +145,7 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </Button>
-                                    <CheckBox fx:id="homeAndAway" layoutX="552.0" layoutY="6.0" mnemonicParsing="false" text="Home AND away" />
+                                    <CheckBox fx:id="homeAndAway" layoutX="440.0" layoutY="5.0" mnemonicParsing="false" text="Generate Home AND Away Fixtures" />
                                  </children>
                               </AnchorPane>
                            </children>

@@ -125,74 +125,32 @@ public class Admin extends Viewer {
         
         //Create 2d array of fixtures
         int totalWeeks = teamsCount - 1;
-        int matchesPerWeek = teamsCount / 2;
+        int fixturesPerWeek = teamsCount / 2;
         ArrayList<Fixture> fixtures = new ArrayList<>();
-        
-        for (int round  = 0; round < totalWeeks; round++) {
-            for (int match = 0; match < matchesPerWeek; match++) {
-                int home = (round + match) % (teamsCount - 1);
-                int away = (teamsCount - 1 - match + round) % (teamsCount - 1);
-                // Last team stays in the same place while the others
-                // rotate around it.
-                if (match == 0) {
+        //For each week needed
+        for (int week  = 0; week < totalWeeks; week++) {
+            //Find each team for fixture using array index aritmatic
+            for (int fixture = 0; fixture < fixturesPerWeek; fixture++) {
+                int home = (week + fixture) % (teamsCount - 1);
+                int away = (teamsCount - 1 - fixture + week) % (teamsCount - 1);
+                // Other teams rotate around last team
+                if (fixture == 0) {
                     away = teamsCount - 1;
                 }
-                // Add one so teamsCount are number 1 to teamsCount not 0 to teamsCount - 1
-                // upon display.
-                //rounds[round][match] = (home + 1) + " v " + (away + 1);
-                fixtures.add(new Fixture(league.getTeams().get(home), league.getTeams().get(away), (round + increment), venue));
+                //Add fixture to temporary array
+                fixtures.add(new Fixture(league.getTeams().get(home), league.getTeams().get(away), (week + increment), venue));
             }
         }
+        //Remove 'bye' team from league as no longer needed
         if (bye == true) {
             league.getTeams().remove(teamsCount - 1);
         }
-        
-        
+        //update League object with new fixtures
         league.appendFixtures(fixtures);
         league.countFixtures();
         if(homeAndAway) {
             generateFixtures(league, false, "away");
         }
-
-        
-//        // Interleave so that home and away games are fairly evenly dispersed.
-//        String[][] interleaved = new String[totalWeeks][matchesPerWeek];
-//        
-//        int evn = 0;
-//        int odd = (teamsCount / 2);
-//        for (int i = 0; i < rounds.length; i++) {
-//            if (i % 2 == 0) {
-//                interleaved[i] = rounds[evn++];
-//            } else {
-//                interleaved[i] = rounds[odd++];
-//            }
-//        }
-//        
-//        rounds = interleaved;
-//
-//        // Last team can't be away for every game so flip them
-//        // to home on odd rounds.
-//        for (int round = 0; round < rounds.length; round++) {
-//            if (round % 2 == 1) {
-//                rounds[round][0] = flip(rounds[round][0]);
-//            }
-//        }
-//        
-//        // Display the fixtures        
-//        for (int i = 0; i < rounds.length; i++) {
-//            System.out.println("Round " + (i + 1));
-//            System.out.println(Arrays.asList(rounds[i]));
-//            System.out.println();
-//        }
-//        
-//        System.out.println();
-//        
-//        if (bye) {
-//            System.out.println("Matches against team " + teamsCount + " are byes.");
-//        }
-//        
-//        System.out.println("Use mirror image of these rounds for "
-//            + "return fixtures.");
     }
 
     private static String flip(String match) {
