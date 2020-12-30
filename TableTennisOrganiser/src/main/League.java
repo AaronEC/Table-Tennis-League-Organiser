@@ -15,7 +15,7 @@ public class League implements Serializable{
     
     private static final long serialVersionUID = 8604642400555460345L;
     private final ArrayList<Team> teams;
-    private final ArrayList<Fixture> fixtures;
+    private ArrayList<Fixture> fixtures;
     private String name;
     private int teamsCount;
     private int fixturesCount;
@@ -65,8 +65,8 @@ public class League implements Serializable{
         return teamsCount;
     }
 
-    void setFixtures(Fixture fixtures) {
-
+    void setFixtures(ArrayList<Fixture> fixtures) {
+        this.fixtures = fixtures;
     }
     /**
      * Adds team of object type Team to League.

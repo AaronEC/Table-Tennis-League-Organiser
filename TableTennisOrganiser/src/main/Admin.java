@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * <h1>Admin Logic Class</h1>
@@ -104,62 +105,86 @@ public class Admin extends Viewer {
      * @param league 
      */
     void generateFixtures(League league) {
-        System.out.println(league.getTeamsCount());
-        System.out.println(league.getTeamsCount() % 2);
-        ArrayList<Team> notPlayed = new ArrayList<>();
-        //Reset all fixtures in league
-        league.resetFixtures();
-        //Reset the list of teams each team has already played
-        for (Team tempTeam : league.getTeams()) {
-            tempTeam.resetHasPlayed();
-        }
-        //Check if there is an odd number of teams
-        if (league.getTeamsCount() % 2 == 1) {
-            
-        }
-        //Calculate how many weeks will be needed to play all fixtures
-        int weeks = league.getTeamsCount() / 2;
-        System.out.println("Weeks " + weeks);
-        //Make each team play all other teams only once, and never play more
-        //than one game a week.
-        for (int i = 0; i <= weeks; i++) {
-            System.out.println("Week " + i);
-            notPlayed.clear();
-            for (Team team : league.getTeams()) {
-                notPlayed.add(team);
-                //System.out.println("Not Played " + team.getName());
-            }    
-            //Every team in the league
-            for (Team homeTeam : league.getTeams()) {
-                System.out.println("Home Team: " + homeTeam.getName());
-                //Can potentially play every team
-                for (Team awayTeam : league.getTeams()) {
-                    System.out.println("Away Team: " + awayTeam.getName());
-                    //IF they are not the same team
-                    if (homeTeam.getName() != awayTeam.getName()) {
-                        //AND they haven't already played a game that week
-                        if (notPlayed.contains(homeTeam) && notPlayed.contains(awayTeam)) {
-                            //AND they haven't already played eachother in the league
-                            if (!homeTeam.getHasPlayed().contains(awayTeam) && (!awayTeam.getHasPlayed().contains(homeTeam))) {
-                                league.addFixture(new Fixture(homeTeam, awayTeam, i + 1));
-                                notPlayed.remove(homeTeam);
-                                notPlayed.remove(awayTeam);
-                                System.out.println(homeTeam.getName() + " & " + awayTeam.getName() + " have played.");
-                                homeTeam.addHasPlayed(awayTeam);
-                                awayTeam.addHasPlayed(homeTeam); 
-                            } else { System.out.println("These teams have already played eachother"); }
-                        } else { System.out.println("Teams have already played this week"); }
-                    }
-                    else { System.out.println("Team is the same"); }
-                }
-            }
+
+        //How many teamsCount are in the league?
+        int teamsCount = league.getTeamsCount();
+
+        
+        //If odd number of teamsCount then add a bye
+        boolean bye = false;
+        if (teamsCount % 2 == 1) {
+            bye = true;
+            league.addTeam("*Bye*");
+            teamsCount++;
         }
         
-        for (Fixture fixture : league.getFixtures()) {
-//            System.out.println("Week " + fixture.getWeek());
-//            System.out.println(fixture.getTeams());
+        //Create 2d array of fixtures
+        int totalWeeks = teamsCount - 1;
+        int matchesPerWeek = teamsCount / 2;
+        String[][] rounds = new String[totalWeeks][matchesPerWeek];
+        ArrayList<Fixture> fixtures = new ArrayList<>();
+        
+        for (int round = 0; round < totalWeeks; round++) {
+            for (int match = 0; match < matchesPerWeek; match++) {
+                int home = (round + match) % (teamsCount - 1);
+                int away = (teamsCount - 1 - match + round) % (teamsCount - 1);
+                // Last team stays in the same place while the others
+                // rotate around it.
+                if (match == 0) {
+                    away = teamsCount - 1;
+                }
+                // Add one so teamsCount are number 1 to teamsCount not 0 to teamsCount - 1
+                // upon display.
+                //rounds[round][match] = (home + 1) + " v " + (away + 1);
+                fixtures.add(new Fixture(league.getTeams().get(home), league.getTeams().get(away), round));
+            }
         }
+        league.getTeams().remove(teamsCount - 1);
+        league.setFixtures(fixtures);
+        
+//        // Interleave so that home and away games are fairly evenly dispersed.
+//        String[][] interleaved = new String[totalWeeks][matchesPerWeek];
+//        
+//        int evn = 0;
+//        int odd = (teamsCount / 2);
+//        for (int i = 0; i < rounds.length; i++) {
+//            if (i % 2 == 0) {
+//                interleaved[i] = rounds[evn++];
+//            } else {
+//                interleaved[i] = rounds[odd++];
+//            }
+//        }
+//        
+//        rounds = interleaved;
+//
+//        // Last team can't be away for every game so flip them
+//        // to home on odd rounds.
+//        for (int round = 0; round < rounds.length; round++) {
+//            if (round % 2 == 1) {
+//                rounds[round][0] = flip(rounds[round][0]);
+//            }
+//        }
+//        
+//        // Display the fixtures        
+//        for (int i = 0; i < rounds.length; i++) {
+//            System.out.println("Round " + (i + 1));
+//            System.out.println(Arrays.asList(rounds[i]));
+//            System.out.println();
+//        }
+//        
+//        System.out.println();
+//        
+//        if (bye) {
+//            System.out.println("Matches against team " + teamsCount + " are byes.");
+//        }
+//        
+//        System.out.println("Use mirror image of these rounds for "
+//            + "return fixtures.");
+    }
 
+    private static String flip(String match) {
+        String[] components = match.split(" v ");
+        return components[1] + " v " + components[0];
     }
     
     void modifyScoreSheet(League league, Fixture fixture) {

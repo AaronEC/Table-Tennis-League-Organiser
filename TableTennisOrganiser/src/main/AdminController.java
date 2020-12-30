@@ -122,10 +122,10 @@ public class AdminController extends UserController implements Initializable{
         leagueChoiceBoxTeamsTab.getSelectionModel().clearSelection();
         admin.saveLeagues();
         teamTableAdmin.getSelectionModel().selectFirst();
-        updateLeaguesTableView();
         updateleagueChoiceBoxTeamsTab();
         updateleagueChoiceBoxFixturesTab();
         updateTeamsTableView();
+        updateLeaguesTableView();
     }
     /**
      * Changes a selected League's name. Selection is from leagueTableAdmin
