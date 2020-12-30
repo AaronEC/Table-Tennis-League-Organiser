@@ -147,6 +147,10 @@ public class UserController extends User implements Initializable{
                 - If there are an odd number of teams in the league,
                   a 'bye' will be assigned once per week, where it is 
                   not possible for that team to play.
+                  
+                - If "Generate home AND away fixtures" is selected,
+                  every team will play every other team at in both
+                  a HOME and AWAY match (doubles the fixtures).
             """;
         alert.setContentText(s);
         alert.show();

@@ -19,16 +19,27 @@ public class Fixture implements Serializable{
     private String awayTeamName;
     private char played;
 
-    public Fixture(Team homeTeam, Team awayTeam, int week) {
+    public Fixture(Team homeTeam, Team awayTeam, int week, String venue) {
         
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        this.venue = homeTeam.getVenue();
+        this.venue = setVenue(venue);
         this.homeTeamName = homeTeam.getName();
         this.awayTeamName = awayTeam.getName();
         this.week = week + 1;
         this.teams = homeTeam.getName() + " vs " + awayTeam.getName();
         this.played = 'n';
+    }
+
+    public String setVenue(String venue) {
+        if ("home".equals(venue)) {
+            return homeTeam.getVenue();
+        } else if ("away".equals(venue)){
+        return awayTeam.getVenue();
+        } else {
+            System.err.println("Venue Error");
+            return null;
+        }
     }
 
     Team calculateWinner(DoublesSet[] doublesSet, SinglesSet[] singlesSet) {

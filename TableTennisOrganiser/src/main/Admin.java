@@ -102,12 +102,18 @@ public class Admin extends Viewer {
      * Generates and REPLACES all fixtures for the league passed.
      * @param league 
      */
-    void generateFixtures(League league) {
+    void generateFixtures(League league, boolean homeAndAway, String venue) {
+        league.countTeams();
         System.out.println("Generating fixtures for " + league.getTeamsCount() + " teams.");
         System.out.println("Teams in league: " + league.getTeams().toString());
-//How many teamsCount are in the league?
+        //How many teamsCount are in the league?
         int teamsCount = league.getTeamsCount();
-
+        int increment;
+        if (venue == "away") {
+            increment = league.getTeamsCount();
+        } else {
+            increment = 0;
+        }
         
         //If odd number of teamsCount then add a bye
         boolean bye = false;
@@ -120,10 +126,9 @@ public class Admin extends Viewer {
         //Create 2d array of fixtures
         int totalWeeks = teamsCount - 1;
         int matchesPerWeek = teamsCount / 2;
-        String[][] rounds = new String[totalWeeks][matchesPerWeek];
         ArrayList<Fixture> fixtures = new ArrayList<>();
         
-        for (int round = 0; round < totalWeeks; round++) {
+        for (int round  = 0; round < totalWeeks; round++) {
             for (int match = 0; match < matchesPerWeek; match++) {
                 int home = (round + match) % (teamsCount - 1);
                 int away = (teamsCount - 1 - match + round) % (teamsCount - 1);
@@ -135,16 +140,20 @@ public class Admin extends Viewer {
                 // Add one so teamsCount are number 1 to teamsCount not 0 to teamsCount - 1
                 // upon display.
                 //rounds[round][match] = (home + 1) + " v " + (away + 1);
-                fixtures.add(new Fixture(league.getTeams().get(home), league.getTeams().get(away), round));
+                fixtures.add(new Fixture(league.getTeams().get(home), league.getTeams().get(away), (round + increment), venue));
             }
         }
         if (bye == true) {
             league.getTeams().remove(teamsCount - 1);
         }
-        league.setFixtures(fixtures);
+        
+        
+        league.appendFixtures(fixtures);
         league.countFixtures();
-        
-        
+        if(homeAndAway) {
+            generateFixtures(league, false, "away");
+        }
+
         
 //        // Interleave so that home and away games are fairly evenly dispersed.
 //        String[][] interleaved = new String[totalWeeks][matchesPerWeek];

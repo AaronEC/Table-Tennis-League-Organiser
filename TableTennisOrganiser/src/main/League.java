@@ -68,6 +68,12 @@ public class League implements Serializable{
     void setFixtures(ArrayList<Fixture> fixtures) {
         this.fixtures = fixtures;
     }
+    
+    void appendFixtures(ArrayList<Fixture> fixtures) {
+        for (Fixture fixture: fixtures) {
+            this.fixtures.add(fixture);
+        }
+    }
     /**
      * Adds team of object type Team to League.
      * @param team Team to be added.

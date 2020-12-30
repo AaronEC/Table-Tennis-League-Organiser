@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -57,6 +58,7 @@ public class AdminController extends UserController implements Initializable{
     @FXML private TableColumn <Fixture, Integer> fixturePlayedAdmin;
     @FXML private Label fixtureInfoLabels;
     @FXML private Label fixtureInfoVariables;
+    @FXML private CheckBox homeAndAway;
     
     /** Class Variables **/
     private final Admin admin = new Admin();
@@ -449,13 +451,17 @@ public class AdminController extends UserController implements Initializable{
     }
     
     public void generateFixtures(ActionEvent event) {
-       
+        boolean homeAway = false;
+        if (homeAndAway.isSelected()) {
+            homeAway = true;
+        }
         if (leagueSelectionFixturesTab.getTeamsCount() < 2) {
             popupWindow("Error", "Not enough teams!", "Please add 2 or more teams to generate fixtures.");
         }
         if (popupWindowChoice("Overwrite " + leagueSelectionFixturesTab.getName() + " fixtures?", "This will replace ALL current fixtures in this league", "Are you sure?")) {
             System.out.println("League Selected: " + leagueSelectionFixturesTab.getName());
-            admin.generateFixtures(leagueSelectionFixturesTab);
+            leagueSelectionFixturesTab.resetFixtures();
+            admin.generateFixtures(leagueSelectionFixturesTab, homeAway, "home");
             admin.saveLeagues();
             updateFixturesTableView();
             updateLeaguesTableView();
