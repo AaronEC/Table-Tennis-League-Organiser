@@ -104,18 +104,20 @@
                                           <TableColumn editable="false" prefWidth="317.6000122070312" sortable="false" text="Fixture Information" />
                                        </columns>
                                     </TableView>
-                                    <TableView fx:id="fixtureTableAdmin" layoutX="35.0" layoutY="83.0" prefHeight="244.0" prefWidth="289.0">
+                                    <TableView fx:id="fixtureTableAdmin" layoutX="35.0" layoutY="83.0" prefHeight="244.0" prefWidth="329.0">
                                        <columns>
-                                          <TableColumn fx:id="fixtureWeekAdmin" prefWidth="66.39996719360352" text="Week" />
-                                          <TableColumn fx:id="fixtureTeamsAdmin" minWidth="0.0" prefWidth="170.40000915527344" text="Teams" />
-                                          <TableColumn fx:id="fixturePlayedAdmin" prefWidth="51.20003662109377" text="Played" />
+                                          <TableColumn fx:id="fixtureWeekAdmin" prefWidth="36.000064849853516" text="Week" />
+                                          <TableColumn fx:id="fixtureHomeTeamAdmin" minWidth="0.0" prefWidth="76.0" text="Home" />
+                                          <TableColumn fx:id="fixtureAwayTeamAdmin" prefWidth="71.199951171875" text="Away" />
+                                          <TableColumn fx:id="fixtureVenueAdmin" prefWidth="103.19993591308594" text="Venue" />
+                                          <TableColumn fx:id="fixturePlayedAdmin" prefWidth="42.4000244140625" text="Played" />
                                        </columns>
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </TableView>
                                     <Button layoutX="35.0" layoutY="364.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Rename Team" />
-                                    <Button layoutX="111.0" layoutY="409.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="147.0" text="Delete Selected Team">
+                                    <Button layoutX="111.0" layoutY="409.0" mnemonicParsing="false" onAction="#deleteFixtures" prefHeight="26.0" prefWidth="147.0" text="Delete Fixtures">
                                        <effect>
                                           <ColorAdjust brightness="0.02" contrast="0.04" hue="-0.02" saturation="0.48" />
                                        </effect>
@@ -133,10 +135,21 @@
                                     <Label fx:id="fixtureInfoLabels" alignment="TOP_LEFT" layoutX="388.0" layoutY="114.0" prefHeight="178.0" prefWidth="142.0" />
                                     <Label fx:id="fixtureInfoVariables" alignment="TOP_LEFT" layoutX="545.0" layoutY="114.0" prefHeight="177.0" prefWidth="146.0" wrapText="true" />
                                     <ChoiceBox layoutX="537.0" layoutY="336.0" prefHeight="26.0" prefWidth="160.0" />
-                                    <Button layoutX="379.0" layoutY="31.0" mnemonicParsing="false" onAction="#generateFixtures" prefHeight="26.0" prefWidth="318.0" text="Generate Fixtures">
+                                    <Button layoutX="379.0" layoutY="31.0" mnemonicParsing="false" onAction="#generateFixtures" prefHeight="26.0" prefWidth="271.0" text="Generate Fixtures">
                                        <effect>
                                           <ColorAdjust hue="0.74" saturation="0.19" />
                                        </effect>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Button layoutX="649.0" layoutY="30.0" mnemonicParsing="false" onAction="#fixturesHelp" prefHeight="28.0" prefWidth="50.0" text="Help?">
+                                       <effect>
+                                          <ColorAdjust hue="-0.82" saturation="0.17" />
+                                       </effect>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </Button>
                                  </children>
                               </AnchorPane>

@@ -51,7 +51,9 @@ public class AdminController extends UserController implements Initializable{
     @FXML private ChoiceBox<String> leagueChoiceBoxFixturesTab;
     @FXML private TableView <Fixture> fixtureTableAdmin;
     @FXML private TableColumn <Fixture, String> fixtureWeekAdmin;
-    @FXML private TableColumn <Fixture, Integer> fixtureTeamsAdmin;
+    @FXML private TableColumn <Fixture, Integer> fixtureHomeTeamAdmin;
+    @FXML private TableColumn <Fixture, Integer> fixtureAwayTeamAdmin;
+    @FXML private TableColumn <Fixture, Integer> fixtureVenueAdmin;
     @FXML private TableColumn <Fixture, Integer> fixturePlayedAdmin;
     @FXML private Label fixtureInfoLabels;
     @FXML private Label fixtureInfoVariables;
@@ -218,7 +220,7 @@ public class AdminController extends UserController implements Initializable{
             teamTableAdmin.setItems(listTeams(leagueSelectionTeamsTab.getTeams()));
         }
         else {
-            leagueChoiceBoxTeamsTab.setValue("No Leagues Added");
+            //leagueChoiceBoxTeamsTab.setValue("No Leagues Added");
         }
     }
     //Populate League choice box from League ArrayList
@@ -247,6 +249,7 @@ public class AdminController extends UserController implements Initializable{
         admin.saveLeagues();
         updateTeamsTableView();
         updateLeaguesTableView();
+        updateFixturesTableView();
     }
     /**
      * Changes a selected Team's name. Team selection is from teamTableAdmin
@@ -389,7 +392,9 @@ public class AdminController extends UserController implements Initializable{
     public void initializeFixturesTab() {
         //Set values for TableView
         fixtureWeekAdmin.setCellValueFactory(new PropertyValueFactory<>("week"));
-        fixtureTeamsAdmin.setCellValueFactory(new PropertyValueFactory<>("teams"));
+        fixtureHomeTeamAdmin.setCellValueFactory(new PropertyValueFactory<>("homeTeamName"));
+        fixtureAwayTeamAdmin.setCellValueFactory(new PropertyValueFactory<>("awayTeamName"));
+        fixtureVenueAdmin.setCellValueFactory(new PropertyValueFactory<>("venue"));
         fixturePlayedAdmin.setCellValueFactory(new PropertyValueFactory<>("played"));
         
         //Populate UI elements with data
@@ -439,15 +444,34 @@ public class AdminController extends UserController implements Initializable{
             fixtureTableAdmin.setItems(listFixtures(leagueSelectionFixturesTab.getFixtures()));
         }
         else {
-            leagueChoiceBoxTeamsTab.setValue("No Leagues Added");
+            //leagueChoiceBoxTeamsTab.setValue("No Leagues Added");
         }
     }
     
     public void generateFixtures(ActionEvent event) {
+       
+        if (leagueSelectionFixturesTab.getTeamsCount() < 2) {
+            popupWindow("Error", "Not enough teams!", "Please add 2 or more teams to generate fixtures.");
+        }
         if (popupWindowChoice("Overwrite " + leagueSelectionFixturesTab.getName() + " fixtures?", "This will replace ALL current fixtures in this league", "Are you sure?")) {
             System.out.println("League Selected: " + leagueSelectionFixturesTab.getName());
             admin.generateFixtures(leagueSelectionFixturesTab);
+            admin.saveLeagues();
             updateFixturesTableView();
+            updateLeaguesTableView();
+        }
+    }
+    
+    public void fixturesHelp(ActionEvent event) {
+        popupWindowInformation();
+    }
+    
+    public void deleteFixtures(ActionEvent event) {
+        if (popupWindowChoice("Delete " + leagueSelectionFixturesTab.getName() + " fixtures?", "This will DELETE ALL current fixtures in this league", "Are you sure?")) {
+        admin.deleteFixtures(leagueSelectionFixturesTab);
+        admin.saveLeagues();
+        updateFixturesTableView();
+        updateLeaguesTableView();
         }
     }
     

@@ -12,15 +12,21 @@ public class Fixture implements Serializable{
     private static final long serialVersionUID = 8604642400555460347L;
     private int week;
     private String teams;
+    private String venue;
     private Team homeTeam;
     private Team awayTeam;
+    private String homeTeamName;
+    private String awayTeamName;
     private char played;
 
     public Fixture(Team homeTeam, Team awayTeam, int week) {
         
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        this.week = week;
+        this.venue = homeTeam.getVenue();
+        this.homeTeamName = homeTeam.getName();
+        this.awayTeamName = awayTeam.getName();
+        this.week = week + 1;
         this.teams = homeTeam.getName() + " vs " + awayTeam.getName();
         this.played = 'n';
     }
@@ -59,6 +65,18 @@ public class Fixture implements Serializable{
 
     public Team getAwayTeam() {
         return awayTeam;
+    }
+
+    public String getHomeTeamName() {
+        return homeTeamName;
+    }
+
+    public String getAwayTeamName() {
+        return awayTeamName;
+    }
+
+    public String getVenue() {
+        return venue;
     }
     
 

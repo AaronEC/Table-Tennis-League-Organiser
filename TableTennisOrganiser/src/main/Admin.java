@@ -1,6 +1,5 @@
 package main;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * <h1>Admin Logic Class</h1>
@@ -105,8 +103,9 @@ public class Admin extends Viewer {
      * @param league 
      */
     void generateFixtures(League league) {
-
-        //How many teamsCount are in the league?
+        System.out.println("Generating fixtures for " + league.getTeamsCount() + " teams.");
+        System.out.println("Teams in league: " + league.getTeams().toString());
+//How many teamsCount are in the league?
         int teamsCount = league.getTeamsCount();
 
         
@@ -139,8 +138,13 @@ public class Admin extends Viewer {
                 fixtures.add(new Fixture(league.getTeams().get(home), league.getTeams().get(away), round));
             }
         }
-        league.getTeams().remove(teamsCount - 1);
+        if (bye == true) {
+            league.getTeams().remove(teamsCount - 1);
+        }
         league.setFixtures(fixtures);
+        league.countFixtures();
+        
+        
         
 //        // Interleave so that home and away games are fairly evenly dispersed.
 //        String[][] interleaved = new String[totalWeeks][matchesPerWeek];
@@ -208,5 +212,10 @@ public class Admin extends Viewer {
         getLeagues().forEach(temp -> {
             temp.countFixtures();
         });
+    }
+
+    void deleteFixtures(League league) {
+        league.resetFixtures();
+        league.countFixtures();
     }
 }

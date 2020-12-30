@@ -1,6 +1,9 @@
 package main;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -8,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +19,10 @@ import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.*;
 
 /**
@@ -126,6 +134,22 @@ public class UserController extends User implements Initializable{
         } else {
             return false;
         }
+    }
+    
+    protected void popupWindowInformation() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Generate Fixtures");
+        alert.setHeaderText("Click to generate fixtures using these rules:");
+        String s ="""
+                - Each team will play every other team in the league.
+                - No team will play more than once a week.
+                - Each team only plays another team once.
+                - If there are an odd number of teams in the league,
+                  a 'bye' will be assigned once per week, where it is 
+                  not possible for that team to play.
+            """;
+        alert.setContentText(s);
+        alert.show();
     }
     /**
      * Called from Admin or Viewer scenes. Returns user to the login screen.
