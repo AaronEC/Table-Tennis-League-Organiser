@@ -59,8 +59,6 @@ public class AdminController extends UserController implements Initializable{
     @FXML private TableColumn <Fixture, Integer> fixtureVenueAdmin;
     @FXML private TableColumn <Fixture, Integer> fixturePlayedAdmin;
     @FXML private TableColumn <Fixture, String> fixtureVsAdmin;
-    @FXML private Label fixtureInfoLabels;
-    @FXML private Label fixtureInfoVariables;
     @FXML private CheckBox homeAndAway;
     
     /** Class Variables **/
@@ -410,8 +408,6 @@ public class AdminController extends UserController implements Initializable{
         //Listener for League selection in Choice Box.
         leagueChoiceBoxFixturesTab.setOnAction((event) -> {
             updateFixturesTableView();
-            fixtureInfoLabels.setText("");
-            fixtureInfoVariables.setText("");
             fixtureTableAdmin.getSelectionModel().selectFirst();
         });
         

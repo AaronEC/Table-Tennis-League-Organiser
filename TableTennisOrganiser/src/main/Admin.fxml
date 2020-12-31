@@ -14,9 +14,11 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.web.WebView?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="540" prefWidth="960" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.AdminController">
       <children>
@@ -46,7 +48,17 @@
                         <Button fx:id="addleague" layoutX="34.0" layoutY="419.0" mnemonicParsing="false" onAction="#addLeague" prefHeight="26.0" prefWidth="150.0" text="Add League" />
                         <TextField fx:id="leagueNameIn" layoutX="34.0" layoutY="393.0" onAction="#addLeague" prefHeight="26.0" prefWidth="150.0" promptText="Enter League Name" />
                         <Button layoutX="892.0" layoutY="472.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
-                        <WebView fx:id="help" layoutX="602.0" layoutY="121.0" prefHeight="200.0" prefWidth="200.0" />
+                        <ImageView fitHeight="435.0" fitWidth="512.0" layoutX="415.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="33.0">
+                           <image>
+                              <Image url="@../img/Help.png" />
+                           </image>
+                        </ImageView>
+                        <Separator layoutX="384.0" layoutY="-7.0" orientation="VERTICAL" prefHeight="522.0" prefWidth="3.0" />
+                        <Label layoutX="35.0" layoutY="25.0" text="League Database: ">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
               </content>
@@ -142,22 +154,22 @@
                                           <Button layoutX="299.0" layoutY="419.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.7" text="Save Fixture" />
                                           <AnchorPane layoutX="15.0" layoutY="95.0" prefHeight="74.0" prefWidth="430.0">
                                              <children>
-                                                <TextField layoutX="18.0" layoutY="24.0" prefHeight="26.0" prefWidth="24.0" />
+                                                <TextField layoutX="14.0" layoutY="24.0" prefHeight="26.0" prefWidth="27.0" />
                                                 <TextField layoutX="167.0" layoutY="24.0" prefHeight="26.0" prefWidth="120.0" />
                                                 <TextField layoutX="290.0" layoutY="24.0" prefHeight="26.0" prefWidth="98.0" />
-                                                <TextField layoutX="45.0" layoutY="24.0" prefHeight="26.0" prefWidth="120.0" />
-                                                <TextField layoutX="389.0" layoutY="24.0" prefHeight="26.0" prefWidth="27.0" />
-                                                <Label layoutX="15.0" layoutY="5.0" text="Week" />
-                                                <Label layoutX="100.0" layoutY="5.0" text="Home" />
+                                                <TextField layoutX="44.0" layoutY="24.0" prefHeight="26.0" prefWidth="120.0" />
+                                                <TextField layoutX="391.0" layoutY="24.0" prefHeight="26.0" prefWidth="27.0" />
+                                                <Label layoutX="13.0" layoutY="5.0" text="Week" />
+                                                <Label layoutX="88.0" layoutY="5.0" text="Home" />
                                                 <Label layoutX="213.0" layoutY="6.0" text="Away" />
                                                 <Label layoutX="322.0" layoutY="6.0" text="Venue" />
-                                                <Label layoutX="375.0" layoutY="6.0" text="Played?" />
+                                                <Label layoutX="384.0" layoutY="6.0" text="Played?" />
                                                 <Separator layoutX="1.0" layoutY="54.0" prefHeight="13.0" prefWidth="427.0" />
                                              </children>
                                           </AnchorPane>
                                        </children>
                                     </AnchorPane>
-                                    <ChoiceBox fx:id="leagueChoiceBoxFixturesTab" layoutX="150.0" layoutY="27.0" prefHeight="26.0" prefWidth="300.0" />
+                                    <ChoiceBox fx:id="leagueChoiceBoxFixturesTab" layoutX="156.0" layoutY="26.0" prefHeight="26.0" prefWidth="300.0" />
                                     <TableView fx:id="fixtureTableAdmin" layoutX="35.0" layoutY="70.0" prefHeight="377.0" prefWidth="419.0" stylesheets="@admin.css">
                                        <columns>
                                           <TableColumn fx:id="fixtureWeekAdmin" prefWidth="36.000064849853516" text="Week" />
@@ -171,12 +183,12 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </TableView>
-                                    <Button layoutX="113.0" layoutY="461.0" mnemonicParsing="false" onAction="#deleteFixtures" prefHeight="26.0" prefWidth="147.0" text="Delete All Fixtures">
+                                    <Button layoutX="171.0" layoutY="461.0" mnemonicParsing="false" onAction="#deleteFixtures" prefHeight="26.0" prefWidth="147.0" text="Delete All Fixtures">
                                        <effect>
                                           <ColorAdjust brightness="0.02" contrast="0.04" hue="-0.02" saturation="0.48" />
                                        </effect>
                                     </Button>
-                                    <Line endX="220.0" endY="-4.0" layoutX="359.0" layoutY="43.0" startX="92.0" startY="-4.0" />
+                                    <Line endX="220.0" endY="-4.0" layoutX="359.0" layoutY="43.0" startX="96.99996948242188" startY="-3.79998779296875" />
                                     <Label layoutX="54.0" layoutY="28.0" prefHeight="17.0" prefWidth="101.0" text="Select League:" />
                                  </children>
                               </AnchorPane>
