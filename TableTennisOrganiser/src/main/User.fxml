@@ -8,18 +8,22 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="480" prefWidth="720" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.UserController">
+<AnchorPane prefHeight="540" prefWidth="960" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.UserController">
    <children>
-      <Label fx:id="myMessage" layoutX="215.0" layoutY="328.0" prefHeight="38.0" prefWidth="66.0" text="Username" />
-      <Button fx:id="sayHello" defaultButton="true" layoutX="328.0" layoutY="418.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="79.0" text="Login" />
-      <Label fx:id="myMessage1" layoutX="217.0" layoutY="367.0" prefHeight="38.0" prefWidth="66.0" text="Password" />
-      <ImageView fitHeight="284.0" fitWidth="690.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="284.0" fitWidth="690.0" layoutX="142.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/Logo.png" />
          </image>
       </ImageView>
-      <PasswordField fx:id="passwordInput" layoutX="293.0" layoutY="373.0" promptText="Please Enter Password" />
-      <ChoiceBox fx:id="loginSelect" layoutX="292.0" layoutY="335.0" prefWidth="150.0" />
+      <AnchorPane layoutX="389.0" layoutY="360.0" prefHeight="172.0" prefWidth="197.0">
+         <children>
+            <Button fx:id="sayHello" defaultButton="true" layoutX="59.0" layoutY="100.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="79.0" text="Login" />
+            <PasswordField fx:id="passwordInput" layoutX="24.0" layoutY="49.0" promptText="Please Enter Password" />
+            <ChoiceBox fx:id="loginSelect" layoutX="24.0" layoutY="14.0" prefWidth="150.0" />
+         </children>
+      </AnchorPane>
+      <Label fx:id="myMessage1" layoutX="345.0" layoutY="401.0" prefHeight="38.0" prefWidth="66.0" text="Password" />
+      <Label fx:id="myMessage" layoutX="345.0" layoutY="369.0" prefHeight="32.0" prefWidth="66.0" text="Username" />
 
    </children>
 </AnchorPane>

@@ -17,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.web.WebView;
 /**
  * <h1>Admin GUI Controller Class</h1>
  * Controls FMXL GUI elements for Admin class.
@@ -33,6 +34,7 @@ public class AdminController extends UserController implements Initializable{
     @FXML private TableColumn <League, String> leagueNameAdmin;
     @FXML private TableColumn <League, Integer> leagueTeamsAdmin;
     @FXML private TableColumn <League, Integer> leagueFixturesAdmin;
+    @FXML private WebView help;
     
     /** Teams Tab **/
     @FXML private ChoiceBox<String> leagueChoiceBoxTeamsTab;
@@ -56,6 +58,7 @@ public class AdminController extends UserController implements Initializable{
     @FXML private TableColumn <Fixture, Integer> fixtureAwayTeamAdmin;
     @FXML private TableColumn <Fixture, Integer> fixtureVenueAdmin;
     @FXML private TableColumn <Fixture, Integer> fixturePlayedAdmin;
+    @FXML private TableColumn <Fixture, String> fixtureVsAdmin;
     @FXML private Label fixtureInfoLabels;
     @FXML private Label fixtureInfoVariables;
     @FXML private CheckBox homeAndAway;
@@ -398,6 +401,7 @@ public class AdminController extends UserController implements Initializable{
         fixtureAwayTeamAdmin.setCellValueFactory(new PropertyValueFactory<>("awayTeamName"));
         fixtureVenueAdmin.setCellValueFactory(new PropertyValueFactory<>("venue"));
         fixturePlayedAdmin.setCellValueFactory(new PropertyValueFactory<>("played"));
+        fixtureVsAdmin.setCellValueFactory(new PropertyValueFactory<>("separator"));
         
         //Populate UI elements with data
         updateleagueChoiceBoxFixturesTab();

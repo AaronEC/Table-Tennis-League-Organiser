@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -15,16 +16,17 @@
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="480" prefWidth="720" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.AdminController">
+<AnchorPane prefHeight="540" prefWidth="960" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.AdminController">
       <children>
-      <TabPane prefHeight="480.0" prefWidth="720.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="540.0" prefWidth="960.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="Leagues">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="leagueTableAdmin" layoutX="39.0" layoutY="35.0" prefHeight="380.0" prefWidth="320.0">
+                        <TableView fx:id="leagueTableAdmin" layoutX="35.0" layoutY="70.0" prefHeight="302.0" prefWidth="319.0">
                            <columns>
                               <TableColumn fx:id="leagueNameAdmin" prefWidth="186.39996337890625" text="Name" />
                               <TableColumn fx:id="leagueTeamsAdmin" minWidth="0.0" prefWidth="64.79998779296875" text="Teams" />
@@ -34,16 +36,17 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </TableView>
-                        <Button fx:id="changeleagueName" layoutX="405.0" layoutY="164.0" mnemonicParsing="false" onAction="#editLeagueName" prefHeight="26.0" prefWidth="150.0" text="Change Name" />
-                        <Button fx:id="deleteLeague" layoutX="405.0" layoutY="388.0" mnemonicParsing="false" onAction="#deleteLeague" prefHeight="26.0" prefWidth="147.0" text="Delete Selected League">
+                        <Button fx:id="changeleagueName" layoutX="204.0" layoutY="419.0" mnemonicParsing="false" onAction="#editLeagueName" prefHeight="26.0" prefWidth="150.0" text="Change Name" />
+                        <Button fx:id="deleteLeague" layoutX="120.0" layoutY="464.0" mnemonicParsing="false" onAction="#deleteLeague" prefHeight="26.0" prefWidth="147.0" text="Delete Selected League">
                            <effect>
                               <ColorAdjust brightness="0.02" contrast="0.04" hue="-0.02" saturation="0.48" />
                            </effect>
                         </Button>
-                        <TextField fx:id="leagueEditName" layoutX="405.0" layoutY="138.0" onAction="#editLeagueName" promptText="Enter New League Name" />
-                        <Button fx:id="addleague" layoutX="406.0" layoutY="82.0" mnemonicParsing="false" onAction="#addLeague" prefHeight="26.0" prefWidth="150.0" text="Add League" />
-                        <TextField fx:id="leagueNameIn" layoutX="406.0" layoutY="56.0" onAction="#addLeague" promptText="Enter League Name" />
-                        <Button layoutX="651.0" layoutY="402.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
+                        <TextField fx:id="leagueEditName" layoutX="204.0" layoutY="393.0" onAction="#editLeagueName" prefHeight="26.0" prefWidth="150.0" promptText="Enter New League Name" />
+                        <Button fx:id="addleague" layoutX="34.0" layoutY="419.0" mnemonicParsing="false" onAction="#addLeague" prefHeight="26.0" prefWidth="150.0" text="Add League" />
+                        <TextField fx:id="leagueNameIn" layoutX="34.0" layoutY="393.0" onAction="#addLeague" prefHeight="26.0" prefWidth="150.0" promptText="Enter League Name" />
+                        <Button layoutX="892.0" layoutY="472.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
+                        <WebView fx:id="help" layoutX="602.0" layoutY="121.0" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </AnchorPane>
               </content>
@@ -52,41 +55,46 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ChoiceBox fx:id="leagueChoiceBoxTeamsTab" layoutX="34.0" layoutY="30.0" prefHeight="26.0" prefWidth="292.0" />
-                        <TableView layoutX="379.0" layoutY="83.0" prefHeight="200.0" prefWidth="317.0">
-                          <columns>
-                            <TableColumn editable="false" prefWidth="317.6000122070312" sortable="false" text="Team Information" />
-                          </columns>
-                        </TableView>
-                        <TableView fx:id="teamTableAdmin" layoutX="35.0" layoutY="83.0" prefHeight="244.0" prefWidth="289.0">
+                        <ChoiceBox fx:id="leagueChoiceBoxTeamsTab" layoutX="150.0" layoutY="27.0" prefHeight="26.0" prefWidth="300.0" />
+                        <TableView fx:id="teamTableAdmin" layoutX="35.0" layoutY="70.0" prefHeight="285.0" prefWidth="415.0">
                            <columns>
-                              <TableColumn fx:id="teamNameAdmin" prefWidth="191.19997787475586" text="Name" />
-                              <TableColumn fx:id="teamPointsAdmin" minWidth="0.0" prefWidth="44.80006408691406" text="Points" />
-                              <TableColumn fx:id="teamPlayersAdmin" prefWidth="50.39996337890625" text="Players" />
+                              <TableColumn fx:id="teamNameAdmin" prefWidth="298.5" text="Name" />
+                              <TableColumn fx:id="teamPointsAdmin" minWidth="0.0" prefWidth="61.0" text="Points" />
+                              <TableColumn fx:id="teamPlayersAdmin" prefWidth="54.5" text="Players" />
                            </columns>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </TableView>
-                        <Button fx:id="changeteamName" layoutX="35.0" layoutY="364.0" mnemonicParsing="false" onAction="#editTeamName" prefHeight="26.0" prefWidth="150.0" text="Rename Team" />
-                        <Button layoutX="111.0" layoutY="409.0" mnemonicParsing="false" onAction="#deleteTeam" prefHeight="26.0" prefWidth="147.0" text="Delete Selected Team">
+                        <Button fx:id="changeteamName" layoutX="109.0" layoutY="407.0" mnemonicParsing="false" onAction="#editTeamName" prefHeight="26.0" prefWidth="150.0" text="Rename Team" />
+                        <Button layoutX="185.0" layoutY="452.0" mnemonicParsing="false" onAction="#deleteTeam" prefHeight="26.0" prefWidth="147.0" text="Delete Selected Team">
                            <effect>
                               <ColorAdjust brightness="0.02" contrast="0.04" hue="-0.02" saturation="0.48" />
                            </effect>
                         </Button>
-                        <TextField fx:id="teamEditName" alignment="CENTER" layoutX="185.0" layoutY="364.0" onAction="#editTeamName" prefHeight="26.0" prefWidth="140.0" promptText="Enter New Team Name" />
-                        <Button fx:id="addteam" layoutX="35.0" layoutY="336.0" mnemonicParsing="false" onAction="#addTeam" prefHeight="26.0" prefWidth="150.0" text="Add Team" />
-                        <TextField fx:id="teamNameIn" alignment="CENTER" layoutX="185.0" layoutY="336.0" onAction="#addTeam" prefHeight="26.0" prefWidth="140.0" promptText="Enter Team Name" />
-                        <TextArea editable="false" layoutX="380.0" layoutY="105.0" prefHeight="197.0" prefWidth="318.0" />
-                        <Button layoutX="378.0" layoutY="310.0" mnemonicParsing="false" onAction="#addPlayer" prefHeight="26.0" prefWidth="160.0" text="Add New Player" />
-                        <TextField fx:id="playerNameIn" alignment="CENTER" layoutX="538.0" layoutY="309.0" onAction="#addPlayer" prefHeight="26.0" prefWidth="158.0" promptText="Enter Player Name" />
-                        <Button layoutX="651.0" layoutY="410.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
-                        <Button layoutX="378.0" layoutY="336.0" mnemonicParsing="false" onAction="#deletePlayer" prefHeight="26.0" prefWidth="160.0" text="Delete Player" />
-                        <Button layoutX="378.0" layoutY="363.0" mnemonicParsing="false" onAction="#updateVenue" prefHeight="26.0" prefWidth="160.0" text="Update Venue" />
-                        <TextField fx:id="venueNameIn" alignment="CENTER" layoutX="538.0" layoutY="362.0" onAction="#updateVenue" prefHeight="26.0" prefWidth="158.0" promptText="Enter Venue Name" />
-                        <Label fx:id="teamInfoLabels" alignment="TOP_LEFT" layoutX="388.0" layoutY="114.0" prefHeight="178.0" prefWidth="142.0" />
-                        <Label fx:id="teamInfoVariables" alignment="TOP_LEFT" layoutX="545.0" layoutY="114.0" prefHeight="177.0" prefWidth="146.0" wrapText="true" />
-                        <ChoiceBox fx:id="playerChoiceBox" layoutX="537.0" layoutY="336.0" prefHeight="26.0" prefWidth="160.0" />
+                        <TextField fx:id="teamEditName" alignment="CENTER" layoutX="259.0" layoutY="407.0" onAction="#editTeamName" prefHeight="26.0" prefWidth="140.0" promptText="Enter New Team Name" />
+                        <Button fx:id="addteam" layoutX="109.0" layoutY="379.0" mnemonicParsing="false" onAction="#addTeam" prefHeight="26.0" prefWidth="150.0" text="Add Team" />
+                        <TextField fx:id="teamNameIn" alignment="CENTER" layoutX="259.0" layoutY="379.0" onAction="#addTeam" prefHeight="26.0" prefWidth="140.0" promptText="Enter Team Name" />
+                        <AnchorPane layoutX="480.0" layoutY="5.0" prefHeight="512.0" prefWidth="486.0">
+                           <children>
+                              <TableView layoutX="43.0" layoutY="65.0" prefHeight="200.0" prefWidth="400.0">
+                                <columns>
+                                  <TableColumn editable="false" prefWidth="399.0" sortable="false" text="Team Information" />
+                                </columns>
+                              </TableView>
+                              <TextArea editable="false" layoutX="43.0" layoutY="89.0" prefHeight="264.0" prefWidth="400.0" />
+                              <Label fx:id="teamInfoLabels" alignment="TOP_LEFT" layoutX="52.0" layoutY="104.0" prefHeight="239.0" prefWidth="182.0" />
+                              <Label fx:id="teamInfoVariables" alignment="TOP_LEFT" layoutX="242.0" layoutY="103.0" prefHeight="241.0" prefWidth="191.0" wrapText="true" />
+                              <Button layoutX="84.0" layoutY="378.0" mnemonicParsing="false" onAction="#addPlayer" prefHeight="26.0" prefWidth="160.0" text="Add New Player" />
+                              <TextField fx:id="playerNameIn" alignment="CENTER" layoutX="244.0" layoutY="378.0" onAction="#addPlayer" prefHeight="26.0" prefWidth="158.0" promptText="Enter Player Name" />
+                              <Button layoutX="84.0" layoutY="404.0" mnemonicParsing="false" onAction="#deletePlayer" prefHeight="26.0" prefWidth="160.0" text="Delete Player" />
+                              <Button layoutX="84.0" layoutY="431.0" mnemonicParsing="false" onAction="#updateVenue" prefHeight="26.0" prefWidth="160.0" text="Update Venue" />
+                              <TextField fx:id="venueNameIn" alignment="CENTER" layoutX="244.0" layoutY="430.0" onAction="#updateVenue" prefHeight="26.0" prefWidth="158.0" promptText="Enter Venue Name" />
+                              <ChoiceBox fx:id="playerChoiceBox" layoutX="243.0" layoutY="404.0" prefHeight="26.0" prefWidth="159.0" />
+                              <Button layoutX="406.0" layoutY="463.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="56.0" layoutY="35.0" prefHeight="17.0" prefWidth="101.0" text="Select League:" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -96,56 +104,80 @@
                      <children>
                         <AnchorPane prefHeight="455.0" prefWidth="720.0">
                            <children>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="451.0" prefWidth="720.0">
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="960.0">
                                  <children>
-                                    <Line endX="100.0" layoutX="359.0" layoutY="43.0" startX="-100.0" />
-                                    <ChoiceBox fx:id="leagueChoiceBoxFixturesTab" layoutX="44.0" layoutY="30.0" prefHeight="26.0" prefWidth="282.0" />
-                                    <TableView layoutX="379.0" layoutY="83.0" prefHeight="200.0" prefWidth="317.0">
-                                       <columns>
-                                          <TableColumn editable="false" prefWidth="317.6000122070312" sortable="false" text="Fixture Information" />
-                                       </columns>
-                                    </TableView>
-                                    <TableView fx:id="fixtureTableAdmin" layoutX="21.0" layoutY="83.0" prefHeight="306.0" prefWidth="330.0">
+                                    <AnchorPane layoutX="480.0" layoutY="-1.0" prefHeight="513.0" prefWidth="480.0">
+                                       <children>
+                                          <Button layoutX="99.0" layoutY="27.0" mnemonicParsing="false" onAction="#generateFixtures" prefHeight="26.0" prefWidth="238.0" text="Generate Fixtures">
+                                             <effect>
+                                                <ColorAdjust hue="0.74" saturation="0.19" />
+                                             </effect>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Button>
+                                          <Button layoutX="335.0" layoutY="26.0" mnemonicParsing="false" onAction="#fixturesHelp" prefHeight="28.0" prefWidth="50.0" text="Help?">
+                                             <effect>
+                                                <ColorAdjust hue="-0.82" saturation="0.17" />
+                                             </effect>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Button>
+                                          <CheckBox fx:id="homeAndAway" layoutX="136.0" layoutY="6.0" mnemonicParsing="false" text="Generate Home AND Away Fixtures" />
+                                          <TableView layoutX="15.0" layoutY="71.0" prefHeight="330.0" prefWidth="430.0">
+                                             <columns>
+                                                <TableColumn editable="false" prefWidth="429.0" sortable="false" text="Score Sheet" />
+                                             </columns>
+                                          </TableView>
+                                          <TextArea editable="false" layoutX="15.0" layoutY="95.0" prefHeight="306.0" prefWidth="430.0">
+                                             <effect>
+                                                <ColorAdjust brightness="-0.06" hue="-0.72" saturation="-1.0" />
+                                             </effect>
+                                          </TextArea>
+                                          <Button layoutX="85.0" layoutY="419.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.7" text="New Fixture" />
+                                          <Button fx:id="logout1" layoutX="407.0" layoutY="474.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
+                                          <Button layoutX="166.0" layoutY="461.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Clear Form" />
+                                          <Button layoutX="192.0" layoutY="419.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.7" text="Edit Fixture" />
+                                          <Button layoutX="299.0" layoutY="419.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.7" text="Save Fixture" />
+                                          <AnchorPane layoutX="15.0" layoutY="95.0" prefHeight="74.0" prefWidth="430.0">
+                                             <children>
+                                                <TextField layoutX="18.0" layoutY="24.0" prefHeight="26.0" prefWidth="24.0" />
+                                                <TextField layoutX="167.0" layoutY="24.0" prefHeight="26.0" prefWidth="120.0" />
+                                                <TextField layoutX="290.0" layoutY="24.0" prefHeight="26.0" prefWidth="98.0" />
+                                                <TextField layoutX="45.0" layoutY="24.0" prefHeight="26.0" prefWidth="120.0" />
+                                                <TextField layoutX="389.0" layoutY="24.0" prefHeight="26.0" prefWidth="27.0" />
+                                                <Label layoutX="15.0" layoutY="5.0" text="Week" />
+                                                <Label layoutX="100.0" layoutY="5.0" text="Home" />
+                                                <Label layoutX="213.0" layoutY="6.0" text="Away" />
+                                                <Label layoutX="322.0" layoutY="6.0" text="Venue" />
+                                                <Label layoutX="375.0" layoutY="6.0" text="Played?" />
+                                                <Separator layoutX="1.0" layoutY="54.0" prefHeight="13.0" prefWidth="427.0" />
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                    <ChoiceBox fx:id="leagueChoiceBoxFixturesTab" layoutX="150.0" layoutY="27.0" prefHeight="26.0" prefWidth="300.0" />
+                                    <TableView fx:id="fixtureTableAdmin" layoutX="35.0" layoutY="70.0" prefHeight="377.0" prefWidth="419.0" stylesheets="@admin.css">
                                        <columns>
                                           <TableColumn fx:id="fixtureWeekAdmin" prefWidth="36.000064849853516" text="Week" />
-                                          <TableColumn fx:id="fixtureHomeTeamAdmin" minWidth="0.0" prefWidth="76.0" text="Home" />
-                                          <TableColumn fx:id="fixtureAwayTeamAdmin" prefWidth="71.199951171875" text="Away" />
-                                          <TableColumn fx:id="fixtureVenueAdmin" prefWidth="103.19993591308594" text="Venue" />
-                                          <TableColumn fx:id="fixturePlayedAdmin" prefWidth="42.4000244140625" text="Played" />
+                                          <TableColumn fx:id="fixtureHomeTeamAdmin" minWidth="0.0" prefWidth="82.4000244140625" style="-fx-alignmment: CENTER;" text="Home" />
+                                          <TableColumn fx:id="fixtureVsAdmin" prefWidth="21.5999755859375" text="Vs" />
+                                          <TableColumn fx:id="fixtureAwayTeamAdmin" prefWidth="105.5999755859375" text="Away" />
+                                          <TableColumn fx:id="fixtureVenueAdmin" prefWidth="112.800048828125" text="Venue" />
+                                          <TableColumn fx:id="fixturePlayedAdmin" prefWidth="43.199951171875" text="Played" />
                                        </columns>
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </TableView>
-                                    <Button layoutX="126.0" layoutY="396.0" mnemonicParsing="false" onAction="#deleteFixtures" prefHeight="26.0" prefWidth="147.0" text="Delete All Fixtures">
+                                    <Button layoutX="113.0" layoutY="461.0" mnemonicParsing="false" onAction="#deleteFixtures" prefHeight="26.0" prefWidth="147.0" text="Delete All Fixtures">
                                        <effect>
                                           <ColorAdjust brightness="0.02" contrast="0.04" hue="-0.02" saturation="0.48" />
                                        </effect>
                                     </Button>
-                                    <TextArea editable="false" layoutX="378.0" layoutY="105.0" prefHeight="243.0" prefWidth="322.0" />
-                                    <Button layoutX="379.0" layoutY="355.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Add As NEW Fixture" />
-                                    <Button fx:id="logout1" layoutX="651.0" layoutY="410.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
-                                    <Button layoutX="539.0" layoutY="355.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Update Selected Fixture" />
-                                    <Button layoutX="460.0" layoutY="397.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Clear Form" />
-                                    <Label fx:id="fixtureInfoLabels" alignment="TOP_LEFT" layoutX="388.0" layoutY="114.0" prefHeight="178.0" prefWidth="142.0" />
-                                    <Label fx:id="fixtureInfoVariables" alignment="TOP_LEFT" layoutX="545.0" layoutY="114.0" prefHeight="177.0" prefWidth="146.0" wrapText="true" />
-                                    <Button layoutX="401.0" layoutY="31.0" mnemonicParsing="false" onAction="#generateFixtures" prefHeight="26.0" prefWidth="230.0" text="Generate Fixtures">
-                                       <effect>
-                                          <ColorAdjust hue="0.74" saturation="0.19" />
-                                       </effect>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </Button>
-                                    <Button layoutX="631.0" layoutY="30.0" mnemonicParsing="false" onAction="#fixturesHelp" prefHeight="28.0" prefWidth="50.0" text="Help?">
-                                       <effect>
-                                          <ColorAdjust hue="-0.82" saturation="0.17" />
-                                       </effect>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </Button>
-                                    <CheckBox fx:id="homeAndAway" layoutX="440.0" layoutY="5.0" mnemonicParsing="false" text="Generate Home AND Away Fixtures" />
+                                    <Line endX="220.0" endY="-4.0" layoutX="359.0" layoutY="43.0" startX="92.0" startY="-4.0" />
+                                    <Label layoutX="54.0" layoutY="28.0" prefHeight="17.0" prefWidth="101.0" text="Select League:" />
                                  </children>
                               </AnchorPane>
                            </children>

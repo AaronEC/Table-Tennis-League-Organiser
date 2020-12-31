@@ -18,6 +18,7 @@ public class Fixture implements Serializable{
     private String homeTeamName;
     private String awayTeamName;
     private char played;
+    private String separator;
 
     public Fixture(Team homeTeam, Team awayTeam, int week, String venue) {
         
@@ -29,6 +30,7 @@ public class Fixture implements Serializable{
         this.week = week + 1;
         this.teams = homeTeam.getName() + " vs " + awayTeam.getName();
         this.played = 'n';
+        this.separator = "Vs";
     }
 
     public String setVenue(String venue) {
@@ -56,6 +58,10 @@ public class Fixture implements Serializable{
 
     public void setPlayed(char played) {
         this.played = played;
+    }
+
+    public String getSeparator() {
+        return separator;
     }
 
     public int getWeek() {

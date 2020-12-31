@@ -1,0 +1,13 @@
+/* Sytlesheet for use with admin scene */
+.table-column {
+  -fx-alignment: CENTER;
+}
+#fixtureVenueAdmin {
+  -fx-alignment: CENTER_LEFT;
+}
+#fixtureAwayTeamAdmin {
+  -fx-alignment: CENTER_LEFT;
+}
+#fixtureHomeTeamAdmin {
+  -fx-alignment: CENTER_RIGHT;
+}
