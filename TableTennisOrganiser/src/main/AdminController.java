@@ -28,38 +28,42 @@ import javafx.scene.web.WebView;
 public class AdminController extends UserController implements Initializable{
     
     /** Leagues Tab **/
-    @FXML private TextField leagueEditName;
-    @FXML private TextField leagueNameIn;
-    @FXML private TableView <League> leagueTableAdmin;
-    @FXML private TableColumn <League, String> leagueNameAdmin;
-    @FXML private TableColumn <League, Integer> leagueTeamsAdmin;
-    @FXML private TableColumn <League, Integer> leagueFixturesAdmin;
-    @FXML private WebView help;
+    @FXML private TextField textFieldLeaguesTabUpdateName;
+    @FXML private TextField textFieldLeaguesTabCreateName;
+    @FXML private TableView <League> tableViewLeaguesTab;
+    @FXML private TableColumn <League, String> tableViewLeaguesTabNameColumn;
+    @FXML private TableColumn <League, Integer> tableViewLeaguesTabTeamsColumn;
+    @FXML private TableColumn <League, Integer> tableViewLeaguesTabFixturesColumn;
     
     /** Teams Tab **/
-    @FXML private ChoiceBox<String> leagueChoiceBoxTeamsTab;
-    @FXML private ChoiceBox<String> playerChoiceBox;
-    @FXML private TextField teamEditName;
-    @FXML private TextField teamNameIn;
-    @FXML private TextField playerNameIn;
-    @FXML private TextField venueNameIn;
-    @FXML private TableView <Team> teamTableAdmin;
-    @FXML private TableColumn <Team, String> teamNameAdmin;
-    @FXML private TableColumn <Team, Integer> teamPointsAdmin;
-    @FXML private TableColumn <Team, Integer> teamPlayersAdmin;
-    @FXML private Label teamInfoLabels;
-    @FXML private Label teamInfoVariables;
+    @FXML private ChoiceBox<String> choiceBoxTeamsTabLeague;
+    @FXML private ChoiceBox<String> choiceBoxTeamsTabPlayer;
+    @FXML private TextField textFieldTeamsTabTeamUpdateName;
+    @FXML private TextField textFieldTeamsTabTeamCreateName;
+    @FXML private TextField textFieldTeamsTabVenueUpdateName;
+    @FXML private TextField textFieldTeamsTabPlayerCreateName;
+    @FXML private TableView <Team> tableViewTeamsTab;
+    @FXML private TableColumn <Team, String> tableViewTeamsTabNameColumn;
+    @FXML private TableColumn <Team, Integer> tableViewTeamsTabPointsColumn;
+    @FXML private TableColumn <Team, Integer> tableViewTeamsTabPlayersColumn;
+    @FXML private Label labelTeamsTabTeamInfoLabels;
+    @FXML private Label labelTeamsTabTeamInfoVariables;
     
     /** Fixtures Tab **/
-    @FXML private ChoiceBox<String> leagueChoiceBoxFixturesTab;
-    @FXML private TableView <Fixture> fixtureTableAdmin;
-    @FXML private TableColumn <Fixture, String> fixtureWeekAdmin;
-    @FXML private TableColumn <Fixture, Integer> fixtureHomeTeamAdmin;
-    @FXML private TableColumn <Fixture, Integer> fixtureAwayTeamAdmin;
-    @FXML private TableColumn <Fixture, Integer> fixtureVenueAdmin;
-    @FXML private TableColumn <Fixture, Integer> fixturePlayedAdmin;
-    @FXML private TableColumn <Fixture, String> fixtureVsAdmin;
+    @FXML private ChoiceBox<String> choiceBoxFixturesTabLeague;
+    @FXML private TableView <Fixture> tableViewFixturesTab;
+    @FXML private TableColumn <Fixture, String> tableViewFixturesTabWeekColumn;
+    @FXML private TableColumn <Fixture, Integer> tableViewFixturesTabHomeColumn;
+    @FXML private TableColumn <Fixture, String> tableViewFixturesTabVsColumn;
+    @FXML private TableColumn <Fixture, Integer> tableViewFixturesTabAwayColumn;
+    @FXML private TableColumn <Fixture, Integer> tableViewFixturesTabVenueColumn;
+    @FXML private TableColumn <Fixture, Integer> tableViewFixturesTabPlayedColumn;
+    
     @FXML private CheckBox homeAndAway;
+    
+    /** Score Sheet **/
+    @FXML private ChoiceBox<String> choiceBoxFixturesTabHomePlayer1;
+    @FXML private ChoiceBox<String> choiceBoxFixturesTabHomePlayer2;
     
     /** Class Variables **/
     private final Admin admin = new Admin();
@@ -94,16 +98,16 @@ public class AdminController extends UserController implements Initializable{
      * initialises the UI elements and data structures in 'Leagues' tab.
      */
     public void initializeLeaguesTab()  {
-        leagueFixturesAdmin.setCellValueFactory(new PropertyValueFactory<>("fixturesCount"));
-        leagueTeamsAdmin.setCellValueFactory(new PropertyValueFactory<>("teamsCount"));
-        leagueNameAdmin.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableViewLeaguesTabFixturesColumn.setCellValueFactory(new PropertyValueFactory<>("fixturesCount"));
+        tableViewLeaguesTabTeamsColumn.setCellValueFactory(new PropertyValueFactory<>("teamsCount"));
+        tableViewLeaguesTabNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         updateLeaguesTableView();
 
         //Listener for when a League is selected in TableView.
-        leagueTableAdmin.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        tableViewLeaguesTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                League selected = leagueTableAdmin.getSelectionModel().getSelectedItem();
+                League selected = tableViewLeaguesTab.getSelectionModel().getSelectedItem();
                 System.out.println(selected.getName());               
             }
         });
@@ -113,35 +117,35 @@ public class AdminController extends UserController implements Initializable{
      * removing a league OR team.
      */
     public void updateLeaguesTableView() {
-        leagueTableAdmin.getItems().clear();
-        leagueTableAdmin.setItems(listLeagues(admin.getLeagues()));
+        tableViewLeaguesTab.getItems().clear();
+        tableViewLeaguesTab.setItems(listLeagues(admin.getLeagues()));
     }
     /**
      * Adds a League. Reads league name from leagueNameIn JavaFX TextField.
      * @param event Add League button press OR LeagueNameIn text field return.
      */
-    public void addLeague(ActionEvent event) {
-        if (isEmptyError(leagueNameIn.getText()))   {  return;  }
-        admin.addLeague(leagueNameIn.getText());
-        leagueNameIn.clear();
-        leagueChoiceBoxTeamsTab.getSelectionModel().clearSelection();
+    public void createLeague(ActionEvent event) {
+        if (isEmptyError(textFieldLeaguesTabCreateName.getText()))   {  return;  }
+        admin.addLeague(textFieldLeaguesTabCreateName.getText());
+        textFieldLeaguesTabCreateName.clear();
+        choiceBoxTeamsTabLeague.getSelectionModel().clearSelection();
         admin.saveLeagues();
-        teamTableAdmin.getSelectionModel().selectFirst();
+        tableViewTeamsTab.getSelectionModel().selectFirst();
         updateleagueChoiceBoxTeamsTab();
-        updateleagueChoiceBoxFixturesTab();
+        updateLeagueChoiceBoxFixturesTab();
         updateTeamsTableView();
         updateLeaguesTableView();
     }
     /**
      * Changes a selected League's name. Selection is from leagueTableAdmin
      * TableView JavaFX element.
-     * @param event Change Name button press OR leagueEditName text field return
+     * @param event Change Name button press OR textFieldLeaguesTabUpdateName text field return
      */
-    public void editLeagueName(ActionEvent event) {
-        if (isEmptyError(leagueEditName.getText()))   {  return;  }
-        if (leagueTableAdmin.getSelectionModel().getSelectedItem() == null) {popupWindow("Error", "No league Selected.","Please select a league to change name."); return; }
-        leagueTableAdmin.getSelectionModel().getSelectedItem().setName(leagueEditName.getText());
-        leagueEditName.clear();
+    public void updateLeagueName(ActionEvent event) {
+        if (isEmptyError(textFieldLeaguesTabUpdateName.getText()))   {  return;  }
+        if (tableViewLeaguesTab.getSelectionModel().getSelectedItem() == null) {popupWindow("Error", "No league Selected.","Please select a league to change name."); return; }
+        tableViewLeaguesTab.getSelectionModel().getSelectedItem().setName(textFieldLeaguesTabUpdateName.getText());
+        textFieldLeaguesTabUpdateName.clear();
         admin.saveLeagues();
         updateLeaguesTableView();
         updateleagueChoiceBoxTeamsTab();
@@ -152,7 +156,7 @@ public class AdminController extends UserController implements Initializable{
      * @param event Delete league button press.
      */
     public void deleteLeague(ActionEvent event) {
-        League selection = leagueTableAdmin.getSelectionModel().getSelectedItem();
+        League selection = tableViewLeaguesTab.getSelectionModel().getSelectedItem();
         //Check input is present
         if (selection == null) { 
             popupWindow(); 
@@ -163,7 +167,7 @@ public class AdminController extends UserController implements Initializable{
             admin.saveLeagues();
             updateLeaguesTableView();
             updateleagueChoiceBoxTeamsTab();
-            updateleagueChoiceBoxFixturesTab();
+            updateLeagueChoiceBoxFixturesTab();
         }
     }
     
@@ -182,45 +186,45 @@ public class AdminController extends UserController implements Initializable{
      */
     public void initializeTeamsTab() {
         //Set values for TableView
-        teamNameAdmin.setCellValueFactory(new PropertyValueFactory<>("name"));
-        teamPointsAdmin.setCellValueFactory(new PropertyValueFactory<>("points"));
-        teamPlayersAdmin.setCellValueFactory(new PropertyValueFactory<>("playersCount"));
+        tableViewTeamsTabNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableViewTeamsTabPointsColumn.setCellValueFactory(new PropertyValueFactory<>("points"));
+        tableViewTeamsTabPlayersColumn.setCellValueFactory(new PropertyValueFactory<>("playersCount"));
         
         //Populate UI elements with data
         updateleagueChoiceBoxTeamsTab();
         updateTeamsTableView();
         
         //Listener for League selection in Choice Box.
-        leagueChoiceBoxTeamsTab.setOnAction((event) -> {
+        choiceBoxTeamsTabLeague.setOnAction((event) -> {
             updateTeamsTableView();
-            teamInfoLabels.setText("");
-            teamInfoVariables.setText("");
-            teamTableAdmin.getSelectionModel().selectFirst();
+            labelTeamsTabTeamInfoLabels.setText("");
+            labelTeamsTabTeamInfoVariables.setText("");
+            tableViewTeamsTab.getSelectionModel().selectFirst();
         });
         
         //Listener for when a Team is selected in TableView.
-        teamTableAdmin.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        tableViewTeamsTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                teamSelection = teamTableAdmin.getSelectionModel().getSelectedItem();
+                teamSelection = tableViewTeamsTab.getSelectionModel().getSelectedItem();
                 System.out.println(teamSelection.getName());
                 displayTeamInfo(teamSelection);
             }
         });
-        teamTableAdmin.getSelectionModel().selectFirst();
+        tableViewTeamsTab.getSelectionModel().selectFirst();
     }
     /**
      * Updates the teamTableAdmin TableView in the 'Teams' tab. For use after 
      * adding or removing players or teams.
      */
     public void updateTeamsTableView() {
-        teamTableAdmin.getItems().clear();
-        String leagueChoiceBoxTeamsTabSelection = leagueChoiceBoxTeamsTab.getSelectionModel().getSelectedItem();
+        tableViewTeamsTab.getItems().clear();
+        String leagueChoiceBoxTeamsTabSelection = choiceBoxTeamsTabLeague.getSelectionModel().getSelectedItem();
         ArrayList<League> leagues = admin.getLeagues();
         if (leagueChoiceBoxTeamsTabSelection!=null) {
             leagues.stream().filter(temp -> (leagueChoiceBoxTeamsTabSelection.equals(temp.getName()))).forEachOrdered(temp -> {
                 leagueSelectionTeamsTab = temp;
             });
-            teamTableAdmin.setItems(listTeams(leagueSelectionTeamsTab.getTeams()));
+            tableViewTeamsTab.setItems(listTeams(leagueSelectionTeamsTab.getTeams()));
         }
         else {
             //leagueChoiceBoxTeamsTab.setValue("No Leagues Added");
@@ -228,12 +232,12 @@ public class AdminController extends UserController implements Initializable{
     }
     //Populate League choice box from League ArrayList
     public void updateleagueChoiceBoxTeamsTab() {
-        leagueChoiceBoxTeamsTab.getItems().clear();
+        choiceBoxTeamsTabLeague.getItems().clear();
         admin.viewLeagues().forEach(choices -> {
-            leagueChoiceBoxTeamsTab.getItems().add(choices);
+            choiceBoxTeamsTabLeague.getItems().add(choices);
         });
         try{
-            leagueChoiceBoxTeamsTab.setValue(admin.viewLeagues().get(0));
+            choiceBoxTeamsTabLeague.setValue(admin.viewLeagues().get(0));
             System.out.println("Selected League " + admin.viewLeagues().get(0) + " in choice box");
         } catch (IndexOutOfBoundsException ex) {
             System.err.println("No leagues to load");            
@@ -243,12 +247,12 @@ public class AdminController extends UserController implements Initializable{
     /**
      * Adds a Team to selected League. League selection comes from 
      * leagueChoiceBoxTeamsTab in 'Teams' tab.
-     * @param event Add Team button press OR teamNameIn TextField return.
+     * @param event Add Team button press OR textFieldTeamsTabTeamCreateName TextField return.
      */
-    public void addTeam(ActionEvent event) {
-        if (isEmptyError(teamNameIn.getText()))   {  return;  }
-        admin.addTeam(leagueSelectionTeamsTab, teamNameIn.getText());
-        teamNameIn.clear();
+    public void createTeam(ActionEvent event) {
+        if (isEmptyError(textFieldTeamsTabTeamCreateName.getText()))   {  return;  }
+        admin.addTeam(leagueSelectionTeamsTab, textFieldTeamsTabTeamCreateName.getText());
+        textFieldTeamsTabTeamCreateName.clear();
         admin.saveLeagues();
         updateTeamsTableView();
         updateLeaguesTableView();
@@ -257,13 +261,13 @@ public class AdminController extends UserController implements Initializable{
     /**
      * Changes a selected Team's name. Team selection is from teamTableAdmin
      * TableView JavaFX element in 'Teams' tab.
-     * @param event Rename Team button press OR teamEditName text field return.
+     * @param event Rename Team button press OR textFieldTeamsTabTeamUpdateName text field return.
      */
-    public void editTeamName(ActionEvent event) {
-        if (isEmptyError(teamEditName.getText()))   {  return;  }
-        teamTableAdmin.getSelectionModel().getSelectedItem().setName(teamEditName.getText());
+    public void updateTeamName(ActionEvent event) {
+        if (isEmptyError(textFieldTeamsTabTeamUpdateName.getText()))   {  return;  }
+        tableViewTeamsTab.getSelectionModel().getSelectedItem().setName(textFieldTeamsTabTeamUpdateName.getText());
         
-        teamEditName.clear();
+        textFieldTeamsTabTeamUpdateName.clear();
         admin.saveLeagues();
         updateTeamsTableView();
     }
@@ -273,7 +277,7 @@ public class AdminController extends UserController implements Initializable{
      * @param event Delete Selected Team button press.
      */
     public void deleteTeam(ActionEvent event) {
-        Team selection = teamTableAdmin.getSelectionModel().getSelectedItem();
+        Team selection = tableViewTeamsTab.getSelectionModel().getSelectedItem();
         if (selection == null) { popupWindow(); return;}
         if (popupWindowChoice(("Delete " + selection.getName() +"?"), "WARNING: This Action Cannot be Undone!", "This will also delete all players in this team!"))   {
             admin.removeTeam(leagueSelectionTeamsTab, selection);
@@ -283,9 +287,9 @@ public class AdminController extends UserController implements Initializable{
         }
     }
     /**
-     * Updates the two team information labels (teamInfoLabels and 
-     * teamInfoVariables) with the selected teams information.
-     * @param team Selected team in teamTableAdmin.
+     * Updates the two team information labels (labelTeamsTabTeamInfoLabels and 
+ labelTeamsTabTeamInfoVariables) with the selected teams information.
+     * @param team Selected team in tableViewTeamsTab.
      */
     public void displayTeamInfo(Team team)   {
         ArrayList<Player> players = team.getPlayers();
@@ -296,7 +300,7 @@ public class AdminController extends UserController implements Initializable{
             });
         }
         
-        teamInfoLabels.setText("""
+        labelTeamsTabTeamInfoLabels.setText("""
                 Name:
                 Matches Played:
                 Matches Won:
@@ -305,7 +309,7 @@ public class AdminController extends UserController implements Initializable{
                 Total Points:
                 Home Venue:
                 Players:"""); 
-        teamInfoVariables.setText(
+        labelTeamsTabTeamInfoVariables.setText(
                 team.getName() + "\n" +
                 team.getMatchesPlayed() + "\n" +
                 team.getMatchesWon() + "\n" +
@@ -317,27 +321,27 @@ public class AdminController extends UserController implements Initializable{
                 );
         
         //Populate Player ChoiceBox
-        playerChoiceBox.getItems().clear();
+        choiceBoxTeamsTabPlayer.getItems().clear();
         team.getPlayers().forEach(chosenPlayer -> {
-            playerChoiceBox.getItems().add(chosenPlayer.getName());
+            choiceBoxTeamsTabPlayer.getItems().add(chosenPlayer.getName());
         });
         if (!team.getPlayers().isEmpty()) {
-            playerChoiceBox.setValue(team.getPlayers().get(0).getName());
+            choiceBoxTeamsTabPlayer.setValue(team.getPlayers().get(0).getName());
         }
         else {
-        playerChoiceBox.setValue("No Players in Team");
+        choiceBoxTeamsTabPlayer.setValue("No Players in Team");
         }
     }
     /**
-     * Updates the selected team's (in teamTableAdmin Table View) venue string
-     * with the input from venueNameIn text field.
-     * @param event Update Venue button press OR venueNameIn text field return.
+     * Updates the selected team's (in tableViewTeamsTab Table View) venue string
+ with the input from textFieldTeamsTabPlayerCreateName text field.
+     * @param event Update Venue button press OR textFieldTeamsTabPlayerCreateName text field return.
      */
     public void updateVenue(ActionEvent event) {
-        if (isEmptyError(venueNameIn.getText()))   {  return;  }
-        admin.updateVenue(teamSelection, venueNameIn.getText());
+        if (isEmptyError(textFieldTeamsTabVenueUpdateName.getText()))   {  return;  }
+        admin.updateVenue(teamSelection, textFieldTeamsTabVenueUpdateName.getText());
         displayTeamInfo(teamSelection);
-        venueNameIn.clear();
+        textFieldTeamsTabVenueUpdateName.clear();
         admin.saveLeagues();
     }
     //Converts Team ArrayList to Observable list, for TableView.
@@ -353,16 +357,16 @@ public class AdminController extends UserController implements Initializable{
     /**
      * Adds a Player to selected Team. Player name comes from playerNameIn
      * TextField in 'Teams' tab.
-     * @param event Add New Player button OR playerNameIn TextField return.
+     * @param event Add New Player button OR textFieldTeamsTabVenueUpdateName TextField return.
      */
-    public void addPlayer(ActionEvent event) {
-        if (isEmptyError(playerNameIn.getText()))   {  return;  }
-        admin.addPlayer(teamSelection, playerNameIn.getText());
-        teamNameIn.clear();
+    public void createPlayer(ActionEvent event) {
+        if (isEmptyError(textFieldTeamsTabPlayerCreateName.getText()))   {  return;  }
+        admin.addPlayer(teamSelection, textFieldTeamsTabPlayerCreateName.getText());
+        textFieldTeamsTabPlayerCreateName.clear();
         admin.saveLeagues();
         displayTeamInfo(teamSelection);
         updateTeamsTableView();
-        playerNameIn.clear();
+        textFieldTeamsTabPlayerCreateName.clear();
     }
     /**
      * Deletes a Player from selected Team. Team selection comes from 
@@ -372,7 +376,7 @@ public class AdminController extends UserController implements Initializable{
     public void deletePlayer(ActionEvent event) {
         Player playerSelection = null;
         for (Player player : teamSelection.getPlayers()) {
-            if (playerChoiceBox.getSelectionModel().getSelectedItem().equals(player.getName())) {
+            if (choiceBoxTeamsTabPlayer.getSelectionModel().getSelectedItem().equals(player.getName())) {
                 playerSelection = player;
             }
         }
@@ -394,41 +398,41 @@ public class AdminController extends UserController implements Initializable{
     
     public void initializeFixturesTab() {
         //Set values for TableView
-        fixtureWeekAdmin.setCellValueFactory(new PropertyValueFactory<>("week"));
-        fixtureHomeTeamAdmin.setCellValueFactory(new PropertyValueFactory<>("homeTeamName"));
-        fixtureAwayTeamAdmin.setCellValueFactory(new PropertyValueFactory<>("awayTeamName"));
-        fixtureVenueAdmin.setCellValueFactory(new PropertyValueFactory<>("venue"));
-        fixturePlayedAdmin.setCellValueFactory(new PropertyValueFactory<>("played"));
-        fixtureVsAdmin.setCellValueFactory(new PropertyValueFactory<>("separator"));
+        tableViewFixturesTabWeekColumn.setCellValueFactory(new PropertyValueFactory<>("week"));
+        tableViewFixturesTabHomeColumn.setCellValueFactory(new PropertyValueFactory<>("homeTeamName"));
+        tableViewFixturesTabAwayColumn.setCellValueFactory(new PropertyValueFactory<>("awayTeamName"));
+        tableViewFixturesTabVenueColumn.setCellValueFactory(new PropertyValueFactory<>("venue"));
+        tableViewFixturesTabPlayedColumn.setCellValueFactory(new PropertyValueFactory<>("played"));
+        tableViewFixturesTabVsColumn.setCellValueFactory(new PropertyValueFactory<>("separator"));
         
         //Populate UI elements with data
-        updateleagueChoiceBoxFixturesTab();
+        updateLeagueChoiceBoxFixturesTab();
         updateFixturesTableView();
         
         //Listener for League selection in Choice Box.
-        leagueChoiceBoxFixturesTab.setOnAction((event) -> {
+        choiceBoxFixturesTabLeague.setOnAction((event) -> {
             updateFixturesTableView();
-            fixtureTableAdmin.getSelectionModel().selectFirst();
+            tableViewFixturesTab.getSelectionModel().selectFirst();
         });
         
         //Listener for when a Fixture is selected in TableView.
-        fixtureTableAdmin.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        tableViewFixturesTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                fixtureSelection = fixtureTableAdmin.getSelectionModel().getSelectedItem();
+                fixtureSelection = tableViewFixturesTab.getSelectionModel().getSelectedItem();
                 System.out.println(fixtureSelection.getTeams());
                 //displayFixtureInfo(fixtureSelection);
             }
         });
-        fixtureTableAdmin.getSelectionModel().selectFirst();
+        tableViewFixturesTab.getSelectionModel().selectFirst();
     }
     
-    public void updateleagueChoiceBoxFixturesTab() {
-        leagueChoiceBoxFixturesTab.getItems().clear();
+    public void updateLeagueChoiceBoxFixturesTab() {
+        choiceBoxFixturesTabLeague.getItems().clear();
         admin.viewLeagues().forEach(choices -> {
-            leagueChoiceBoxFixturesTab.getItems().add(choices);
+            choiceBoxFixturesTabLeague.getItems().add(choices);
         });
         try{
-            leagueChoiceBoxFixturesTab.setValue(admin.viewLeagues().get(0));
+            choiceBoxFixturesTabLeague.setValue(admin.viewLeagues().get(0));
             System.out.println("Selected League " + admin.viewLeagues().get(0) + " in choice box");
         } catch (IndexOutOfBoundsException ex) {
             System.err.println("No leagues to load");            
@@ -436,14 +440,14 @@ public class AdminController extends UserController implements Initializable{
     }
     
     public void updateFixturesTableView() {
-        fixtureTableAdmin.getItems().clear();
-        String leagueChoiceBoxFixturesTabSelection = leagueChoiceBoxFixturesTab.getSelectionModel().getSelectedItem();
+        tableViewFixturesTab.getItems().clear();
+        String leagueChoiceBoxFixturesTabSelection = choiceBoxFixturesTabLeague.getSelectionModel().getSelectedItem();
         ArrayList<League> leagues = admin.getLeagues();
         if (leagueChoiceBoxFixturesTabSelection!=null) {
             leagues.stream().filter(temp -> (leagueChoiceBoxFixturesTabSelection.equals(temp.getName()))).forEachOrdered(temp -> {
                 leagueSelectionFixturesTab = temp;
             });
-            fixtureTableAdmin.setItems(listFixtures(leagueSelectionFixturesTab.getFixtures()));
+            tableViewFixturesTab.setItems(listFixtures(leagueSelectionFixturesTab.getFixtures()));
         }
         else {
             //leagueChoiceBoxTeamsTab.setValue("No Leagues Added");
