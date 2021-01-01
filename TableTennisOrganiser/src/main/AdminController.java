@@ -58,12 +58,18 @@ public class AdminController extends UserController implements Initializable{
     @FXML private TableColumn <Fixture, Integer> tableViewFixturesTabAwayColumn;
     @FXML private TableColumn <Fixture, Integer> tableViewFixturesTabVenueColumn;
     @FXML private TableColumn <Fixture, Integer> tableViewFixturesTabPlayedColumn;
-    
-    @FXML private CheckBox homeAndAway;
+    @FXML private CheckBox checkBoxFixturesTabHomeAway;
     
     /** Score Sheet **/
+    @FXML private ChoiceBox<String> choiceBoxFixturesTabHomeTeam;
+    @FXML private ChoiceBox<String> choiceBoxFixturesTabAway;
     @FXML private ChoiceBox<String> choiceBoxFixturesTabHomePlayer1;
     @FXML private ChoiceBox<String> choiceBoxFixturesTabHomePlayer2;
+    @FXML private ChoiceBox<String> choiceBoxFixturesTabAwayPlayer1;
+    @FXML private ChoiceBox<String> choiceBoxFixturesTabAwayPlayer2;
+    @FXML private CheckBox checkBoxFixturesTabPlayed;
+    @FXML private TextField textFieldFixturesTabWeek;
+    @FXML private TextField textFieldFixturesVenue;
     
     /** Class Variables **/
     private final Admin admin = new Admin();
@@ -213,8 +219,8 @@ public class AdminController extends UserController implements Initializable{
         tableViewTeamsTab.getSelectionModel().selectFirst();
     }
     /**
-     * Updates the teamTableAdmin TableView in the 'Teams' tab. For use after 
-     * adding or removing players or teams.
+     * Updates the TableView in the 'Teams' tab. For use after adding or 
+     * removing players or teams.
      */
     public void updateTeamsTableView() {
         tableViewTeamsTab.getItems().clear();
@@ -230,7 +236,10 @@ public class AdminController extends UserController implements Initializable{
             //leagueChoiceBoxTeamsTab.setValue("No Leagues Added");
         }
     }
-    //Populate League choice box from League ArrayList
+    /**
+     * Updates the league choice box on the teams tab with all leagues in 
+     * the database.
+     */
     public void updateleagueChoiceBoxTeamsTab() {
         choiceBoxTeamsTabLeague.getItems().clear();
         admin.viewLeagues().forEach(choices -> {
@@ -258,6 +267,7 @@ public class AdminController extends UserController implements Initializable{
         updateLeaguesTableView();
         updateFixturesTableView();
     }
+    
     /**
      * Changes a selected Team's name. Team selection is from teamTableAdmin
      * TableView JavaFX element in 'Teams' tab.
@@ -396,6 +406,9 @@ public class AdminController extends UserController implements Initializable{
     /** Fixtures Tab Methods **/
     /**************************/
     
+    /**
+     * initialises the UI elements and data structures in 'Fixtures' tab.
+     */
     public void initializeFixturesTab() {
         //Set values for TableView
         tableViewFixturesTabWeekColumn.setCellValueFactory(new PropertyValueFactory<>("week"));
@@ -426,6 +439,10 @@ public class AdminController extends UserController implements Initializable{
         tableViewFixturesTab.getSelectionModel().selectFirst();
     }
     
+    /**
+     * Updates the league choice box on the fixtures tab with all leagues in 
+     * the database.
+     */
     public void updateLeagueChoiceBoxFixturesTab() {
         choiceBoxFixturesTabLeague.getItems().clear();
         admin.viewLeagues().forEach(choices -> {
@@ -439,6 +456,10 @@ public class AdminController extends UserController implements Initializable{
         }
     }
     
+    /**
+     * Updates the TableView in the 'Teams' tab. For use after adding or 
+     * removing players or teams.
+     */
     public void updateFixturesTableView() {
         tableViewFixturesTab.getItems().clear();
         String leagueChoiceBoxFixturesTabSelection = choiceBoxFixturesTabLeague.getSelectionModel().getSelectedItem();
@@ -454,9 +475,24 @@ public class AdminController extends UserController implements Initializable{
         }
     }
     
+    /**
+     * This generates a league style set of fixtures for the selected league in
+     * the fixtures tab league selection box using the following rule set:
+     *  - Each team will play every other team in the league.
+     *  - No team will play more than once a week.
+     *  - Each team only plays another team once.
+     *  - If there are an odd number of teams in the league,
+     *  a 'bye' will be assigned once per week, where it is 
+     *  not possible for that team to play.
+     * 
+     *  - If "Generate home AND away fixtures" is selected,
+     *  every team will play every other team at in both
+     *  a HOME and AWAY match (doubles the fixtures).
+     * @param event Generate Fixtures GUI button press.
+     */
     public void generateFixtures(ActionEvent event) {
         boolean homeAway = false;
-        if (homeAndAway.isSelected()) {
+        if (checkBoxFixturesTabHomeAway.isSelected()) {
             homeAway = true;
         }
         if (leagueSelectionFixturesTab.getTeamsCount() < 2) {
@@ -471,11 +507,20 @@ public class AdminController extends UserController implements Initializable{
             updateLeaguesTableView();
         }
     }
-    
+    /**
+     * Pops up a window to explain to the user in more detail how the league 
+     * fixtures are generated and what rules the algorithm follows.
+     * @param event Help GUI button press.
+     */
     public void fixturesHelp(ActionEvent event) {
         popupWindowInformation();
     }
     
+    /**
+     * Deletes ALL fixtures from the league selected in the fixtures tab league
+     * selection box.
+     * @param event Delete ALL Fixtures GUI button press.
+     */
     public void deleteFixtures(ActionEvent event) {
         if (popupWindowChoice("Delete " + leagueSelectionFixturesTab.getName() + " fixtures?", "This will DELETE ALL current fixtures in this league", "Are you sure?")) {
         admin.deleteFixtures(leagueSelectionFixturesTab);
@@ -485,17 +530,15 @@ public class AdminController extends UserController implements Initializable{
         }
     }
     
-    //Converts Fixture ArrayList to Observable list, for TableView.
+    //Converts Fixture ArrayList to Observable list, for display in TableView.
     private ObservableList<Fixture> listFixtures(ArrayList<Fixture> input)    {
         ObservableList<Fixture> output = FXCollections.observableArrayList(input);
         return output;
     }
-    
-    
-    
+
     /**
-     * Checks if String is empty. ONLY used by UI controllers for checking user 
-     * inputs before processing.
+     * Checks if String is empty. ONLY used by UI controllers for error checking
+     * user text inputs before processing.
      * @param in String
      * @return True - Empty String (creates pop up error window), 
      * False - Not Empty String.
