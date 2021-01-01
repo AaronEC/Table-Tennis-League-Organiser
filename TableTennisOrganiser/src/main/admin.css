@@ -11,3 +11,9 @@
 #fixtureHomeTeamAdmin {
   -fx-alignment: CENTER_RIGHT;
 }
+#teamNameAdmin {
+  -fx-alignment: CENTER_LEFT;
+}
+#leagueNameAdmin {
+  -fx-alignment: CENTER_LEFT;
+}

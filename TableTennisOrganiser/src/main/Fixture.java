@@ -29,7 +29,7 @@ public class Fixture implements Serializable{
         this.awayTeamName = awayTeam.getName();
         this.week = week + 1;
         this.teams = homeTeam.getName() + " vs " + awayTeam.getName();
-        this.played = 'n';
+        this.played = 'N';
         this.separator = "Vs";
     }
 
