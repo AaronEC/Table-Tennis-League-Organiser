@@ -149,7 +149,7 @@ public class UserController extends User implements Initializable{
                   not possible for that team to play.
                   
                 - If "Generate home AND away fixtures" is selected,
-                  every team will play every other team at in both
+                  every team will play every other team TWICE in both
                   a HOME and AWAY match (doubles the fixtures).
             """;
         alert.setContentText(s);
