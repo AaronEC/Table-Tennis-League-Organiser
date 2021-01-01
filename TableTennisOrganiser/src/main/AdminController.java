@@ -17,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 /**
  * <h1>Admin GUI Controller Class</h1>
  * Controls FMXL GUI elements for Admin class.
@@ -68,7 +69,6 @@ public class AdminController extends UserController implements Initializable{
     /** Score Sheet **/
     @FXML private ChoiceBox<String> choiceBoxFixturesTabHomeTeam;
     @FXML private ChoiceBox<String> choiceBoxFixturesTabAwayTeam;
-    @FXML private ChoiceBox<String> choiceBoxFixturesTabAway;
     @FXML private ChoiceBox<String> choiceBoxFixturesTabHomePlayer1;
     @FXML private ChoiceBox<String> choiceBoxFixturesTabHomePlayer2;
     @FXML private ChoiceBox<String> choiceBoxFixturesTabAwayPlayer1;
@@ -227,7 +227,7 @@ public class AdminController extends UserController implements Initializable{
         tableViewTeamsTab.getSelectionModel().selectFirst();
     }
     /**
-     * Updates the TableView in the 'Teams' tab. For use after adding or 
+     * Updates the TableView in the 'Teams' tab. F0or use after adding or 
      * removing players or teams.
      */
     public void updateTeamsTableView() {
@@ -237,11 +237,13 @@ public class AdminController extends UserController implements Initializable{
         if (leagueChoiceBoxTeamsTabSelection!=null) {
             leagues.stream().filter(temp -> (leagueChoiceBoxTeamsTabSelection.equals(temp.getName()))).forEachOrdered(temp -> {
                 leagueSelectionTeamsTab = temp;
+                System.out.println("League selected in teams tab: " + temp.getName());
             });
             tableViewTeamsTab.setItems(listTeams(leagueSelectionTeamsTab.getTeams()));
         }
         else {
             //leagueChoiceBoxTeamsTab.setValue("No Leagues Added");
+            System.err.println("No leagues for choice box");
         }
     }
     /**
@@ -433,21 +435,17 @@ public class AdminController extends UserController implements Initializable{
         updateLeagueChoiceBoxFixturesTab();
         updateFixturesTableView();
         
-        //Listener for League selection in Choice Box.
+        //Listener for League selection in Fixtures Tab.
         choiceBoxFixturesTabLeague.setOnAction((event) -> {
-            updateFixturesTableView();
+            admin.getLeagues().forEach(league -> {
+                if (league.getName() == choiceBoxFixturesTabLeague.getSelectionModel().getSelectedItem()) {
+                    leagueSelectionFixturesTab = league;
+                    System.out.println("League selected in fixures tab: " + league.getName());
+                    updateFixturesTableView();
+                }
+            });
             tableViewFixturesTab.getSelectionModel().selectFirst();
         });
-        
-        //Listener for when a Fixture is selected in TableView.
-        tableViewFixturesTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                fixtureSelection = tableViewFixturesTab.getSelectionModel().getSelectedItem();
-                System.out.println("Fixture Selected: " + fixtureSelection.getTeams());
-                displayFixtureInfo(fixtureSelection);
-            }
-        });
-        tableViewFixturesTab.getSelectionModel().selectFirst();
         
         //Listener for Home Team selection in Choice Box.
         choiceBoxFixturesTabHomeTeam.setOnAction((event) -> {
@@ -467,6 +465,16 @@ public class AdminController extends UserController implements Initializable{
                 }
             });
         });
+        
+        //Listener for when a Fixture is selected in TableView.
+        tableViewFixturesTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                fixtureSelection = tableViewFixturesTab.getSelectionModel().getSelectedItem();
+                System.out.println("Fixture Selected: " + fixtureSelection.getTeams());
+                updateFixtureInfo(fixtureSelection);
+            }
+        });
+        tableViewFixturesTab.getSelectionModel().selectFirst();
     }
     
     /**
@@ -568,7 +576,17 @@ public class AdminController extends UserController implements Initializable{
     /** 5. Score Sheet Methods **/
     /****************************/
     
-    public void displayFixtureInfo(Fixture fixture) {
+    public void updateFixtureInfo(Fixture fixture) {
+        //Clear player choice boxes to (to avoid duplication)
+        choiceBoxFixturesTabHomePlayer1.getItems().clear();
+        choiceBoxFixturesTabHomePlayer2.getItems().clear();
+        choiceBoxFixturesTabAwayPlayer1.getItems().clear();
+        choiceBoxFixturesTabAwayPlayer1.setValue("");
+        choiceBoxFixturesTabAwayPlayer2.getItems().clear();
+        choiceBoxFixturesTabAwayPlayer2.setValue("");
+        choiceBoxFixturesTabAwayTeam.getItems().clear();
+        choiceBoxFixturesTabHomeTeam.getItems().clear();
+        System.out.println("Cleared players");
         //Update fixture information top ribbon
         textFieldFixturesTabWeek.setText(String.valueOf(fixture.getWeek()));
         textFieldFixturesTabVenue.setText(fixture.getVenue());
@@ -588,42 +606,55 @@ public class AdminController extends UserController implements Initializable{
      * @param fixture The fixture to get the teams from.
      */
     public void updateTeamsChoiceBoxes(Fixture fixture) {
+        homeTeamSelectionFixturesTab = fixture.getHomeTeam();
+        awayTeamSelectionFixturesTab = fixture.getAwayTeam();
+        fixture.getHomeTeam().countPlayers();
+        System.out.println("Home team Players no: " + fixture.getHomeTeam().getPlayersCount());
+        fixture.getAwayTeam().countPlayers();
+        System.out.println("Away team Players no: " + fixture.getAwayTeam().getPlayersCount());
         //Home team.
+
+        System.out.println("Home team: " + fixture.getHomeTeamName());
         try {
-        leagueSelectionTeamsTab.getTeams().forEach(team -> {
+        leagueSelectionFixturesTab.getTeams().forEach(team -> {
             choiceBoxFixturesTabHomeTeam.getItems().add(team.getName());
             if (team.getName() == fixture.getHomeTeamName()) {
                 choiceBoxFixturesTabHomeTeam.getSelectionModel().select(fixture.getHomeTeamName());
             }
         });
-        updateHomePlayers();
-        } catch (Exception ex) {
-            System.out.println("No team selected by user yet");
-        }
+        
         //Away team.
-        try {
-        choiceBoxFixturesTabAwayTeam.getItems().clear();
-        leagueSelectionTeamsTab.getTeams().forEach(team -> {
-            choiceBoxFixturesTabAwayTeam.getItems().add(team.getName());
-            if (team.getName() == fixture.getAwayTeamName()) {
-                choiceBoxFixturesTabAwayTeam.getSelectionModel().select(fixture.getAwayTeamName());
-            }
-        });
-        updateAwayPlayers();
-        } catch (Exception ex) {
-            System.out.println("No team selected by user yet");
+        //First we check for a Bye (this can only ever be the away team)
+        System.out.println("Away team: " + fixture.getAwayTeamName());
+        if (fixture.getAwayTeamName().equals("*Bye*")) {
+            choiceBoxFixturesTabAwayTeam.setValue("*Bye*");
+            choiceBoxFixturesTabAwayPlayer1.setValue("*Bye*");
+            choiceBoxFixturesTabAwayPlayer2.setValue("*Bye*");
+            
+        } 
+        //If not a Bye match, set and display the away team.
+        else {
+            leagueSelectionFixturesTab.getTeams().forEach(team -> {
+                choiceBoxFixturesTabAwayTeam.getItems().add(team.getName());
+                if (team.getName() == fixture.getAwayTeamName()) {
+                    choiceBoxFixturesTabAwayTeam.getSelectionModel().select(fixture.getAwayTeamName());
+                }
+            });
         }
+        } catch (NullPointerException ex) {
+            System.out.println("Fixture not initialised");
+        }
+        updateHomePlayers();
+        updateAwayPlayers();
     }
     
     public void updateHomePlayers() {
         //Player 1
-        choiceBoxFixturesTabHomePlayer1.getItems().clear();
         homeTeamSelectionFixturesTab.getPlayers().forEach(player -> {
             choiceBoxFixturesTabHomePlayer1.getItems().add(player.getName());
         });
         choiceBoxFixturesTabHomePlayer1.getSelectionModel().selectFirst();
         //Player 2
-        choiceBoxFixturesTabHomePlayer2.getItems().clear();
         homeTeamSelectionFixturesTab.getPlayers().forEach(player -> {
             choiceBoxFixturesTabHomePlayer2.getItems().add(player.getName());
         });
@@ -632,21 +663,31 @@ public class AdminController extends UserController implements Initializable{
     
     public void updateAwayPlayers() {
         //Player 1
-        choiceBoxFixturesTabAwayPlayer1.getItems().clear();
         awayTeamSelectionFixturesTab.getPlayers().forEach(player -> {
             choiceBoxFixturesTabAwayPlayer1.getItems().add(player.getName());
         });
         choiceBoxFixturesTabAwayPlayer1.getSelectionModel().selectFirst();
         //Player 2
-        choiceBoxFixturesTabAwayPlayer2.getItems().clear();
         awayTeamSelectionFixturesTab.getPlayers().forEach(player -> {
             choiceBoxFixturesTabAwayPlayer2.getItems().add(player.getName());
         });
         choiceBoxFixturesTabAwayPlayer2.getSelectionModel().select(1);
     }
     
+    public void noPlayersErrorCheckHome(MouseEvent mouseEvent) {
+        if (homeTeamSelectionFixturesTab.getPlayersCount() < 2) {
+        popupWindow("No Players", "No players in team " + homeTeamSelectionFixturesTab.getName(), "Please add more players in teams tab to create a fixture");
+        } 
+    }
+    
+    public void noPlayersErrorCheckAway(MouseEvent mouseEvent) {
+        if (awayTeamSelectionFixturesTab.getPlayersCount() < 2) {
+        popupWindow("No Players", "No players in team " + awayTeamSelectionFixturesTab.getName(), "Please add more players in teams tab to create a fixture");
+        } 
+    }
+    
     /**
-     * Checks if String is empty. ONLY used by UI controllers for error checking
+     * Checks if String is empty. ONLY used by GUI controllers for error checking
      * user text inputs before processing.
      * @param in String
      * @return True - Empty String (creates pop up error window), 

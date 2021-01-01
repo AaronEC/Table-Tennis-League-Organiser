@@ -120,6 +120,7 @@ public class Admin extends Viewer {
         if (teamsCount % 2 == 1) {
             bye = true;
             league.addTeam("*Bye*");
+            league.getTeams().get(teamsCount).setVenue("*Bye*");
             teamsCount++;
         }
         
