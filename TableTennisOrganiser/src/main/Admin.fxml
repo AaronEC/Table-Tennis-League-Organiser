@@ -273,7 +273,10 @@
                                                 </TextField>
                                              </children>
                                           </GridPane>
-                                          <TextArea layoutX="295.0" layoutY="317.0" prefHeight="57.0" prefWidth="132.0" />
+                                          <TextArea fx:id="resultsText" editable="false" layoutX="295.0" layoutY="317.0" prefHeight="57.0" prefWidth="132.0">
+                                             <effect>
+                                                <ColorAdjust brightness="0.38" contrast="-0.13" />
+                                             </effect></TextArea>
                                           <Label layoutX="22.0" layoutY="179.0" text="Home Players" />
                                           <Label layoutX="31.0" layoutY="302.0" text="Away Players" />
                                           <Label layoutX="327.0" layoutY="208.0" text="Doubles Set:" />
@@ -286,8 +289,8 @@
                                           <Line endX="-5.20001220703125" endY="-11.600006103515625" layoutX="72.0" layoutY="291.0" startX="-5.20001220703125" startY="8.399993896484375" />
                                           <Line endX="-16.0" endY="20.800018310546875" layoutX="82.0" layoutY="301.0" startX="-16.0" startY="42.399993896484375" />
                                           <Label layoutX="142.0" layoutY="208.0" text="Set 1" />
-                                          <Label layoutX="226.0" layoutY="208.0" text="Set 2" />
-                                          <Label layoutX="142.0" layoutY="388.0" text="Set 3" />
+                                          <Label layoutX="226.0" layoutY="208.0" text="Set 3" />
+                                          <Label layoutX="142.0" layoutY="388.0" text="Set 2" />
                                           <Label layoutX="228.0" layoutY="388.0" text="Set 4" />
                                           <Label layoutX="195.0" layoutY="232.0" text="1" />
                                           <Label layoutX="195.0" layoutY="254.0" text="2" />

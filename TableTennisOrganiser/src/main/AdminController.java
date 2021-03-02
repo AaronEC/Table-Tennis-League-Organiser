@@ -16,6 +16,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -78,8 +79,9 @@ public class AdminController extends UserController implements Initializable{
     @FXML private CheckBox checkBoxFixturesTabPlayed;
     @FXML private TextField textFieldFixturesTabWeek;
     @FXML private TextField textFieldFixturesTabVenue;
+    @FXML private TextArea resultsText;
     
-    /** Score Text Fields **/
+    /** Score Grid Panes **/
     @FXML private GridPane scoreGrid = new GridPane();
     @FXML private GridPane doublesGrid = new GridPane();
     
@@ -603,7 +605,7 @@ public class AdminController extends UserController implements Initializable{
         }
         //Update & populate choice boxes
         updateTeamsChoiceBoxes(fixture);
-        updateScoreSheetDisplay(fixture);
+        updateScoreSheetScores(fixture);
         //update teams variables
         
     }
@@ -704,65 +706,87 @@ public class AdminController extends UserController implements Initializable{
     public void calculateScores(ActionEvent event) {
         System.out.println("main.AdminController.calculateScores()");
         
-        ArrayList<String> singlesScores = new ArrayList<String>();
-        ArrayList<String> doublesScores = new ArrayList<String>();
-        
-        // Get user input from GUI grid panes
+        // Data arrays for storing scores
+        ArrayList<String> singlesScores = new ArrayList<>();
+        ArrayList<String> doublesScores = new ArrayList<>();
         
         // Create Array of singles scores from user input
         ObservableList<Node> sChildren = scoreGrid.getChildren();
         for(Node node : sChildren) {
             TextField score = (TextField) node;
-            singlesScores.add(score.getText());
+            // Error check input
+            if (score.getText().contains(":") || "".equals(score.getText())) {
+                singlesScores.add(score.getText());
+            } else {
+                popupWindow("Invalid Input", "Please use 'Home Score : Away Score' format", "E.G. 9:11 or 11:0");
+            }
         }
         
         // Create Array of doubles scores from user input
         ObservableList<Node> dChildren = doublesGrid.getChildren();
         for(Node node : dChildren) {
             TextField score = (TextField) node;
-            doublesScores.add(score.getText());
+            // Error check input
+            if (score.getText().contains(":") || "".equals(score.getText())) {
+                doublesScores.add(score.getText());
+            } else {
+                popupWindow("Invalid Input", "Please use 'Score : Score' format", "E.G. 9:11 or 11:0");
+            }
         }
         
+        // Call Admin class logic to update Fixture scores
         admin.modifyScoreSheet(fixtureSelection, singlesScores, doublesScores);
         admin.saveLeagues();
+        resultsText.setText("Winner: " + fixtureSelection.calculateWinner().getName());
         
     }
     
-    public void updateScoreSheetDisplay(Fixture fixture) {
+    public void updateScoreSheetScores(Fixture fixture) {
         
-
+        // Get nodes from GridPane
         ObservableList<Node> currentGrid = scoreGrid.getChildren();
+        // Empty list for return
         ObservableList<Node> newGrid = FXCollections.observableArrayList();
-
-        int i = 0;
+        // Get any saved scores for this fixture
+        ArrayList<String> scores = fixture.getSinglesScores();
         
-        try {
-            ArrayList<String> scores = fixture.getSinglesScores();
-
-            System.out.println(scores);
-
-            for (Node node : currentGrid) {
-                TextField text = new TextField();
+        // Create list of scores to populate GridPane (Blank if none saved)
+        int i = 0;
+        for (Node node : currentGrid) {
+            TextField text = new TextField();
+            if (scores != null) {
                 text.setText(scores.get(i));
-                node = (Node) text;
-                newGrid.add(node);
-                i++;
+            } else {
+                text.setText("");
             }
-
-            scoreGrid.getChildren().clear();
-            int row = 0;
-            int col = 0;
-            for (Node node : newGrid) {
-                scoreGrid.add(node, col, row);
-                row++;
-                if (row % 6 == 0) {
-                    col++;
-                    row = 0;
-                }
-            }
-        } catch (NullPointerException e) {
-            System.err.println("No score sheet found for fixture");
+            node = (Node) text;
+            newGrid.add(node);
+            i++;
         }
+        // Clear current GridPane
+        scoreGrid.getChildren().clear();
+        
+        // Populate GridPane with previously loaded scores
+        int row = 0;
+        int col = 0;
+        for (Node node : newGrid) {
+            scoreGrid.add(node, col, row);
+            row++;
+            if (row % 6 == 0) {
+                col++;
+                row = 0;
+            }
+        }
+        
+        // Update results box
+        System.out.println(scores);
+        if (scores != null) {
+                resultsText.setText("Winner: " + fixtureSelection.calculateWinner().getName());
+            } else {
+                resultsText.setText("");
+            }
+        
+        
     }
     
     /**
