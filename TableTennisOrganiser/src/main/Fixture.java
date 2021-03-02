@@ -45,50 +45,47 @@ public class Fixture implements Serializable{
             return null;
         }
     }
-
+    /**
+     * Calculates the winner of this fixture and returns the Team object.
+     * Returns null if unable to calculate winner (this shouldn't happen with
+     * correct inputs).
+     * @return 
+     */
     public Team calculateWinner() {
         int homeGames = 0;
         int awayGames = 0;
         int homeSets = 0;
         int awaySets = 0;
-        int draws = 0;
         int index = 0;
         for (String game : singlesScores) {
-            String[] score = game.split(":");
-            if (Integer.parseInt(score[0]) > Integer.parseInt(score[1])) {
-                homeGames++;
-            } else if (Integer.parseInt(score[1]) > Integer.parseInt(score[0])) {
-                awayGames++;
-            } else {
-                draws++;
-            }
-            index++;
-            if (index == 3) {
-                System.out.println(homeGames);
-                System.out.println(awayGames);
-                if (homeGames > awayGames) {
-                    homeSets++;
-                } else if (homeGames < awayGames) {
-                    awaySets++;
-                } else {
-                    draws++;
+            if (game != "") {
+                String[] score = game.split(":");
+                if (Integer.parseInt(score[0]) > Integer.parseInt(score[1])) {
+                    homeGames++;
+                } else if (Integer.parseInt(score[1]) > Integer.parseInt(score[0])) {
+                    awayGames++;
                 }
-                homeGames = 0;
-                awayGames = 0;
-                index = 0;
+                index++;
+                if (index == 3) {
+                    if (homeGames > awayGames) {
+                        homeSets++;
+                    } else if (homeGames < awayGames) {
+                        awaySets++;
+                    }
+                    homeGames = 0;
+                    awayGames = 0;
+                    index = 0;
+                }
             }
-            
         }
         System.out.println(homeSets);
         System.out.println(awaySets);
-        System.out.println(draws);
         
         if (homeSets > awaySets) {
             return homeTeam;
         } else if (awaySets > homeSets) {
             return awayTeam;
         } else {
-            System.err.println("Draw detected: check input data");
             return null;
         }
     }

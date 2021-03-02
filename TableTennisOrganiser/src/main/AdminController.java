@@ -715,10 +715,12 @@ public class AdminController extends UserController implements Initializable{
         for(Node node : sChildren) {
             TextField score = (TextField) node;
             // Error check input
-            if (score.getText().contains(":") || "".equals(score.getText())) {
+            if (score.getText().matches("[0-9]+[:][0-9]+") || "".equals(score.getText())) {
                 singlesScores.add(score.getText());
             } else {
                 popupWindow("Invalid Input", "Please use 'Home Score : Away Score' format", "E.G. 9:11 or 11:0");
+                resultsText.setText("Please add more\nscores");
+                return;
             }
         }
         
@@ -727,17 +729,24 @@ public class AdminController extends UserController implements Initializable{
         for(Node node : dChildren) {
             TextField score = (TextField) node;
             // Error check input
-            if (score.getText().contains(":") || "".equals(score.getText())) {
+            if (score.getText().matches("[0-9]+[:][0-9]+") || "".equals(score.getText())) {
                 doublesScores.add(score.getText());
             } else {
                 popupWindow("Invalid Input", "Please use 'Score : Score' format", "E.G. 9:11 or 11:0");
+                return;
             }
         }
         
+        System.out.println("TEST");
         // Call Admin class logic to update Fixture scores
         admin.modifyScoreSheet(fixtureSelection, singlesScores, doublesScores);
         admin.saveLeagues();
-        resultsText.setText("Winner: " + fixtureSelection.calculateWinner().getName());
+        try {
+            resultsText.setText("Winner: " + fixtureSelection.calculateWinner().getName());
+        } catch (NullPointerException e) {
+            System.err.println("Unable to determine winner: check input data");
+            resultsText.setText("Please add more\nscores");
+        }
         
     }
     
@@ -781,12 +790,14 @@ public class AdminController extends UserController implements Initializable{
         // Update results box
         System.out.println(scores);
         if (scores != null) {
+            try {
                 resultsText.setText("Winner: " + fixtureSelection.calculateWinner().getName());
-            } else {
-                resultsText.setText("");
+            } catch (NullPointerException e) {
+                System.err.println("Unable to determine winner: check input data");
             }
-        
-        
+        } else {
+            resultsText.setText("");
+        }
     }
     
     /**
