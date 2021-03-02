@@ -603,6 +603,7 @@ public class AdminController extends UserController implements Initializable{
         }
         //Update & populate choice boxes
         updateTeamsChoiceBoxes(fixture);
+        updateScoreSheetDisplay(fixture);
         //update teams variables
         
     }
@@ -723,7 +724,45 @@ public class AdminController extends UserController implements Initializable{
         }
         
         admin.modifyScoreSheet(fixtureSelection, singlesScores, doublesScores);
+        admin.saveLeagues();
         
+    }
+    
+    public void updateScoreSheetDisplay(Fixture fixture) {
+        
+
+        ObservableList<Node> currentGrid = scoreGrid.getChildren();
+        ObservableList<Node> newGrid = FXCollections.observableArrayList();
+
+        int i = 0;
+        
+        try {
+            ArrayList<String> scores = fixture.getSinglesScores();
+
+            System.out.println(scores);
+
+            for (Node node : currentGrid) {
+                TextField text = new TextField();
+                text.setText(scores.get(i));
+                node = (Node) text;
+                newGrid.add(node);
+                i++;
+            }
+
+            scoreGrid.getChildren().clear();
+            int row = 0;
+            int col = 0;
+            for (Node node : newGrid) {
+                scoreGrid.add(node, col, row);
+                row++;
+                if (row % 6 == 0) {
+                    col++;
+                    row = 0;
+                }
+            }
+        } catch (NullPointerException e) {
+            System.err.println("No score sheet found for fixture");
+        }
     }
     
     /**
@@ -743,5 +782,6 @@ public class AdminController extends UserController implements Initializable{
         }
         return error;
     }
+
 }
 

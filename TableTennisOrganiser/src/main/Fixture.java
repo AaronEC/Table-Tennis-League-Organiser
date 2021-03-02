@@ -105,6 +105,13 @@ public class Fixture implements Serializable{
     public void setDoublesScores(ArrayList<String> doublesScores) {
         this.doublesScores = doublesScores;
     }
-    
+
+    public ArrayList<String> getSinglesScores() {
+        return singlesScores;
+    }
+
+    public ArrayList<String> getDoublesScores() {
+        return doublesScores;
+    }
     
 }

@@ -177,7 +177,6 @@
                                               <RowConstraints maxHeight="37.60001220703125" minHeight="10.0" prefHeight="20.8000244140625" vgrow="SOMETIMES" />
                                               <RowConstraints maxHeight="40.799975585937496" minHeight="10.0" prefHeight="24.000012207031247" vgrow="SOMETIMES" />
                                               <RowConstraints maxHeight="36.79998779296876" minHeight="0.0" prefHeight="24.599987792968747" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="48.400000000000006" minHeight="2.6000122070312557" prefHeight="27.20001220703125" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="33.59998779296875" minHeight="0.0" prefHeight="23.39998779296876" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="48.000036621093756" minHeight="10.0" prefHeight="17.200012207031236" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="43.199987792968756" minHeight="10.0" prefHeight="29.99998779296874" vgrow="SOMETIMES" />
@@ -213,32 +212,32 @@
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="S3G1" prefWidth="72.0" GridPane.rowIndex="4">
+                                                <TextField fx:id="S3G1" prefWidth="72.0" GridPane.rowIndex="3">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="S3G2" prefWidth="72.0" GridPane.rowIndex="5">
+                                                <TextField fx:id="S3G2" prefWidth="72.0" GridPane.rowIndex="4">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="S3G3" prefWidth="72.0" GridPane.rowIndex="6">
+                                                <TextField fx:id="S3G3" prefWidth="72.0" GridPane.rowIndex="5">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="S4G1" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                <TextField fx:id="S4G1" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="S4G2" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                <TextField fx:id="S4G2" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="S4G3" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                <TextField fx:id="S4G3" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
