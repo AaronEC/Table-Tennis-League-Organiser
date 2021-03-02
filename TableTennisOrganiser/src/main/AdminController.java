@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -18,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 /**
  * <h1>Admin GUI Controller Class</h1>
  * Controls FMXL GUI elements for Admin class.
@@ -76,6 +78,10 @@ public class AdminController extends UserController implements Initializable{
     @FXML private CheckBox checkBoxFixturesTabPlayed;
     @FXML private TextField textFieldFixturesTabWeek;
     @FXML private TextField textFieldFixturesTabVenue;
+    
+    /** Score Text Fields **/
+    @FXML private GridPane scoreGrid = new GridPane();
+    @FXML private GridPane doublesGrid = new GridPane();
     
     /** Class Variables **/
     private final Admin admin = new Admin();
@@ -577,7 +583,7 @@ public class AdminController extends UserController implements Initializable{
     /****************************/
     
     public void updateFixtureInfo(Fixture fixture) {
-        //Clear player choice boxes to (to avoid duplication)
+        //Clear player choice boxes (to avoid duplication)
         choiceBoxFixturesTabHomePlayer1.getItems().clear();
         choiceBoxFixturesTabHomePlayer2.getItems().clear();
         choiceBoxFixturesTabAwayPlayer1.getItems().clear();
@@ -612,8 +618,8 @@ public class AdminController extends UserController implements Initializable{
         System.out.println("Home team Players no: " + fixture.getHomeTeam().getPlayersCount());
         fixture.getAwayTeam().countPlayers();
         System.out.println("Away team Players no: " + fixture.getAwayTeam().getPlayersCount());
+        
         //Home team.
-
         System.out.println("Home team: " + fixture.getHomeTeamName());
         try {
         leagueSelectionFixturesTab.getTeams().forEach(team -> {
@@ -684,6 +690,40 @@ public class AdminController extends UserController implements Initializable{
         if (awayTeamSelectionFixturesTab.getPlayersCount() < 2) {
         popupWindow("No Players", "No players in team " + awayTeamSelectionFixturesTab.getName(), "Please add more players in teams tab to create a fixture");
         } 
+    }
+    
+    /* Score Calculation Methods */
+    
+    /**
+     * Calculates the final scores (including winner/loser and points assigned)
+     * from the game scores which have been entered by the user into the score
+     * sheet on the fixtures tab.
+     * @param event Calculate Scores button press on fixtures GUI tab
+     */
+    public void calculateScores(ActionEvent event) {
+        System.out.println("main.AdminController.calculateScores()");
+        
+        ArrayList<String> singlesScores = new ArrayList<String>();
+        ArrayList<String> doublesScores = new ArrayList<String>();
+        
+        // Get user input from GUI grid panes
+        
+        // Create Array of singles scores from user input
+        ObservableList<Node> sChildren = scoreGrid.getChildren();
+        for(Node node : sChildren) {
+            TextField score = (TextField) node;
+            singlesScores.add(score.getText());
+        }
+        
+        // Create Array of doubles scores from user input
+        ObservableList<Node> dChildren = doublesGrid.getChildren();
+        for(Node node : dChildren) {
+            TextField score = (TextField) node;
+            doublesScores.add(score.getText());
+        }
+        
+        admin.modifyScoreSheet(fixtureSelection, singlesScores, doublesScores);
+        
     }
     
     /**

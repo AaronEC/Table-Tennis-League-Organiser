@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Not yet implemented
+ * Class for holding all attributes of a fixture.
  * @author Aaron
  */
 public class Fixture implements Serializable{
@@ -19,6 +19,8 @@ public class Fixture implements Serializable{
     private String awayTeamName;
     private char played;
     private String separator;
+    private ArrayList<String> singlesScores;
+    private ArrayList<String> doublesScores;
 
     public Fixture(Team homeTeam, Team awayTeam, int week, String venue) {
         
@@ -95,4 +97,14 @@ public class Fixture implements Serializable{
     public String getVenue() {
         return venue;
     }
+
+    public void setSinglesScores(ArrayList<String> singlesScores) {
+        this.singlesScores = singlesScores;
+    }
+
+    public void setDoublesScores(ArrayList<String> doublesScores) {
+        this.doublesScores = doublesScores;
+    }
+    
+    
 }

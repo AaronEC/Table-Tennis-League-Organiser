@@ -159,8 +159,19 @@ public class Admin extends Viewer {
         return components[1] + " v " + components[0];
     }
     
-    void modifyScoreSheet(League league, Fixture fixture) {
-
+    /**
+     * Updates the score sheet for the given fixture. Scores must be passed as
+     * an array of strings in the following format:
+     * (int)home score : (int)away score
+     * 4x3 singles games
+     * 1x3 doubles games
+     * @param fixture 
+     */
+    void modifyScoreSheet(Fixture fixture, ArrayList<String> singlesScores, ArrayList<String> doublesScores) {
+        
+        System.out.println(fixture.getAwayTeamName() + singlesScores + doublesScores);
+        fixture.setSinglesScores(singlesScores);
+        fixture.setDoublesScores(doublesScores);
     }
 
     void saveLeagueToDatabase(League league) {

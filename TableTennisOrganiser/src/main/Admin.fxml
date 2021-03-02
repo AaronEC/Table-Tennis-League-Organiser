@@ -168,7 +168,7 @@
                                                 <ChoiceBox fx:id="choiceBoxFixturesTabAwayTeam" layoutX="167.0" layoutY="28.0" prefWidth="120.0" />
                                              </children>
                                           </AnchorPane>
-                                          <GridPane hgap="40.0" layoutX="133.0" layoutY="232.0" prefHeight="146.0" prefWidth="130.0">
+                                          <GridPane fx:id="scoreGrid" hgap="40.0" layoutX="133.0" layoutY="232.0" prefHeight="146.0" prefWidth="130.0">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.199951171875" minWidth="0.0" prefWidth="26.200000000000003" />
                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.40002441406247" minWidth="10.0" prefWidth="25.400000000000006" />
@@ -183,67 +183,62 @@
                                                 <RowConstraints maxHeight="43.199987792968756" minHeight="10.0" prefHeight="29.99998779296874" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                <TextField fx:id="S1G1" prefWidth="72.0">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                <TextField fx:id="S1G2" prefWidth="72.0" GridPane.rowIndex="1">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <TextField fx:id="S1G3" prefWidth="72.0" GridPane.rowIndex="2">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField fx:id="S2G1" prefWidth="72.0" GridPane.columnIndex="1">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1">
+                                                <TextField fx:id="S2G2" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="6">
+                                                <TextField fx:id="S2G3" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="5">
+                                                <TextField fx:id="S3G1" prefWidth="72.0" GridPane.rowIndex="4">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="4">
+                                                <TextField fx:id="S3G2" prefWidth="72.0" GridPane.rowIndex="5">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="2">
+                                                <TextField fx:id="S3G3" prefWidth="72.0" GridPane.rowIndex="6">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="1">
+                                                <TextField fx:id="S4G1" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0">
+                                                <TextField fx:id="S4G2" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                                   <font>
-                                                      <Font size="11.0" />
-                                                   </font>
-                                                </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                <TextField fx:id="S4G3" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
@@ -251,7 +246,7 @@
                                              </children>
                                           </GridPane>
                                           <ChoiceBox fx:id="choiceBoxFixturesTabHomePlayer1" layoutX="113.0" layoutY="175.0" minHeight="-Infinity" onMouseReleased="#noPlayersErrorCheckHome" prefHeight="25.0" prefWidth="86.0" />
-                                          <GridPane hgap="10.0" layoutX="337.0" layoutY="231.0" prefHeight="64.0" prefWidth="42.0">
+                                          <GridPane fx:id="doublesGrid" hgap="10.0" layoutX="337.0" layoutY="231.0" prefHeight="64.0" prefWidth="42.0">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.199951171875" minWidth="10.0" prefWidth="106.40007324218749" />
                                              </columnConstraints>
@@ -262,17 +257,17 @@
                                                 <RowConstraints maxHeight="10.600012207031256" minHeight="2.6000122070312557" prefHeight="2.6000122070312557" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                <TextField prefWidth="72.0">
+                                                <TextField fx:id="SDG1" prefWidth="72.0">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="2">
+                                                <TextField fx:id="SDG2" prefWidth="72.0" GridPane.rowIndex="1">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="1">
+                                                <TextField fx:id="SDG3" prefWidth="72.0" GridPane.rowIndex="2">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
@@ -283,7 +278,7 @@
                                           <Label layoutX="22.0" layoutY="179.0" text="Home Players" />
                                           <Label layoutX="31.0" layoutY="302.0" text="Away Players" />
                                           <Label layoutX="327.0" layoutY="208.0" text="Doubles Set:" />
-                                          <Button layoutX="295.0" layoutY="373.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="Generate Scores" />
+                                          <Button defaultButton="true" layoutX="295.0" layoutY="373.0" mnemonicParsing="false" onAction="#calculateScores" prefHeight="25.0" prefWidth="132.0" text="Calculate Scores" />
                                           <CheckBox fx:id="checkBoxFixturesTabPlayed" layoutX="414.0" layoutY="126.0" mnemonicParsing="false" prefWidth="16.0" />
                                           <ChoiceBox fx:id="choiceBoxFixturesTabHomePlayer2" layoutX="199.0" layoutY="175.0" minHeight="-Infinity" onMouseReleased="#noPlayersErrorCheckHome" prefHeight="25.0" prefWidth="86.0" />
                                           <ChoiceBox fx:id="choiceBoxFixturesTabAwayPlayer1" layoutX="23.0" layoutY="254.0" minHeight="-Infinity" onMouseReleased="#noPlayersErrorCheckAway" prefHeight="25.0" prefWidth="86.0" />
