@@ -23,7 +23,6 @@ public class Team implements Serializable{
     private int matchesPlayed;
     private int matchesWon;
     private int matchesLost;
-    private int matchesDrawn;
     private int playersCount;
 
     public Team(String name)    {
@@ -33,8 +32,6 @@ public class Team implements Serializable{
         this.rank = 0;
         this.matchesPlayed = 0;
         this.matchesWon = 0;
-        this.matchesLost = 0;
-        this.matchesDrawn = 0;
         this.points = 0;
         this.teamPlayers = new ArrayList<>();
         this.hasPlayed = new ArrayList<Team>();
@@ -74,17 +71,24 @@ public class Team implements Serializable{
         return this.teamPlayers;
     }
     
-
     public void setName(String name) {
         this.name = name;
     }
     
+    public void setMatchesPlayed(int matchesPlayed) {
+        this.matchesPlayed = matchesPlayed;
+    }
+
+    public void incrementMatchesWon() {
+        this.matchesWon++;
+    }
+
     public void setMatchesLost(int matchesLost) {
         this.matchesLost = matchesLost;
     }
 
-    public void setMatchesDrawn(int matchesDrawn) {
-        this.matchesDrawn = matchesDrawn;
+    public int getMatchesLost() {
+        return matchesLost;
     }
 
     public void setVenue(String venue) {
@@ -115,6 +119,10 @@ public class Team implements Serializable{
         return this.points;
     }
 
+    public void addPoints(int points) {
+        this.points += points;
+    }
+ 
     public String getVenue() {
         return this.venue;
     }
@@ -126,17 +134,16 @@ public class Team implements Serializable{
     public int getMatchesPlayed() {
         return matchesPlayed;
     }
-
-    public int getMatchesLost() {
-        return matchesLost;
-    }
-
-    public int getMatchesDrawn() {
-        return matchesDrawn;
+    
+    public void resetStats() {
+        this.matchesLost = 0;
+        this.matchesPlayed = 0;
+        this.matchesWon = 0;
+        this.points = 0;
     }
     
-    private int calculatePoints() {
-        return ((this.matchesWon * 3) + (this.matchesDrawn * 1));
+    private void calculatePoints() {
+        //return ((this.matchesWon * 3) + (this.matchesDrawn * 1));
     }
     /**
      * Loads players from database file "players.csv" and stores them to 

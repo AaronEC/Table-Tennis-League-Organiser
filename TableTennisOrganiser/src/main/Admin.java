@@ -167,11 +167,10 @@ public class Admin extends Viewer {
      * 1x3 doubles games
      * @param fixture 
      */
-    void modifyScoreSheet(Fixture fixture, ArrayList<String> singlesScores, ArrayList<String> doublesScores) {
+    void modifyScoreSheet(Fixture fixture, ArrayList<String> scores) {
         
-        System.out.println(fixture.getAwayTeamName() + singlesScores + doublesScores);
-        fixture.setSinglesScores(singlesScores);
-        fixture.setDoublesScores(doublesScores);
+        System.out.println(fixture.getAwayTeamName() + scores);
+        fixture.setScores(scores);
     }
 
     void saveLeagueToDatabase(League league) {
@@ -196,5 +195,9 @@ public class Admin extends Viewer {
     void deleteFixtures(League league) {
         league.resetFixtures();
         league.countFixtures();
+    }
+
+    void updateTeams() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

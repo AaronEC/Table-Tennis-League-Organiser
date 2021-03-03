@@ -83,7 +83,6 @@ public class AdminController extends UserController implements Initializable{
     
     /** Score Grid Panes **/
     @FXML private GridPane scoreGrid = new GridPane();
-    @FXML private GridPane doublesGrid = new GridPane();
     
     /** Class Variables **/
     private final Admin admin = new Admin();
@@ -235,7 +234,7 @@ public class AdminController extends UserController implements Initializable{
         tableViewTeamsTab.getSelectionModel().selectFirst();
     }
     /**
-     * Updates the TableView in the 'Teams' tab. F0or use after adding or 
+     * Updates the TableView in the 'Teams' tab. For use after adding or 
      * removing players or teams.
      */
     public void updateTeamsTableView() {
@@ -316,7 +315,7 @@ public class AdminController extends UserController implements Initializable{
     }
     /**
      * Updates the two team information labels (labelTeamsTabTeamInfoLabels and 
- labelTeamsTabTeamInfoVariables) with the selected teams information.
+     * labelTeamsTabTeamInfoVariables) with the selected teams information.
      * @param team Selected team in tableViewTeamsTab.
      */
     public void displayTeamInfo(Team team)   {
@@ -707,8 +706,7 @@ public class AdminController extends UserController implements Initializable{
         System.out.println("main.AdminController.calculateScores()");
         
         // Data arrays for storing scores
-        ArrayList<String> singlesScores = new ArrayList<>();
-        ArrayList<String> doublesScores = new ArrayList<>();
+        ArrayList<String> scores = new ArrayList<>();
         
         // Create Array of singles scores from user input
         ObservableList<Node> sChildren = scoreGrid.getChildren();
@@ -716,38 +714,29 @@ public class AdminController extends UserController implements Initializable{
             TextField score = (TextField) node;
             // Error check input
             if (score.getText().matches("[0-9]+[:][0-9]+") || "".equals(score.getText())) {
-                singlesScores.add(score.getText());
+                scores.add(score.getText());
             } else {
                 popupWindow("Invalid Input", "Please use 'Home Score : Away Score' format", "E.G. 9:11 or 11:0");
-                resultsText.setText("Please add more\nscores");
                 return;
             }
         }
         
-        // Create Array of doubles scores from user input
-        ObservableList<Node> dChildren = doublesGrid.getChildren();
-        for(Node node : dChildren) {
-            TextField score = (TextField) node;
-            // Error check input
-            if (score.getText().matches("[0-9]+[:][0-9]+") || "".equals(score.getText())) {
-                doublesScores.add(score.getText());
-            } else {
-                popupWindow("Invalid Input", "Please use 'Score : Score' format", "E.G. 9:11 or 11:0");
-                return;
-            }
-        }
-        
-        System.out.println("TEST");
         // Call Admin class logic to update Fixture scores
-        admin.modifyScoreSheet(fixtureSelection, singlesScores, doublesScores);
+        admin.modifyScoreSheet(fixtureSelection, scores);
         admin.saveLeagues();
         try {
-            resultsText.setText("Winner: " + fixtureSelection.calculateWinner().getName());
+            resultsText.setText("Winner: " 
+                        + fixtureSelection.calculateWinner().getName()
+                        + "\nScore: "
+                        + fixtureSelection.getResult());
         } catch (NullPointerException e) {
             System.err.println("Unable to determine winner: check input data");
             resultsText.setText("Please add more\nscores");
         }
         
+        // Update team stats for this league
+        admin.generateTeamStats(leagueSelectionTeamsTab);
+        updateTeamsTableView();
     }
     
     public void updateScoreSheetScores(Fixture fixture) {
@@ -757,7 +746,7 @@ public class AdminController extends UserController implements Initializable{
         // Empty list for return
         ObservableList<Node> newGrid = FXCollections.observableArrayList();
         // Get any saved scores for this fixture
-        ArrayList<String> scores = fixture.getSinglesScores();
+        ArrayList<String> scores = fixture.getScores();
         
         // Create list of scores to populate GridPane (Blank if none saved)
         int i = 0;
@@ -791,7 +780,10 @@ public class AdminController extends UserController implements Initializable{
         System.out.println(scores);
         if (scores != null) {
             try {
-                resultsText.setText("Winner: " + fixtureSelection.calculateWinner().getName());
+                resultsText.setText("Winner: " 
+                        + fixtureSelection.calculateWinner().getName()
+                        + "\nScore: "
+                        + fixtureSelection.getResult());
             } catch (NullPointerException e) {
                 System.err.println("Unable to determine winner: check input data");
             }

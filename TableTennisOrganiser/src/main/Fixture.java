@@ -15,12 +15,14 @@ public class Fixture implements Serializable{
     private String venue;
     private Team homeTeam;
     private Team awayTeam;
+    private Team winner;
     private String homeTeamName;
     private String awayTeamName;
     private char played;
     private String separator;
-    private ArrayList<String> singlesScores;
-    private ArrayList<String> doublesScores;
+    private ArrayList<String> scores;
+    private String result;
+
 
     public Fixture(Team homeTeam, Team awayTeam, int week, String venue) {
         
@@ -57,7 +59,7 @@ public class Fixture implements Serializable{
         int homeSets = 0;
         int awaySets = 0;
         int index = 0;
-        for (String game : singlesScores) {
+        for (String game : scores) {
             if (game != "") {
                 String[] score = game.split(":");
                 if (Integer.parseInt(score[0]) > Integer.parseInt(score[1])) {
@@ -81,13 +83,16 @@ public class Fixture implements Serializable{
         System.out.println(homeSets);
         System.out.println(awaySets);
         
+        result = String.format("%d : %d", homeSets, awaySets);
+        
         if (homeSets > awaySets) {
-            return homeTeam;
+            winner = homeTeam;
         } else if (awaySets > homeSets) {
-            return awayTeam;
+            winner = awayTeam;
         } else {
             return null;
         }
+        return winner;
     }
 
     public void setWeek(int week) {
@@ -138,20 +143,21 @@ public class Fixture implements Serializable{
         return venue;
     }
 
-    public void setSinglesScores(ArrayList<String> singlesScores) {
-        this.singlesScores = singlesScores;
+    public void setScores(ArrayList<String> scores) {
+        this.scores = scores;
     }
 
-    public void setDoublesScores(ArrayList<String> doublesScores) {
-        this.doublesScores = doublesScores;
+    public ArrayList<String> getScores() {
+        return scores;
     }
 
-    public ArrayList<String> getSinglesScores() {
-        return singlesScores;
+    public String getResult() {
+        return result;
     }
 
-    public ArrayList<String> getDoublesScores() {
-        return doublesScores;
+    public Team getWinner() {
+        return winner;
     }
+    
     
 }
