@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @version 0.1
  * @since 06/12/2020
  */
-public class Admin extends Viewer {
+public class Admin extends Timer {
     /**
      * Saves ALL leagues currently created by the Admin user to a serialized
      * .bin file. Gets file name from super class 'User'.
@@ -200,4 +200,13 @@ public class Admin extends Viewer {
     void updateTeams() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    protected ArrayList<String> viewLeagues() {
+        ArrayList<String> leagueNames = new ArrayList<>();
+        ArrayList<League> leagues = getLeagues();
+        leagues.forEach(tempLeagues -> {
+            leagueNames.add(tempLeagues.getName());
+        });
+        return leagueNames;
+    }   
 }
