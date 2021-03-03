@@ -16,6 +16,7 @@ public class Fixture implements Serializable{
     private Team homeTeam;
     private Team awayTeam;
     private Team winner;
+    private Team loser;
     private String homeTeamName;
     private String awayTeamName;
     private char played;
@@ -87,8 +88,10 @@ public class Fixture implements Serializable{
         
         if (homeSets > awaySets) {
             winner = homeTeam;
+            loser = awayTeam;
         } else if (awaySets > homeSets) {
             winner = awayTeam;
+            loser = homeTeam;
         } else {
             return null;
         }
@@ -157,6 +160,10 @@ public class Fixture implements Serializable{
 
     public Team getWinner() {
         return winner;
+    }
+
+    public Team getLoser() {
+        return loser;
     }
     
     

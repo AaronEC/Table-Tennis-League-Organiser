@@ -16,9 +16,17 @@ public class Timer extends User {
             }
             
             for (Fixture fixture : league.getFixtures()) {
-                if (fixture.getWinner() != null) {
-                    fixture.getWinner().incrementMatchesWon();
-                    fixture.getWinner().addPoints(3);
+                Team winner = fixture.getWinner();
+                Team loser = fixture.getLoser();
+                
+                if (winner != null) {
+                    winner.incrementMatchesWon();
+                    winner.incrementMatchesPlayed();
+                    winner.addPoints(3);
+                }
+                if (loser != null) {
+                    loser.incrementMatchesPlayed();
+                    loser.addPoints(1);
                 }
             }
 	}

@@ -87,7 +87,7 @@ public class ViewerController extends UserController implements Initializable{
                 input.getPlayers().toString());
         teamStatsLabels.setText("Matches Won: \nMatches Lost: \nMatches Drawn: ");
         teamStatsData.setText(input.getMatchesWon() + "\n" + 
-                input.getMatchesLost() + "\n" + input.getMatchesDrawn());
+                input.getMatchesLost() + "\n");
     }
     /**
      * Converts a League class object into and ObservableList<Teams> for use 

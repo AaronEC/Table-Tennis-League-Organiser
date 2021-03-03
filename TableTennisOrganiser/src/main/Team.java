@@ -22,7 +22,6 @@ public class Team implements Serializable{
     private int points;
     private int matchesPlayed;
     private int matchesWon;
-    private int matchesLost;
     private int playersCount;
 
     public Team(String name)    {
@@ -82,13 +81,13 @@ public class Team implements Serializable{
     public void incrementMatchesWon() {
         this.matchesWon++;
     }
-
-    public void setMatchesLost(int matchesLost) {
-        this.matchesLost = matchesLost;
+    
+    public void incrementMatchesPlayed() {
+        this.matchesPlayed++;
     }
 
     public int getMatchesLost() {
-        return matchesLost;
+        return matchesPlayed - matchesWon;
     }
 
     public void setVenue(String venue) {
@@ -136,7 +135,6 @@ public class Team implements Serializable{
     }
     
     public void resetStats() {
-        this.matchesLost = 0;
         this.matchesPlayed = 0;
         this.matchesWon = 0;
         this.points = 0;

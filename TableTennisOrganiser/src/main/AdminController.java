@@ -215,6 +215,7 @@ public class AdminController extends UserController implements Initializable{
         updateleagueChoiceBoxTeamsTab();
         updateTeamsTableView();
         
+        
         //Listener for League selection in Choice Box.
         choiceBoxTeamsTabLeague.setOnAction((event) -> {
             updateTeamsTableView();
@@ -332,7 +333,6 @@ public class AdminController extends UserController implements Initializable{
                 Matches Played:
                 Matches Won:
                 Matches Lost:
-                Matches Drawn:
                 Total Points:
                 Home Venue:
                 Players:"""); 
@@ -340,7 +340,6 @@ public class AdminController extends UserController implements Initializable{
                 team.getName() + "\n" +
                 team.getMatchesPlayed() + "\n" +
                 team.getMatchesWon() + "\n" +
-                team.getMatchesLost()  + "\n" +
                 team.getMatchesLost()  + "\n" +
                 team.getPoints()  + "\n" + 
                 team.getVenue() + "\n" + 
@@ -703,7 +702,6 @@ public class AdminController extends UserController implements Initializable{
      * @param event Calculate Scores button press on fixtures GUI tab
      */
     public void calculateScores(ActionEvent event) {
-        System.out.println("main.AdminController.calculateScores()");
         
         // Data arrays for storing scores
         ArrayList<String> scores = new ArrayList<>();
@@ -723,7 +721,9 @@ public class AdminController extends UserController implements Initializable{
         
         // Call Admin class logic to update Fixture scores
         admin.modifyScoreSheet(fixtureSelection, scores);
+        admin.generateTeamStats(leagueSelectionTeamsTab);
         admin.saveLeagues();
+        updateTeamsTableView();
         try {
             resultsText.setText("Winner: " 
                         + fixtureSelection.calculateWinner().getName()
@@ -733,10 +733,6 @@ public class AdminController extends UserController implements Initializable{
             System.err.println("Unable to determine winner: check input data");
             resultsText.setText("Please add more\nscores");
         }
-        
-        // Update team stats for this league
-        admin.generateTeamStats(leagueSelectionTeamsTab);
-        updateTeamsTableView();
     }
     
     public void updateScoreSheetScores(Fixture fixture) {
