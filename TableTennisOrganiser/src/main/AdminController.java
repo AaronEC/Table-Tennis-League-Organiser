@@ -37,61 +37,60 @@ import javafx.scene.layout.GridPane;
 public class AdminController extends UserController implements Initializable{
     
     /** Leagues Tab **/
-    @FXML private TextField textFieldLeaguesTabUpdateName;
-    @FXML private TextField textFieldLeaguesTabCreateName;
-    @FXML private TableView <League> tableViewLeaguesTab;
-    @FXML private TableColumn <League, String> tableViewLeaguesTabNameColumn;
-    @FXML private TableColumn <League, Integer> tableViewLeaguesTabTeamsColumn;
-    @FXML private TableColumn <League, Integer> tableViewLeaguesTabFixturesColumn;
+    @FXML protected TextField textFieldLeaguesTabUpdateName;
+    @FXML protected TextField textFieldLeaguesTabCreateName;
+    @FXML protected TableView <League> tableViewLeaguesTab;
+    @FXML protected TableColumn <League, String> tableViewLeaguesTabNameColumn;
+    @FXML protected TableColumn <League, Integer> tableViewLeaguesTabTeamsColumn;
+    @FXML protected TableColumn <League, Integer> tableViewLeaguesTabFixturesColumn;
     
     /** Teams Tab **/
-    @FXML private ChoiceBox<String> choiceBoxTeamsTabLeague;
-    @FXML private ChoiceBox<String> choiceBoxTeamsTabPlayer;
-    @FXML private TextField textFieldTeamsTabTeamUpdateName;
-    @FXML private TextField textFieldTeamsTabTeamCreateName;
-    @FXML private TextField textFieldTeamsTabVenueUpdateName;
-    @FXML private TextField textFieldTeamsTabPlayerCreateName;
-    @FXML private TableView <Team> tableViewTeamsTab;
-    @FXML private TableColumn <Team, String> tableViewTeamsTabNameColumn;
-    @FXML private TableColumn <Team, Integer> tableViewTeamsTabPointsColumn;
-    @FXML private TableColumn <Team, Integer> tableViewTeamsTabPlayersColumn;
-    @FXML private Label labelTeamsTabTeamInfoLabels;
-    @FXML private Label labelTeamsTabTeamInfoVariables;
+    @FXML protected ChoiceBox<String> choiceBoxTeamsTabLeague;
+    @FXML protected ChoiceBox<String> choiceBoxTeamsTabPlayer;
+    @FXML protected TextField textFieldTeamsTabTeamUpdateName;
+    @FXML protected TextField textFieldTeamsTabTeamCreateName;
+    @FXML protected TextField textFieldTeamsTabVenueUpdateName;
+    @FXML protected TextField textFieldTeamsTabPlayerCreateName;
+    @FXML protected TableView <Team> tableViewTeamsTab;
+    @FXML protected TableColumn <Team, String> tableViewTeamsTabNameColumn;
+    @FXML protected TableColumn <Team, Integer> tableViewTeamsTabPointsColumn;
+    @FXML protected TableColumn <Team, Integer> tableViewTeamsTabPlayersColumn;
+    @FXML protected Label labelTeamsTabTeamInfoLabels;
+    @FXML protected Label labelTeamsTabTeamInfoVariables;
     
     /** Fixtures Tab **/
-    @FXML private ChoiceBox<String> choiceBoxFixturesTabLeague;
-    @FXML private TableView <Fixture> tableViewFixturesTab;
-    @FXML private TableColumn <Fixture, String> tableViewFixturesTabWeekColumn;
-    @FXML private TableColumn <Fixture, Integer> tableViewFixturesTabHomeColumn;
-    @FXML private TableColumn <Fixture, String> tableViewFixturesTabVsColumn;
-    @FXML private TableColumn <Fixture, Integer> tableViewFixturesTabAwayColumn;
-    @FXML private TableColumn <Fixture, Integer> tableViewFixturesTabVenueColumn;
-    @FXML private TableColumn <Fixture, Integer> tableViewFixturesTabPlayedColumn;
-    @FXML private CheckBox checkBoxFixturesTabHomeAway;
+    @FXML protected ChoiceBox<String> choiceBoxFixturesTabLeague;
+    @FXML protected TableView <Fixture> tableViewFixturesTab;
+    @FXML protected TableColumn <Fixture, String> tableViewFixturesTabWeekColumn;
+    @FXML protected TableColumn <Fixture, Integer> tableViewFixturesTabHomeColumn;
+    @FXML protected TableColumn <Fixture, String> tableViewFixturesTabVsColumn;
+    @FXML protected TableColumn <Fixture, Integer> tableViewFixturesTabAwayColumn;
+    @FXML protected TableColumn <Fixture, Integer> tableViewFixturesTabVenueColumn;
+    @FXML protected TableColumn <Fixture, Integer> tableViewFixturesTabPlayedColumn;
+    @FXML protected CheckBox checkBoxFixturesTabHomeAway;
     
     /** Score Sheet **/
-    @FXML private ChoiceBox<String> choiceBoxFixturesTabHomeTeam;
-    @FXML private ChoiceBox<String> choiceBoxFixturesTabAwayTeam;
-    @FXML private ChoiceBox<String> choiceBoxFixturesTabHomePlayer1;
-    @FXML private ChoiceBox<String> choiceBoxFixturesTabHomePlayer2;
-    @FXML private ChoiceBox<String> choiceBoxFixturesTabAwayPlayer1;
-    @FXML private ChoiceBox<String> choiceBoxFixturesTabAwayPlayer2;
-    @FXML private CheckBox checkBoxFixturesTabPlayed;
-    @FXML private TextField textFieldFixturesTabWeek;
-    @FXML private TextField textFieldFixturesTabVenue;
-    @FXML private TextArea resultsText;
+    @FXML protected ChoiceBox<String> choiceBoxFixturesTabHomeTeam;
+    @FXML protected ChoiceBox<String> choiceBoxFixturesTabAwayTeam;
+    @FXML protected ChoiceBox<String> choiceBoxFixturesTabHomePlayer1;
+    @FXML protected ChoiceBox<String> choiceBoxFixturesTabHomePlayer2;
+    @FXML protected ChoiceBox<String> choiceBoxFixturesTabAwayPlayer1;
+    @FXML protected ChoiceBox<String> choiceBoxFixturesTabAwayPlayer2;
+    @FXML protected CheckBox checkBoxFixturesTabPlayed;
+    @FXML protected TextField textFieldFixturesTabWeek;
+    @FXML protected TextField textFieldFixturesTabVenue;
+    @FXML protected TextArea resultsText;
     
     /** Score Grid Panes **/
-    @FXML private GridPane scoreGrid = new GridPane();
+    @FXML protected GridPane scoreGrid = new GridPane();
     
     /** Class Variables **/
-    private final Admin admin = new Admin();
-    private League leagueSelectionTeamsTab;
-    private League leagueSelectionFixturesTab;
-    private Team homeTeamSelectionFixturesTab;
-    private Team awayTeamSelectionFixturesTab;
-    private Team teamSelection;
-    private Fixture fixtureSelection;
+    protected League leagueSelectionTeamsTab;
+    protected League leagueSelectionFixturesTab;
+    protected Team homeTeamSelectionFixturesTab;
+    protected Team awayTeamSelectionFixturesTab;
+    protected Team teamSelection;
+    protected Fixture fixtureSelection;
 
     /**
      * initialises the UI elements and associated class data structures.
@@ -103,7 +102,7 @@ public class AdminController extends UserController implements Initializable{
         try {
             admin.loadLeagues();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Admin class creation error");
         }
         admin.countFixtures();
         initializeLeaguesTab();

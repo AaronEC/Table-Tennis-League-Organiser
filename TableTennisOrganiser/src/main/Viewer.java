@@ -1,6 +1,5 @@
 package main;
 
-import java.io.IOException;
 
 /**
  * <h1>Viewer Logic Class</h1>
@@ -10,10 +9,5 @@ import java.io.IOException;
  * @since 06/12/2020
  */
 public class Viewer extends Admin {
-
-
-    void startViewer() throws IOException {
-        System.out.println("Viewer Created");
-    }
 
 }

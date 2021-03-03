@@ -24,8 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @since 06/12/2020
  */
 public class ViewerController extends AdminController implements Initializable{
-    
-    
+
     /**
      * initialises the UI elements and associated class data structures with
      * data from the database files.
@@ -34,22 +33,49 @@ public class ViewerController extends AdminController implements Initializable{
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Viewer viewer = new Viewer();   //Create object of class to control
-        //Load lsit view with team names.
+        
         try {
-            viewer.startViewer();
-            start();
-        } catch (IOException ex) {
-            Logger.getLogger(ViewerController.class.getName()).log(
-                    Level.SEVERE, null, ex);
+            admin.loadLeagues();
+        } catch (ClassNotFoundException ex) {
+            System.err.println("Viewer class creation error");
         }
+        initializeTeamsTab();
         
     }
     
-    public void start() throws IOException
-    {
-        //Create new viewer class at logon
+    /**
+     * Updates the two team information labels (labelTeamsTabTeamInfoLabels and 
+     * labelTeamsTabTeamInfoVariables) with the selected teams information.
+     * @param team Selected team in tableViewTeamsTab.
+     */
+    @Override
+    public void displayTeamInfo(Team team)   {
+        ArrayList<Player> players = team.getPlayers();
+        ArrayList<String> names = new ArrayList<>();
+        if (players != null) {
+            players.forEach(player -> {
+                names.add(player.getName());
+            });
+        }
         
+        labelTeamsTabTeamInfoLabels.setText("""
+                Name:
+                Matches Played:
+                Matches Won:
+                Matches Lost:
+                Total Points:
+                Home Venue:
+                Players:"""); 
+        labelTeamsTabTeamInfoVariables.setText(
+                team.getName() + "\n" +
+                team.getMatchesPlayed() + "\n" +
+                team.getMatchesWon() + "\n" +
+                team.getMatchesLost()  + "\n" +
+                team.getPoints()  + "\n" + 
+                team.getVenue() + "\n" + 
+                names.toString()
+                );
+       
     }
 
 }

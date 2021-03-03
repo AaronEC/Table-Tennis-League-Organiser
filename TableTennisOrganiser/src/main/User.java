@@ -80,7 +80,7 @@ public class User implements Serializable{
      * Returns all leagues as an ArrayList of League class.
      * @return 
      */
-    ArrayList<League> getLeagues() {
+    public ArrayList<League> getLeagues() {
         return leagues;
     }
 }
