@@ -2,7 +2,6 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -68,23 +67,6 @@
                                  <children>
                                     <AnchorPane layoutX="474.0" layoutY="-1.0" prefHeight="513.0" prefWidth="480.0">
                                        <children>
-                                          <Button layoutX="99.0" layoutY="27.0" mnemonicParsing="false" onAction="#generateFixtures" prefHeight="26.0" prefWidth="238.0" text="Generate Fixtures">
-                                             <effect>
-                                                <ColorAdjust hue="0.74" saturation="0.19" />
-                                             </effect>
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </Button>
-                                          <Button layoutX="335.0" layoutY="26.0" mnemonicParsing="false" onAction="#fixturesHelp" prefHeight="28.0" prefWidth="50.0" text="Help?">
-                                             <effect>
-                                                <ColorAdjust hue="-0.82" saturation="0.17" />
-                                             </effect>
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </Button>
-                                          <CheckBox fx:id="checkBoxFixturesTabHomeAway" layoutX="136.0" layoutY="6.0" mnemonicParsing="false" selected="true" text="Generate Home AND Away Fixtures" />
                                           <TableView layoutX="15.0" layoutY="71.0" prefHeight="330.0" prefWidth="430.0">
                                              <columns>
                                                 <TableColumn editable="false" prefWidth="429.0" sortable="false" text="Score Sheet" />
@@ -95,22 +77,16 @@
                                                 <ColorAdjust brightness="-0.04" hue="-0.72" saturation="-1.0" />
                                              </effect>
                                           </TextArea>
-                                          <Button layoutX="85.0" layoutY="435.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.7" text="New Fixture" />
                                           <Button fx:id="logout1" layoutX="407.0" layoutY="474.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
-                                          <Button layoutX="192.0" layoutY="435.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.7" text="Edit Fixture" />
-                                          <Button layoutX="299.0" layoutY="435.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.7" text="Save Fixture" />
                                           <AnchorPane layoutX="15.0" layoutY="95.0" prefHeight="74.0" prefWidth="430.0">
                                              <children>
-                                                <TextField fx:id="textFieldFixturesTabWeek" layoutX="14.0" layoutY="28.0" prefHeight="26.0" prefWidth="27.0" />
-                                                <TextField fx:id="textFieldFixturesTabVenue" layoutX="290.0" layoutY="27.0" prefHeight="26.0" prefWidth="98.0" />
-                                                <Label layoutX="13.0" layoutY="8.0" text="Week" />
-                                                <Label layoutX="88.0" layoutY="8.0" text="Home" />
-                                                <Label layoutX="213.0" layoutY="9.0" text="Away" />
-                                                <Label layoutX="322.0" layoutY="9.0" text="Venue" />
-                                                <Label layoutX="384.0" layoutY="9.0" text="Played?" />
+                                                <Label layoutX="62.0" layoutY="17.0" text="Home" />
+                                                <Label layoutX="200.0" layoutY="17.0" text="Away" />
+                                                <Label layoutX="320.0" layoutY="17.0" text="Venue" />
                                                 <Separator layoutX="1.0" layoutY="63.0" prefHeight="13.0" prefWidth="427.0" />
-                                                <ChoiceBox fx:id="choiceBoxFixturesTabHomeTeam" layoutX="44.0" layoutY="28.0" prefWidth="120.0" />
-                                                <ChoiceBox fx:id="choiceBoxFixturesTabAwayTeam" layoutX="167.0" layoutY="28.0" prefWidth="120.0" />
+                                                <Label fx:id="homeTeam" layoutX="62.0" layoutY="38.0" text="Label" />
+                                                <Label fx:id="awayTeam" layoutX="201.0" layoutY="38.0" text="Label" />
+                                                <Label fx:id="venue" layoutX="323.0" layoutY="38.0" text="Label" />
                                              </children>
                                           </AnchorPane>
                                           <GridPane fx:id="scoreGrid" hgap="40.0" layoutX="133.0" layoutY="232.0" prefHeight="155.0" prefWidth="245.0">
@@ -128,7 +104,7 @@
                                                 <RowConstraints maxHeight="43.199987792968756" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                <TextField prefWidth="72.0">
+                                                <TextField editable="false" prefWidth="72.0">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
@@ -136,72 +112,72 @@
                                                       <Tooltip text="Format: 'Home Score : Away Score'" />
                                                    </tooltip>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="1">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.rowIndex="1">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="2">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.rowIndex="2">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.columnIndex="1">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="3">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.rowIndex="3">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="4">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.rowIndex="4">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.rowIndex="5">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.rowIndex="5">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="2">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.columnIndex="2">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField prefWidth="72.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                <TextField editable="false" prefWidth="72.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                    <font>
                                                       <Font size="11.0" />
                                                    </font>
@@ -209,7 +185,7 @@
                                              </children>
                                           </GridPane>
                                           <ChoiceBox fx:id="choiceBoxFixturesTabHomePlayer1" layoutX="113.0" layoutY="175.0" minHeight="-Infinity" onMouseReleased="#noPlayersErrorCheckHome" prefHeight="25.0" prefWidth="86.0" />
-                                          <TextArea fx:id="resultsText" editable="false" layoutX="295.0" layoutY="317.0" prefHeight="57.0" prefWidth="132.0" promptText="Reults Will Appear Here..." wrapText="true">
+                                          <TextArea fx:id="resultsText" editable="false" layoutX="310.0" layoutY="318.0" prefHeight="69.0" prefWidth="101.0" promptText="Reults Will Appear Here..." wrapText="true">
                                              <effect>
                                                 <ColorAdjust brightness="0.38" contrast="-0.13" />
                                              </effect>
@@ -217,8 +193,6 @@
                                           <Label layoutX="22.0" layoutY="179.0" text="Home Players" />
                                           <Label layoutX="31.0" layoutY="302.0" text="Away Players" />
                                           <Label layoutX="319.0" layoutY="208.0" text="Doubles Set:" />
-                                          <Button defaultButton="true" layoutX="295.0" layoutY="373.0" mnemonicParsing="false" onAction="#calculateScores" prefHeight="25.0" prefWidth="132.0" text="Calculate Scores" />
-                                          <CheckBox fx:id="checkBoxFixturesTabPlayed" layoutX="414.0" layoutY="126.0" mnemonicParsing="false" prefWidth="16.0" />
                                           <ChoiceBox fx:id="choiceBoxFixturesTabHomePlayer2" layoutX="199.0" layoutY="175.0" minHeight="-Infinity" onMouseReleased="#noPlayersErrorCheckHome" prefHeight="25.0" prefWidth="86.0" />
                                           <ChoiceBox fx:id="choiceBoxFixturesTabAwayPlayer1" layoutX="23.0" layoutY="254.0" minHeight="-Infinity" onMouseReleased="#noPlayersErrorCheckAway" prefHeight="25.0" prefWidth="86.0" />
                                           <ChoiceBox fx:id="choiceBoxFixturesTabAwayPlayer2" layoutX="23.0" layoutY="343.0" minHeight="-Infinity" onMouseReleased="#noPlayersErrorCheckAway" prefHeight="25.0" prefWidth="86.0" />
@@ -245,12 +219,6 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </TableView>
-                                    <Button layoutX="171.0" layoutY="461.0" mnemonicParsing="false" onAction="#deleteFixtures" prefHeight="26.0" prefWidth="147.0" text="Delete All Fixtures">
-                                       <effect>
-                                          <ColorAdjust brightness="0.02" contrast="0.04" hue="-0.02" saturation="0.48" />
-                                       </effect>
-                                    </Button>
-                                    <Line endX="214.0" endY="-3.8000106811523438" layoutX="359.0" layoutY="43.0" startX="96.99996948242188" startY="-3.79998779296875" />
                                     <Label layoutX="54.0" layoutY="28.0" prefHeight="17.0" prefWidth="101.0" text="Select League:" />
                                  </children>
                               </AnchorPane>

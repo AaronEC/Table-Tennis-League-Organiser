@@ -169,7 +169,7 @@ public class Admin extends Timer {
      */
     void modifyScoreSheet(Fixture fixture, ArrayList<String> scores) {
         
-        System.out.println(fixture.getAwayTeamName() + scores);
+        System.out.println(fixture.getAwayTeam().getName() + scores);
         fixture.setScores(scores);
     }
 

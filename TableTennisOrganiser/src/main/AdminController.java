@@ -620,19 +620,19 @@ public class AdminController extends UserController implements Initializable{
         System.out.println("Away team Players no: " + fixture.getAwayTeam().getPlayersCount());
         
         //Home team.
-        System.out.println("Home team: " + fixture.getHomeTeamName());
+        System.out.println("Home team: " + fixture.getHomeTeam().getName());
         try {
         leagueSelectionFixturesTab.getTeams().forEach(team -> {
             choiceBoxFixturesTabHomeTeam.getItems().add(team.getName());
-            if (team.getName() == fixture.getHomeTeamName()) {
-                choiceBoxFixturesTabHomeTeam.getSelectionModel().select(fixture.getHomeTeamName());
+            if (team.getName() == fixture.getHomeTeam().getName()) {
+                choiceBoxFixturesTabHomeTeam.getSelectionModel().select(fixture.getHomeTeam().getName());
             }
         });
         
         //Away team.
         //First we check for a Bye (this can only ever be the away team)
-        System.out.println("Away team: " + fixture.getAwayTeamName());
-        if (fixture.getAwayTeamName().equals("*Bye*")) {
+        System.out.println("Away team: " + fixture.getAwayTeam().getName());
+        if (fixture.getAwayTeam().getName().equals("*Bye*")) {
             choiceBoxFixturesTabAwayTeam.setValue("*Bye*");
             choiceBoxFixturesTabAwayPlayer1.setValue("*Bye*");
             choiceBoxFixturesTabAwayPlayer2.setValue("*Bye*");
@@ -642,8 +642,8 @@ public class AdminController extends UserController implements Initializable{
         else {
             leagueSelectionFixturesTab.getTeams().forEach(team -> {
                 choiceBoxFixturesTabAwayTeam.getItems().add(team.getName());
-                if (team.getName() == fixture.getAwayTeamName()) {
-                    choiceBoxFixturesTabAwayTeam.getSelectionModel().select(fixture.getAwayTeamName());
+                if (team.getName() == fixture.getAwayTeam().getName()) {
+                    choiceBoxFixturesTabAwayTeam.getSelectionModel().select(fixture.getAwayTeam().getName());
                 }
             });
         }
