@@ -56,6 +56,7 @@ public class Fixture implements Serializable{
             return awayTeam.getVenue();
         } else {
             System.err.println("VENUE: " + venue);
+            this.venue = venue;
             return venue;
         }
     }

@@ -22,11 +22,11 @@ public class Admin extends Timer {
      * @param super.fileName
      */
     void saveLeagues() {
-        System.out.println("Saving leagues to file " + super.getFileName());
+        //System.out.println("Saving leagues to file " + super.getFileName());
         try (FileOutputStream fos = new FileOutputStream(super.getFileName()); 
                 ObjectOutputStream oos = new ObjectOutputStream(fos)) {
                     oos.writeObject(getLeagues());
-            System.out.println("Leagues Saved to: " + super.getFileName());
+            //System.out.println("Leagues Saved to: " + super.getFileName());
         } catch (FileNotFoundException ex) {
             System.err.println(super.getFileName() + " not found");
         } catch (IOException ex) {
@@ -40,12 +40,12 @@ public class Admin extends Timer {
      * @throws ClassNotFoundException (there will always be a class here)
      */
     void loadLeagues() throws ClassNotFoundException {
-        System.out.println("Loading leagues from file " + super.getFileName());
+        //System.out.println("Loading leagues from file " + super.getFileName());
         try {
             FileInputStream fis = new FileInputStream(super.getFileName());
             ObjectInputStream ois = new ObjectInputStream(fis);
             setLeagues((ArrayList<League>) ois.readObject());
-            System.out.println("Leagues loaded from: " + super.getFileName());
+            //System.out.println("Leagues loaded from: " + super.getFileName());
         } catch (FileNotFoundException ex) {
             System.err.println("ERROR: File " + super.getFileName() + 
                     " not found");               
@@ -60,7 +60,7 @@ public class Admin extends Timer {
      * @param name 
      */
     public void addTeam(League league, String name) {
-        System.out.println("Adding Team " + name + " to League " + league.getName());
+        //System.out.println("Adding Team " + name + " to League " + league.getName());
         league.addTeam(name);
     }
     /**
@@ -69,7 +69,7 @@ public class Admin extends Timer {
      * @param team 
      */
     public void removeTeam(League league, Team team) {
-        System.out.println("Removing team "  + team.getName() + " from league "+ league.getName());
+        //System.out.println("Removing team "  + team.getName() + " from league "+ league.getName());
         league.removeTeam(team);
     }
     /**
@@ -79,7 +79,7 @@ public class Admin extends Timer {
      * @param name
      */
     public void addPlayer(Team team, String name) {
-        System.out.println("Adding Player " + name + " to Team " + team.getName());
+        //System.out.println("Adding Player " + name + " to Team " + team.getName());
         team.addPlayer(new Player(name));
     }
     /**
@@ -88,7 +88,7 @@ public class Admin extends Timer {
      * @param player
      */
     public void removePlayer(Team team, Player player) {
-        System.out.println("Removing player "  + player.getName() + " from team "+ team.getName());
+        //System.out.println("Removing player "  + player.getName() + " from team "+ team.getName());
         team.removePlayer(player);
     }
     /**
@@ -105,7 +105,7 @@ public class Admin extends Timer {
      */
     void generateFixtures(League league, boolean homeAndAway, String venue) {
         league.countTeams();
-        System.out.println("Generating fixtures for " + league.getTeamsCount() + " teams.");
+        //System.out.println("Generating fixtures for " + league.getTeamsCount() + " teams.");
         //How many teamsCount are in the league?
         int teamsCount = league.getTeamsCount();
         int increment;
