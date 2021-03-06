@@ -191,14 +191,33 @@ public class Admin extends Timer {
             temp.countFixtures();
         });
     }
+    /**
+     * Adds a new blank fixture to the passed league.
+     * @param league
+     */
+    Fixture createFixture(League league) {
+        Team team = new Team("None");
+        Fixture fixture = new Fixture(team, team, 0, "None");
+        league.addFixture(fixture);
+        return fixture;
+    }
 
     void deleteFixtures(League league) {
         league.resetFixtures();
         league.countFixtures();
     }
+    
+    void removeFixture(League league, Fixture fixture) {
+        league.removeFixture(fixture);
+        league.countFixtures();
+    }
 
     void updateTeams() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    void setFixtureVenue(Fixture fixture, String venue) {
+        fixture.setVenue(venue);
     }
     
     protected ArrayList<String> viewLeagues() {
@@ -209,4 +228,5 @@ public class Admin extends Timer {
         });
         return leagueNames;
     }   
+
 }

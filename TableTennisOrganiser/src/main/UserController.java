@@ -29,7 +29,7 @@ public class UserController extends User implements Initializable{
     @FXML private PasswordField passwordInput;
     @FXML private ChoiceBox<String> loginSelect;
     protected final Admin admin = new Admin();
-    protected final Viewer viewer = new Viewer();
+    //protected final Viewer viewer = new Viewer();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -105,6 +105,17 @@ public class UserController extends User implements Initializable{
         alert.setTitle("Error");
         alert.setHeaderText("No value entered");
         alert.setContentText("Please input a value");
+        alert.showAndWait();
+    }
+    /**
+     * Creates a default popup window with error for missing text input.
+     */
+    protected void popupWindowSuccess(String title, String messageLarge, String messageSmall)    {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle(title);
+        alert.setHeaderText(messageLarge);
+        alert.setContentText(messageSmall);
         alert.showAndWait();
     }
     /**

@@ -102,7 +102,11 @@ public class League implements Serializable{
         countTeams();
     }
     void addFixture(Fixture fixture) {
-        fixtures.add(fixture);
+        fixtures.add(0, fixture);
+    }
+    
+    void removeFixture(Fixture fixture) {
+        fixtures.remove(fixture);
     }
     /**
      * Updates the teamsCount(int) by counting all teams in this League.

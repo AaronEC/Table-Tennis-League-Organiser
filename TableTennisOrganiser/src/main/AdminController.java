@@ -320,30 +320,28 @@ public class AdminController extends UserController implements Initializable{
      */
     public void displayTeamInfo(Team team)   {
         ArrayList<Player> players = team.getPlayers();
-        ArrayList<String> names = new ArrayList<>();
+        String names = "";
+        int length = 0;
         if (players != null) {
-            players.forEach(player -> {
-                names.add(player.getName());
-            });
+            for (Player player : players) {
+                names += " " + player.getName();
+                if (length < players.size()-1) {
+                    names += ",";
+                } else {
+                    names += ".";
+                }
+                length++;
+            }
         }
         
-        labelTeamsTabTeamInfoLabels.setText("""
-                Name:
-                Matches Played:
-                Matches Won:
-                Matches Lost:
-                Total Points:
-                Home Venue:
-                Players:"""); 
-        labelTeamsTabTeamInfoVariables.setText(
-                team.getName() + "\n" +
-                team.getMatchesPlayed() + "\n" +
-                team.getMatchesWon() + "\n" +
-                team.getMatchesLost()  + "\n" +
-                team.getPoints()  + "\n" + 
-                team.getVenue() + "\n" + 
-                names.toString()
-                );
+        labelTeamsTabTeamInfoLabels.setText(
+                "Team Overview:\nName:\t\t\t\t\t" + team.getName() +
+                "\nHome Venue:\t\t\t\t" + team.getVenue() +
+                "\nPlayers:\t\t\t\t\t" + names.toString().strip() +
+                "\n\nTeam Statistics:\nMatches Won:\t\t\t\t" + team.getMatchesWon() +
+                "\nMatches Lost:\t\t\t\t" + team.getMatchesLost() +
+                "\nMatches Played:\t\t\t" + team.getMatchesPlayed()
+        );
         
         //Populate Player ChoiceBox
         choiceBoxTeamsTabPlayer.getItems().clear();
@@ -406,6 +404,11 @@ public class AdminController extends UserController implements Initializable{
         }
     }
     
+    public void generateTeamStatsManual() {
+        admin.generateTeamStats(leagueSelectionTeamsTab);
+        popupWindowSuccess("Team Stats Generated!", "Updated statistics for all teams.", "Press OK to continue.");
+    }
+    
     /**
      * Updates the selected team's (in tableViewTeamsTab Table View) venue 
      * string with the input from textFieldTeamsTabPlayerCreateName text field.
@@ -458,6 +461,8 @@ public class AdminController extends UserController implements Initializable{
                 if (team.getName().equals(choiceBoxFixturesTabHomeTeam.getSelectionModel().getSelectedItem())) {
                     homeTeamSelectionFixturesTab = team;
                     System.out.println("Home Team Selection: " + team.getName());
+                    fixtureSelection.setHomeTeam(team);
+                    updateFixturesTableView();
                 }
             });
         });
@@ -467,6 +472,8 @@ public class AdminController extends UserController implements Initializable{
                 if (team.getName().equals(choiceBoxFixturesTabAwayTeam.getSelectionModel().getSelectedItem())) {
                     awayTeamSelectionFixturesTab = team;
                     System.out.println("Away Team Selection: " + team.getName());
+                    fixtureSelection.setAwayTeam(team);
+                    updateFixturesTableView();
                 }
             });
         });
@@ -504,6 +511,12 @@ public class AdminController extends UserController implements Initializable{
         
     }
     
+    public void createFixture() {
+        admin.createFixture(leagueSelectionFixturesTab);
+        updateFixturesTableView();
+        tableViewFixturesTab.getSelectionModel().selectFirst();
+    }
+    
     /**
      * Updates the league choice box on the fixtures tab with all leagues in 
      * the database.
@@ -536,8 +549,9 @@ public class AdminController extends UserController implements Initializable{
             tableViewFixturesTab.setItems(listFixtures(leagueSelectionFixturesTab.getFixtures()));
         }
         else {
-            //leagueChoiceBoxTeamsTab.setValue("No Leagues Added");
+            choiceBoxFixturesTabLeague.setValue("No Leagues Added");
         }
+        tableViewFixturesTab.getSelectionModel().select(fixtureSelection);
     }
     
     /**
@@ -592,12 +606,41 @@ public class AdminController extends UserController implements Initializable{
         updateLeaguesTableView();
         }
     }
+    /**
+     * Deletes a single Fixture from the selected league in the ChoiceBox. Gets
+     * the Fixture from the TableView selection.
+     * @param event 
+     */
+    public void removeFixture(ActionEvent event) {
+        if (popupWindowChoice("Delete Fixture?", "This cannot be undone!", "Are you sure you wish to delete this fixture?")) {
+            admin.removeFixture(leagueSelectionTeamsTab, fixtureSelection);   
+            updateFixturesTableView();
+            admin.saveLeagues();
+        }
+    }
+
+    public void setWeek(ActionEvent event) {
+        try {
+            fixtureSelection.setWeek(Integer.parseInt(textFieldFixturesTabWeek.getText()));
+        } catch (Exception e) {
+            popupWindow("Incorrect Input", "Please enter a number.", "Press OK to continue.");
+        }
+        updateFixturesTableView();
+        admin.saveLeagues();
+    }
+    
+    public void setFixtureVenue(ActionEvent event) {
+        admin.setFixtureVenue(fixtureSelection, textFieldFixturesTabVenue.getText());
+        updateFixturesTableView();
+        admin.saveLeagues();
+    }
     
     public void setPlayed(ActionEvent event) {
         fixtureSelection.setPlayed();
         updateFixturesTableView();
-        System.out.println(fixtureSelection.getPlayed());
+        admin.saveLeagues();
     }
+
     
     //Converts Fixture ArrayList to Observable list, for display in TableView.
     private ObservableList<Fixture> listFixtures(ArrayList<Fixture> input)    {
@@ -642,14 +685,13 @@ public class AdminController extends UserController implements Initializable{
     public void updateTeamsChoiceBoxes(Fixture fixture) {
         homeTeamSelectionFixturesTab = fixture.getHomeTeam();
         awayTeamSelectionFixturesTab = fixture.getAwayTeam();
-        fixture.getHomeTeam().countPlayers();
-        System.out.println("Home team Players no: " + fixture.getHomeTeam().getPlayersCount());
-        fixture.getAwayTeam().countPlayers();
-        System.out.println("Away team Players no: " + fixture.getAwayTeam().getPlayersCount());
-        
+        try {   
+            fixture.getHomeTeam().countPlayers();
+            System.out.println("Home team Players no: " + fixture.getHomeTeam().getPlayersCount());
+            fixture.getAwayTeam().countPlayers();
+            System.out.println("Away team Players no: " + fixture.getAwayTeam().getPlayersCount());
         //Home team.
         System.out.println("Home team: " + fixture.getHomeTeam().getName());
-        try {
         leagueSelectionFixturesTab.getTeams().forEach(team -> {
             choiceBoxFixturesTabHomeTeam.getItems().add(team.getName());
             if (team.getName() == fixture.getHomeTeam().getName()) {
@@ -675,11 +717,11 @@ public class AdminController extends UserController implements Initializable{
                 }
             });
         }
-        } catch (NullPointerException ex) {
-            System.out.println("Fixture not initialised");
-        }
         updateHomePlayers();
         updateAwayPlayers();
+        } catch (NullPointerException ex) {
+            System.out.println("Fixture data incomplete (requires user input)");
+        }
     }
     
     public void updateHomePlayers() {

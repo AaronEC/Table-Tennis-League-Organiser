@@ -21,7 +21,7 @@ public class Fixture implements Serializable{
     private String homeTeamName;
     private String awayTeamName;
     private char played;
-    private String separator;
+    private final String separator;
     private ArrayList<String> scores;
     private String result;
     private int[] playerSelections;
@@ -32,13 +32,21 @@ public class Fixture implements Serializable{
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.venue = setVenue(venue);
-        this.homeTeamName = homeTeam.getName();
-        this.awayTeamName = awayTeam.getName();
+        this.homeTeamName = getName(homeTeam);
+        this.awayTeamName = getName(awayTeam);
         this.week = week + 1;
-        this.teams = homeTeam.getName() + " vs " + awayTeam.getName();
+        this.teams = getName(homeTeam) + " vs " + getName(awayTeam);
         this.played = 'N';
         this.separator = "Vs";
         this.playerSelections = new int[]{0,1,0,1};
+    }
+    
+    public String getName(Team team) {
+        if (team != null) {
+            return team.getName();
+        } else {
+            return "";
+        }
     }
 
     public String setVenue(String venue) {
@@ -47,7 +55,7 @@ public class Fixture implements Serializable{
         } else if ("away".equals(venue)){
         return awayTeam.getVenue();
         } else {
-            System.err.println("Venue Error");
+            this.venue = venue;
             return null;
         }
     }
@@ -198,5 +206,19 @@ public class Fixture implements Serializable{
             this.playerSelections[index] = value;
         }
     }    
+
+    public void setHomeTeam(Team homeTeam) {
+        this.homeTeamName = homeTeam.getName();
+        this.homeTeam = homeTeam;
+        System.out.println(homeTeam);
+        System.out.println(homeTeamName);
+    }
+
+    public void setAwayTeam(Team awayTeam) {
+        this.awayTeamName = awayTeam.getName();
+        this.awayTeam = awayTeam;
+    }
+    
+    
     
 }
