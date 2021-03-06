@@ -23,8 +23,9 @@ public class Admin extends Timer {
      */
     void saveLeagues() {
         System.out.println("Saving leagues to file " + super.getFileName());
-        try (FileOutputStream fos = new FileOutputStream(super.getFileName()); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-                oos.writeObject(getLeagues());
+        try (FileOutputStream fos = new FileOutputStream(super.getFileName()); 
+                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                    oos.writeObject(getLeagues());
             System.out.println("Leagues Saved to: " + super.getFileName());
         } catch (FileNotFoundException ex) {
             System.err.println(super.getFileName() + " not found");
@@ -105,7 +106,6 @@ public class Admin extends Timer {
     void generateFixtures(League league, boolean homeAndAway, String venue) {
         league.countTeams();
         System.out.println("Generating fixtures for " + league.getTeamsCount() + " teams.");
-        System.out.println("Teams in league: " + league.getTeams().toString());
         //How many teamsCount are in the league?
         int teamsCount = league.getTeamsCount();
         int increment;
@@ -168,8 +168,6 @@ public class Admin extends Timer {
      * @param fixture 
      */
     void modifyScoreSheet(Fixture fixture, ArrayList<String> scores) {
-        
-        System.out.println(fixture.getAwayTeam().getName() + scores);
         fixture.setScores(scores);
     }
 

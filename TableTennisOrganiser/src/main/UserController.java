@@ -29,7 +29,6 @@ public class UserController extends User implements Initializable{
     @FXML private PasswordField passwordInput;
     @FXML private ChoiceBox<String> loginSelect;
     protected final Admin admin = new Admin();
-    //protected final Viewer viewer = new Viewer();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

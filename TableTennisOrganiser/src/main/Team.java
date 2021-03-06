@@ -42,9 +42,7 @@ public class Team implements Serializable{
      * @throws IOException 
      */
     void initialize() throws IOException {
-        //System.out.println("Initializing league 1");
-        //loadPlayers();
-        calculatePoints();
+
     }
 
     public int getPlayersCount() {
@@ -139,26 +137,4 @@ public class Team implements Serializable{
         this.matchesWon = 0;
         this.points = 0;
     }
-    
-    private void calculatePoints() {
-        //return ((this.matchesWon * 3) + (this.matchesDrawn * 1));
-    }
-    /**
-     * Loads players from database file "players.csv" and stores them to 
-     * ArrayList<String> players.
-     * @throws IOException 
-     */
-//    void loadPlayers() throws IOException {
-//        ArrayList<String> database = Main.loadFile("players.csv");
-//        for(int i = 0; i < database.size(); i++)    {
-//            String newPlayer = database.get(i);
-//            if(newPlayer.contains(name))    {
-//                List<String> playerNames = Arrays.asList(newPlayer.split("\\s*,\\s*"));
-//                for(int j = 1; j < playerNames.size(); j++) {
-//                    addPlayer(playerNames.get(j));
-//                }
-//            }
-//        }
-//    System.out.println("PLAYERS: " + getPlayers().toString());
-//    }
 }

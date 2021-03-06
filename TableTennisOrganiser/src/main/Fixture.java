@@ -53,10 +53,10 @@ public class Fixture implements Serializable{
         if ("home".equals(venue)) {
             return homeTeam.getVenue();
         } else if ("away".equals(venue)){
-        return awayTeam.getVenue();
+            return awayTeam.getVenue();
         } else {
-            this.venue = venue;
-            return null;
+            System.err.println("VENUE: " + venue);
+            return venue;
         }
     }
     /**
@@ -92,8 +92,6 @@ public class Fixture implements Serializable{
                 }
             }
         }
-        System.out.println(homeSets);
-        System.out.println(awaySets);
         
         result = String.format("%d : %d", homeSets, awaySets);
         
@@ -210,8 +208,6 @@ public class Fixture implements Serializable{
     public void setHomeTeam(Team homeTeam) {
         this.homeTeamName = homeTeam.getName();
         this.homeTeam = homeTeam;
-        System.out.println(homeTeam);
-        System.out.println(homeTeamName);
     }
 
     public void setAwayTeam(Team awayTeam) {

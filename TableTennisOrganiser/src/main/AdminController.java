@@ -3,8 +3,6 @@ package main;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -127,8 +125,7 @@ public class AdminController extends UserController implements Initializable{
         //Listener for when a League is selected in TableView.
         tableViewLeaguesTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                League selected = tableViewLeaguesTab.getSelectionModel().getSelectedItem();
-                System.out.println(selected.getName());               
+                League selected = tableViewLeaguesTab.getSelectionModel().getSelectedItem();             
             }
         });
     }
@@ -227,7 +224,6 @@ public class AdminController extends UserController implements Initializable{
         tableViewTeamsTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 teamSelection = tableViewTeamsTab.getSelectionModel().getSelectedItem();
-                System.out.println(teamSelection.getName());
                 displayTeamInfo(teamSelection);
             }
         });
@@ -512,9 +508,10 @@ public class AdminController extends UserController implements Initializable{
     }
     
     public void createFixture() {
-        admin.createFixture(leagueSelectionFixturesTab);
+        fixtureSelection = admin.createFixture(leagueSelectionFixturesTab);
         updateFixturesTableView();
         tableViewFixturesTab.getSelectionModel().selectFirst();
+        choiceBoxFixturesTabAwayTeam.setValue("");
     }
     
     /**
