@@ -2,6 +2,7 @@ package main;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class for holding all attributes of a fixture.
@@ -23,6 +24,7 @@ public class Fixture implements Serializable{
     private String separator;
     private ArrayList<String> scores;
     private String result;
+    private int[] playerSelections;
 
 
     public Fixture(Team homeTeam, Team awayTeam, int week, String venue) {
@@ -36,6 +38,7 @@ public class Fixture implements Serializable{
         this.teams = homeTeam.getName() + " vs " + awayTeam.getName();
         this.played = 'N';
         this.separator = "Vs";
+        this.playerSelections = new int[]{0,1,0,1};
     }
 
     public String setVenue(String venue) {
@@ -105,9 +108,15 @@ public class Fixture implements Serializable{
     public void setTeams(String teams) {
         this.teams = teams;
     }
-
-    public void setPlayed(char played) {
-        this.played = played;
+    /**
+     * Call to toggle played status between Y and N.
+     */
+    public void setPlayed() {
+        if (this.played == 'Y') {
+            this.played = 'N';
+        } else {
+            this.played = 'Y';
+        }
     }
 
     public String getSeparator() {
@@ -165,6 +174,29 @@ public class Fixture implements Serializable{
     public Team getLoser() {
         return loser;
     }
-    
+    /**
+     * Returns an integer array of index numbers. These match the index of the
+     * selected player in their respective teams Player array. If the team in
+     * this fixture does not have any players, this returns an array of all -1,
+     * which will set the ChoiceBox to blank.
+     * @return (int)Array
+     */
+    public int[] getPlayerSelections() {
+        if (playerSelections != null) {
+            return playerSelections;
+        } else {
+            return new int[]{-1,-1,-1,-1};
+        }
+    }
+    /**
+     * Change the player selection at 'index' to 'value'.
+     * @param index
+     * @param value 
+     */
+    public void setPlayerSelections(int index, int value) {
+        if (value != -1) {
+            this.playerSelections[index] = value;
+        }
+    }    
     
 }

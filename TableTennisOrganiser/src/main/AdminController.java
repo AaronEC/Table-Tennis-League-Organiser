@@ -471,6 +471,27 @@ public class AdminController extends UserController implements Initializable{
             });
         });
         
+        //Listener for Home Player 1 ChoiceBox.
+        choiceBoxFixturesTabHomePlayer1.setOnAction((event) -> {
+            int value = choiceBoxFixturesTabHomePlayer1.getSelectionModel().getSelectedIndex();
+            fixtureSelection.setPlayerSelections(0, value);
+        });
+        //Listener for Home Player 2 ChoiceBox.
+        choiceBoxFixturesTabHomePlayer2.setOnAction((event) -> {
+            int value = choiceBoxFixturesTabHomePlayer2.getSelectionModel().getSelectedIndex();
+            fixtureSelection.setPlayerSelections(1, value);
+        });
+        //Listener for Away Player 1 ChoiceBox.
+        choiceBoxFixturesTabAwayPlayer1.setOnAction((event) -> {
+            int value = choiceBoxFixturesTabAwayPlayer1.getSelectionModel().getSelectedIndex();
+            fixtureSelection.setPlayerSelections(2, value);
+        });
+        //Listener for Away Player 2 ChoiceBox.
+        choiceBoxFixturesTabAwayPlayer2.setOnAction((event) -> {
+            int value = choiceBoxFixturesTabAwayPlayer2.getSelectionModel().getSelectedIndex();
+            fixtureSelection.setPlayerSelections(3, value);
+        });
+        
         //Listener for when a Fixture is selected in TableView.
         tableViewFixturesTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -480,6 +501,7 @@ public class AdminController extends UserController implements Initializable{
             }
         });
         tableViewFixturesTab.getSelectionModel().selectFirst();
+        
     }
     
     /**
@@ -571,6 +593,12 @@ public class AdminController extends UserController implements Initializable{
         }
     }
     
+    public void setPlayed(ActionEvent event) {
+        fixtureSelection.setPlayed();
+        updateFixturesTableView();
+        System.out.println(fixtureSelection.getPlayed());
+    }
+    
     //Converts Fixture ArrayList to Observable list, for display in TableView.
     private ObservableList<Fixture> listFixtures(ArrayList<Fixture> input)    {
         ObservableList<Fixture> output = FXCollections.observableArrayList(input);
@@ -659,12 +687,12 @@ public class AdminController extends UserController implements Initializable{
         homeTeamSelectionFixturesTab.getPlayers().forEach(player -> {
             choiceBoxFixturesTabHomePlayer1.getItems().add(player.getName());
         });
-        choiceBoxFixturesTabHomePlayer1.getSelectionModel().selectFirst();
+        choiceBoxFixturesTabHomePlayer1.getSelectionModel().select(fixtureSelection.getPlayerSelections()[0]);
         //Player 2
         homeTeamSelectionFixturesTab.getPlayers().forEach(player -> {
             choiceBoxFixturesTabHomePlayer2.getItems().add(player.getName());
         });
-        choiceBoxFixturesTabHomePlayer2.getSelectionModel().select(1);
+        choiceBoxFixturesTabHomePlayer2.getSelectionModel().select(fixtureSelection.getPlayerSelections()[1]);
     }
     
     public void updateAwayPlayers() {
@@ -672,12 +700,12 @@ public class AdminController extends UserController implements Initializable{
         awayTeamSelectionFixturesTab.getPlayers().forEach(player -> {
             choiceBoxFixturesTabAwayPlayer1.getItems().add(player.getName());
         });
-        choiceBoxFixturesTabAwayPlayer1.getSelectionModel().selectFirst();
+        choiceBoxFixturesTabAwayPlayer1.getSelectionModel().select(fixtureSelection.getPlayerSelections()[2]);
         //Player 2
         awayTeamSelectionFixturesTab.getPlayers().forEach(player -> {
             choiceBoxFixturesTabAwayPlayer2.getItems().add(player.getName());
         });
-        choiceBoxFixturesTabAwayPlayer2.getSelectionModel().select(1);
+        choiceBoxFixturesTabAwayPlayer2.getSelectionModel().select(fixtureSelection.getPlayerSelections()[3]);
     }
     
     public void noPlayersErrorCheckHome(MouseEvent mouseEvent) {

@@ -29,7 +29,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ChoiceBox fx:id="choiceBoxTeamsTabLeague" layoutX="150.0" layoutY="27.0" prefHeight="26.0" prefWidth="300.0" />
-                        <TableView fx:id="tableViewTeamsTab" layoutX="35.0" layoutY="70.0" prefHeight="285.0" prefWidth="415.0" stylesheets="@admin.css">
+                        <TableView fx:id="tableViewTeamsTab" layoutX="35.0" layoutY="70.0" prefHeight="355.0" prefWidth="415.0" stylesheets="@admin.css">
                            <columns>
                               <TableColumn fx:id="tableViewTeamsTabNameColumn" prefWidth="298.5" text="Name" />
                               <TableColumn fx:id="tableViewTeamsTabPointsColumn" minWidth="0.0" prefWidth="61.0" text="Points" />
@@ -46,8 +46,8 @@
                                     <TableColumn editable="false" prefWidth="399.0" sortable="false" text="Team Information" />
                                  </columns>
                               </TableView>
-                              <TextArea editable="false" layoutX="43.0" layoutY="89.0" prefHeight="264.0" prefWidth="400.0" />
-                              <Label fx:id="labelTeamsTabTeamInfoLabels" alignment="TOP_LEFT" layoutX="52.0" layoutY="104.0" prefHeight="239.0" prefWidth="182.0" />
+                              <TextArea editable="false" layoutX="43.0" layoutY="89.0" prefHeight="333.0" prefWidth="400.0" />
+                              <Label fx:id="labelTeamsTabTeamInfoLabels" alignment="TOP_LEFT" layoutX="52.0" layoutY="104.0" prefHeight="239.0" prefWidth="366.0" />
                               <Label fx:id="labelTeamsTabTeamInfoVariables" alignment="TOP_LEFT" layoutX="242.0" layoutY="103.0" prefHeight="241.0" prefWidth="191.0" wrapText="true" />
                               <Button layoutX="406.0" layoutY="463.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
                            </children>
@@ -72,7 +72,7 @@
                                                 <TableColumn editable="false" prefWidth="429.0" sortable="false" text="Score Sheet" />
                                              </columns>
                                           </TableView>
-                                          <TextArea editable="false" layoutX="15.0" layoutY="95.0" prefHeight="322.0" prefWidth="430.0">
+                                          <TextArea editable="false" layoutX="15.0" layoutY="95.0" prefHeight="354.0" prefWidth="430.0">
                                              <effect>
                                                 <ColorAdjust brightness="-0.04" hue="-0.72" saturation="-1.0" />
                                              </effect>
@@ -80,16 +80,25 @@
                                           <Button fx:id="logout1" layoutX="407.0" layoutY="474.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
                                           <AnchorPane layoutX="15.0" layoutY="95.0" prefHeight="74.0" prefWidth="430.0">
                                              <children>
-                                                <Label layoutX="62.0" layoutY="17.0" text="Home" />
-                                                <Label layoutX="200.0" layoutY="17.0" text="Away" />
-                                                <Label layoutX="320.0" layoutY="17.0" text="Venue" />
+                                                <Label layoutX="62.0" layoutY="17.0" text="Home">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label layoutX="200.0" layoutY="17.0" text="Away">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label layoutX="320.0" layoutY="17.0" text="Venue">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
                                                 <Separator layoutX="1.0" layoutY="63.0" prefHeight="13.0" prefWidth="427.0" />
                                                 <Label fx:id="homeTeam" layoutX="62.0" layoutY="38.0" text="Label" />
                                                 <Label fx:id="awayTeam" layoutX="201.0" layoutY="38.0" text="Label" />
                                                 <Label fx:id="venue" layoutX="323.0" layoutY="38.0" text="Label" />
                                              </children>
                                           </AnchorPane>
-                                          <GridPane fx:id="scoreGrid" hgap="40.0" layoutX="133.0" layoutY="232.0" prefHeight="155.0" prefWidth="245.0">
+                                          <GridPane fx:id="scoreGrid" hgap="40.0" layoutX="133.0" layoutY="232.0" prefHeight="188.0" prefWidth="245.0">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.199951171875" minWidth="0.0" prefWidth="30.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.40002441406247" minWidth="0.0" prefWidth="30.0" />
@@ -98,8 +107,8 @@
                                              <rowConstraints>
                                                 <RowConstraints maxHeight="37.60001220703125" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="40.799975585937496" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="44.99997965494792" minHeight="0.0" prefHeight="39.66666666666667" valignment="TOP" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="33.59998779296875" minHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="67.6666259765625" minHeight="0.0" prefHeight="54.99999999999999" valignment="TOP" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="33.59998779296875" minHeight="0.0" prefHeight="20.333333333333343" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="48.000036621093756" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="43.199987792968756" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
@@ -184,25 +193,48 @@
                                                 </TextField>
                                              </children>
                                           </GridPane>
-                                          <ChoiceBox fx:id="choiceBoxFixturesTabHomePlayer1" layoutX="113.0" layoutY="175.0" minHeight="-Infinity" onMouseReleased="#noPlayersErrorCheckHome" prefHeight="25.0" prefWidth="86.0" />
-                                          <TextArea fx:id="resultsText" editable="false" layoutX="310.0" layoutY="318.0" prefHeight="69.0" prefWidth="101.0" promptText="Reults Will Appear Here..." wrapText="true">
+                                          <TextArea fx:id="resultsText" editable="false" layoutX="310.0" layoutY="344.0" prefHeight="69.0" prefWidth="101.0" promptText="Reults Will Appear Here..." wrapText="true">
                                              <effect>
                                                 <ColorAdjust brightness="0.38" contrast="-0.13" />
                                              </effect>
                                           </TextArea>
-                                          <Label layoutX="22.0" layoutY="179.0" text="Home Players" />
-                                          <Label layoutX="31.0" layoutY="302.0" text="Away Players" />
-                                          <Label layoutX="319.0" layoutY="208.0" text="Doubles Set:" />
-                                          <ChoiceBox fx:id="choiceBoxFixturesTabHomePlayer2" layoutX="199.0" layoutY="175.0" minHeight="-Infinity" onMouseReleased="#noPlayersErrorCheckHome" prefHeight="25.0" prefWidth="86.0" />
-                                          <ChoiceBox fx:id="choiceBoxFixturesTabAwayPlayer1" layoutX="23.0" layoutY="254.0" minHeight="-Infinity" onMouseReleased="#noPlayersErrorCheckAway" prefHeight="25.0" prefWidth="86.0" />
-                                          <ChoiceBox fx:id="choiceBoxFixturesTabAwayPlayer2" layoutX="23.0" layoutY="343.0" minHeight="-Infinity" onMouseReleased="#noPlayersErrorCheckAway" prefHeight="25.0" prefWidth="86.0" />
-                                          <Line endX="14.0" endY="-0.1999969482421875" layoutX="99.0" layoutY="188.0" startX="1.800048828125" startY="-0.1999969482421875" />
-                                          <Line endX="-5.20001220703125" endY="-11.600006103515625" layoutX="72.0" layoutY="291.0" startX="-5.20001220703125" startY="8.399993896484375" />
-                                          <Line endX="-16.0" endY="20.800018310546875" layoutX="82.0" layoutY="301.0" startX="-16.0" startY="42.399993896484375" />
-                                          <Label layoutX="142.0" layoutY="208.0" text="Set 1" />
-                                          <Label layoutX="242.0" layoutY="208.0" text="Set 3" />
-                                          <Label layoutX="146.0" layoutY="392.0" text="Set 2" />
-                                          <Label layoutX="239.0" layoutY="392.0" text="Set 4" />
+                                          <Label layoutX="25.0" layoutY="179.0" text="Home Players">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font></Label>
+                                          <Label layoutX="29.0" layoutY="318.0" text="Away Players">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font></Label>
+                                          <Label layoutX="318.0" layoutY="215.0" text="Doubles Set:">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font></Label>
+                                          <Line endX="14.0" endY="-0.1999969482421875" layoutX="107.0" layoutY="189.0" startX="1.800048828125" startY="-0.1999969482421875" />
+                                          <Line endX="-5.20001220703125" endY="-11.600006103515625" layoutX="71.0" layoutY="307.0" startX="-5.20001220703125" startY="8.399993896484375" />
+                                          <Line endX="-16.0" endY="20.800018310546875" layoutX="82.0" layoutY="317.0" startX="-16.0" startY="42.399993896484375" />
+                                          <Label layoutX="144.0" layoutY="215.0" text="Set 1">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font></Label>
+                                          <Label layoutX="241.0" layoutY="215.0" text="Set 3">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font></Label>
+                                          <Label layoutX="144.0" layoutY="326.0" text="Set 2">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="241.0" layoutY="325.0" text="Set 4">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font></Label>
+                                          <Label fx:id="homePlayer1" layoutX="144.0" layoutY="179.0" text="Label" />
+                                          <Label fx:id="homePlayer2" layoutX="241.0" layoutY="179.0" text="Label" />
+                                          <Label fx:id="awayPlayer1" layoutX="51.0" layoutY="266.0" text="Label" />
+                                          <Label fx:id="awayPlayer2" layoutX="52.0" layoutY="370.0" text="Label" />
+                                          <Line endX="14.0" endY="-0.1999969482421875" layoutX="196.0" layoutY="189.0" startX="1.800048828125" startY="-0.1999969482421875" />
                                        </children>
                                     </AnchorPane>
                                     <ChoiceBox fx:id="choiceBoxFixturesTabLeague" layoutX="156.0" layoutY="26.0" prefHeight="26.0" prefWidth="300.0" />

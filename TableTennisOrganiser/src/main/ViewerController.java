@@ -7,10 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
@@ -22,9 +20,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class ViewerController extends AdminController implements Initializable{
     
-    @FXML private Label homeTeam;
-    @FXML private Label awayTeam;
-    @FXML private Label venue;
+    @FXML private Label homeTeam, awayTeam, venue;
+    @FXML private Label homePlayer1, homePlayer2, awayPlayer1, awayPlayer2;
 
     /**
      * initialises the UI elements and associated class data structures with
@@ -53,31 +50,28 @@ public class ViewerController extends AdminController implements Initializable{
     @Override
     public void displayTeamInfo(Team team)   {
         ArrayList<Player> players = team.getPlayers();
-        ArrayList<String> names = new ArrayList<>();
+        String names = "";
+        int length = 0;
         if (players != null) {
-            players.forEach(player -> {
-                names.add(player.getName());
-            });
+            for (Player player : players) {
+                names += " " + player.getName();
+                if (length < players.size()-1) {
+                    names += ",";
+                } else {
+                    names += ".";
+                }
+                length++;
+            }
         }
         
-        labelTeamsTabTeamInfoLabels.setText("""
-                Name:
-                Matches Played:
-                Matches Won:
-                Matches Lost:
-                Total Points:
-                Home Venue:
-                Players:"""); 
-        labelTeamsTabTeamInfoVariables.setText(
-                team.getName() + "\n" +
-                team.getMatchesPlayed() + "\n" +
-                team.getMatchesWon() + "\n" +
-                team.getMatchesLost()  + "\n" +
-                team.getPoints()  + "\n" + 
-                team.getVenue() + "\n" + 
-                names.toString()
-                );
-       
+        labelTeamsTabTeamInfoLabels.setText(
+                "Team Overview:\nName:\t\t\t\t\t" + team.getName() +
+                "\nHome Venue:\t\t\t\t" + team.getVenue() +
+                "\nPlayers:\t\t\t\t\t" + names.toString().strip() +
+                "\n\nTeam Statistics:\nMatches Won:\t\t\t\t" + team.getMatchesWon() +
+                "\nMatches Lost:\t\t\t\t" + team.getMatchesLost() +
+                "\nMatches Played:\t\t\t" + team.getMatchesPlayed()
+        );
     }
     
     
@@ -132,7 +126,22 @@ public class ViewerController extends AdminController implements Initializable{
         homeTeam.setText(fixture.getHomeTeam().getName());
         awayTeam.setText(fixture.getAwayTeam().getName());
         venue.setText(fixture.getVenue());
- 
+        try {
+            homePlayer1.setText(fixture.getHomeTeam().getPlayers().get(fixture.getPlayerSelections()[0]).getName());
+            homePlayer2.setText(fixture.getHomeTeam().getPlayers().get(fixture.getPlayerSelections()[1]).getName());
+        } catch (IndexOutOfBoundsException e) {
+            homePlayer1.setText("None");
+            homePlayer2.setText("None");
+            System.out.println("No home players in fixture");
+        }
+        try {
+        awayPlayer1.setText(fixture.getAwayTeam().getPlayers().get(fixture.getPlayerSelections()[2]).getName());
+        awayPlayer2.setText(fixture.getAwayTeam().getPlayers().get(fixture.getPlayerSelections()[3]).getName());
+        } catch (IndexOutOfBoundsException e) {
+            awayPlayer1.setText("None");
+            awayPlayer2.setText("None");
+            System.out.println("No away players in fixture");
+        }
         updateScoreSheetScores(fixture);
     }
 
