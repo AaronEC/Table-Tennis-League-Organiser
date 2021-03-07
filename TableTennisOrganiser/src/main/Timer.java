@@ -9,7 +9,6 @@ public class Timer extends User {
 	private int seconds;
 
 	protected void generateTeamStats(League league) {
-            System.out.println(league.getName());
             
             for (Team team : league.getTeams()) {
                 team.resetStats();
@@ -20,7 +19,6 @@ public class Timer extends User {
                 Team loser = fixture.getLoser();
                 
                 if (winner != null) {
-                    System.out.println(winner.getName());
                     winner.incrementMatchesWon();
                     winner.incrementMatchesPlayed();
                     winner.addPoints(3);

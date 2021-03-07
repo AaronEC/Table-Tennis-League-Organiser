@@ -104,7 +104,6 @@ public class Fixture implements Serializable{
         } else {
             return null;
         }
-        System.out.println("Fixture: " + winner.getName());
         return winner;
     }
 
