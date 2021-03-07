@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -66,7 +67,12 @@ public class UserController extends User implements Initializable{
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(adminScene);
         window.setTitle("Secretary View");
-        window.show();        
+        window.show();
+        window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+          public void handle(WindowEvent we) {
+              System.out.println("Exit Event...");
+          }
+      });             
     }
     /**
      * Creates the 'Viewer' interface for the player users.

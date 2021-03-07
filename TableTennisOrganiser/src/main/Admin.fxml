@@ -73,9 +73,10 @@
                         <ChoiceBox fx:id="choiceBoxTeamsTabLeague" layoutX="150.0" layoutY="27.0" prefHeight="26.0" prefWidth="300.0" />
                         <TableView fx:id="tableViewTeamsTab" layoutX="35.0" layoutY="70.0" prefHeight="285.0" prefWidth="415.0" stylesheets="@admin.css">
                            <columns>
-                              <TableColumn fx:id="tableViewTeamsTabNameColumn" prefWidth="298.5" text="Name" />
-                              <TableColumn fx:id="tableViewTeamsTabPointsColumn" minWidth="0.0" prefWidth="61.0" text="Points" />
-                              <TableColumn fx:id="tableViewTeamsTabPlayersColumn" prefWidth="54.5" text="Players" />
+                              <TableColumn fx:id="tableViewTeamsTabNameColumn" prefWidth="213.33334732055664" text="Name" />
+                              <TableColumn fx:id="tableViewTeamsTabPointsColumn" minWidth="0.0" prefWidth="67.33329772949219" text="Points" />
+                              <TableColumn fx:id="tableViewTeamsTabPlayedColumn" minWidth="0.0" prefWidth="65.33331298828125" text="Played" />
+                              <TableColumn fx:id="tableViewTeamsTabPlayersColumn" prefWidth="67.33336385091144" text="Players" />
                            </columns>
                            <cursor>
                               <Cursor fx:constant="HAND" />

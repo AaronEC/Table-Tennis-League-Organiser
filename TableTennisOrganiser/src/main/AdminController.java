@@ -52,6 +52,7 @@ public class AdminController extends UserController implements Initializable{
     @FXML protected TableView <Team> tableViewTeamsTab;
     @FXML protected TableColumn <Team, String> tableViewTeamsTabNameColumn;
     @FXML protected TableColumn <Team, Integer> tableViewTeamsTabPointsColumn;
+    @FXML protected TableColumn <Team, Integer> tableViewTeamsTabPlayedColumn;
     @FXML protected TableColumn <Team, Integer> tableViewTeamsTabPlayersColumn;
     @FXML protected Label labelTeamsTabTeamInfoLabels;
     @FXML protected Label labelTeamsTabTeamInfoVariables;
@@ -290,6 +291,7 @@ public class AdminController extends UserController implements Initializable{
         //Set values for TableView
         tableViewTeamsTabNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableViewTeamsTabPointsColumn.setCellValueFactory(new PropertyValueFactory<>("points"));
+        tableViewTeamsTabPlayedColumn.setCellValueFactory(new PropertyValueFactory<>("matchesPlayed"));
         tableViewTeamsTabPlayersColumn.setCellValueFactory(new PropertyValueFactory<>("playersCount"));
         
         //Populate UI elements with data
@@ -823,18 +825,23 @@ public class AdminController extends UserController implements Initializable{
         // Call Admin class logic to update Fixture scores
         admin.modifyScoreSheet(fixtureSelection, scores);
         fixtureSelection.calculateWinner();
-        admin.saveLeagues();
-        updateTeamsTableView();
         try {
             resultsText.setText("Winner: " 
                         + fixtureSelection.getWinner().getName()
                         + "\nScore: "
                         + fixtureSelection.getResult());
+            fixtureSelection.setPlayed(true);
+            checkBoxFixturesTabPlayed.setSelected(true);
+            tableViewFixturesTab.getSelectionModel().clearSelection();
+            tableViewFixturesTab.getSelectionModel().select(fixtureSelection);
         } catch (NullPointerException e) {
             System.err.println("Unable to determine winner: check input data");
             resultsText.setText("Please add more\nscores");
+            return;
         }
+        updateTeamsTableView();
         admin.generateTeamStats(leagueSelectionTeamsTab);
+        admin.saveLeagues();
     }
     
     public void updateScoreSheetScores(Fixture fixture) {

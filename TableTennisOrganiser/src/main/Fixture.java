@@ -102,7 +102,7 @@ public class Fixture implements Serializable{
             winner = awayTeam;
             loser = homeTeam;
         } else {
-            return null;
+            winner = null;
         }
         return winner;
     }
@@ -122,6 +122,18 @@ public class Fixture implements Serializable{
             this.played = 'N';
         } else {
             this.played = 'Y';
+        }
+    }
+    /**
+     * Overload method for specifying exact property.
+     * @param in 
+     */
+    public void setPlayed(boolean in) {
+        System.out.println(in);
+        if (in == true) {
+            this.played = 'Y';
+        } else {
+            this.played = 'N';
         }
     }
 
