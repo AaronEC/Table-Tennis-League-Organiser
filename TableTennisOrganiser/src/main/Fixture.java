@@ -2,7 +2,6 @@ package main;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class for holding all attributes of a fixture.
@@ -105,6 +104,7 @@ public class Fixture implements Serializable{
         } else {
             return null;
         }
+        System.out.println("Fixture: " + winner.getName());
         return winner;
     }
 

@@ -113,7 +113,6 @@ public class AdminController extends UserController implements Initializable{
         choiceBoxTeamsTabLeague.setOnAction((event) -> {
             updateTeamsTableView();
             labelTeamsTabTeamInfoLabels.setText("");
-            labelTeamsTabTeamInfoVariables.setText("");
             tableViewTeamsTab.getSelectionModel().selectFirst();
         });
         //Listener for when a Team is selected in TableView.
@@ -823,18 +822,19 @@ public class AdminController extends UserController implements Initializable{
         
         // Call Admin class logic to update Fixture scores
         admin.modifyScoreSheet(fixtureSelection, scores);
-        admin.generateTeamStats(leagueSelectionTeamsTab);
+        fixtureSelection.calculateWinner();
         admin.saveLeagues();
         updateTeamsTableView();
         try {
             resultsText.setText("Winner: " 
-                        + fixtureSelection.calculateWinner().getName()
+                        + fixtureSelection.getWinner().getName()
                         + "\nScore: "
                         + fixtureSelection.getResult());
         } catch (NullPointerException e) {
             System.err.println("Unable to determine winner: check input data");
             resultsText.setText("Please add more\nscores");
         }
+        admin.generateTeamStats(leagueSelectionTeamsTab);
     }
     
     public void updateScoreSheetScores(Fixture fixture) {
