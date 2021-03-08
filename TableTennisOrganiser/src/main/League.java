@@ -6,9 +6,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 /**
  *<h1>League Data Structure Class</h1>
- * This class contains the data structure for each league.
+ * This class contains the data structures and associated methods for creating a
+ * league.
  * @author  Aaron Cardwell 13009941
- * @version 0.1
+ * @version 1.0
  * @since 06/12/2020
  */
 public class League implements Serializable{
@@ -20,20 +21,16 @@ public class League implements Serializable{
     private int teamsCount;
     private int fixturesCount;
     
+    /**
+     * Class constructor specifying name of <code>League</code>.
+     * @param name 
+     */
     public League(String name)    {
         this.name = name;
         this.teams = new ArrayList<>();
         this.teamsCount = 0;
         this.fixturesCount = 0;
         this.fixtures = new ArrayList<>();
-    }
-    /**
-     * Currently not used.
-     * @throws FileNotFoundException
-     * @throws IOException 
-     */
-    void initialize() throws FileNotFoundException, IOException {
-        //loadTeams();
     }
 
     void setName(String name) {
@@ -75,7 +72,7 @@ public class League implements Serializable{
         }
     }
     /**
-     * Adds team of object type Team to League.
+     * Adds <code>Team</code> to this <code>League</code>
      * @param team Team to be added.
      */
     void addTeam(Team team) {
@@ -84,7 +81,8 @@ public class League implements Serializable{
         countTeams();
     }
     /**
-     * Overload method for adding a blank team with no players.
+     * Overload method for adding a blank <code>Team</code> with no 
+     * <code>players</code>.
      * @param name Name of team to be added.
      */
     void addTeam(String name) {
@@ -109,14 +107,16 @@ public class League implements Serializable{
         fixtures.remove(fixture);
     }
     /**
-     * Updates the teamsCount(int) by counting all teams in this League.
+     * Updates <code>teamsCount</code> by counting all <code>Team</code> 
+     * objects in this <code>League</code>.
      */
     void countTeams() {
         if (teams == null) { teamsCount = 0; }
         else { teamsCount = teams.size(); }
     }
     /**
-     * Updates the fixturesCount(int) by counting all fixtures in this League.
+     * Updates the <code>fixturesCount</code> by counting all 
+     * <code>Fixture</code> objects in this <code>League</code>.
      */
     void countFixtures()    {
         if (fixtures == null) { fixturesCount = 0; }

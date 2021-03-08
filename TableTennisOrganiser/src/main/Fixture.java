@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Class for holding all attributes of a fixture.
- * @author Aaron
+ * <h1>Fixture Data Class</h1>
+ * Contains all data structures needed for creating a fixture. Also contains
+ * all methods to update an process this data.
+ * @author  Aaron Cardwell 13009941
+ * @version 1.0
+ * @since 06/12/2020
  */
 public class Fixture implements Serializable{
 
@@ -25,7 +29,14 @@ public class Fixture implements Serializable{
     private String result;
     private int[] playerSelections;
 
-
+    /**
+     * Class constructor specifying home team, away team, week of fixture and
+     * venue name.
+     * @param homeTeam
+     * @param awayTeam
+     * @param week
+     * @param venue 
+     */
     public Fixture(Team homeTeam, Team awayTeam, int week, String venue) {
         
         this.homeTeam = homeTeam;
