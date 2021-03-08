@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
- * <h1>Admin Logic Class</h1>
+ * <H1>Admin Logic Class</H1>
  * Class which implements all logic for <code>Admin</code> functions and use 
  * cases.
  * @author  Aaron Cardwell 13009941
