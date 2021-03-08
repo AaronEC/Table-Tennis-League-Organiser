@@ -50,32 +50,7 @@ public class Fixture implements Serializable{
         this.separator = "Vs";
         this.playerSelections = new int[]{0,1,0,1};
     }
-    
-    public String getName(Team team) {
-        if (team != null) {
-            return team.getName();
-        } else {
-            return "";
-        }
-    }
-    /**
-     * Sets <code>venue</code> to either the string passed OR:
-     * - To home teams venue if passed "home".
-     * - To away teams venue if passed "away".
-     * @param venue
-     * @return Venue name as String
-     */
-    public String setVenue(String venue) {
-        if ("home".equals(venue)) {
-            return homeTeam.getVenue();
-        } else if ("away".equals(venue)){
-            return awayTeam.getVenue();
-        } else {
-            System.err.println("VENUE: " + venue);
-            this.venue = venue;
-            return venue;
-        }
-    }
+
     /**
      * Calculates the winner of this <code>Fixture</code>. 
      * Returns the winning <code>Team</code>.
@@ -132,34 +107,14 @@ public class Fixture implements Serializable{
             return null; 
         }
     }
-
-    public void setWeek(int week) {
-        this.week = week;
-    }
-
-    public void setTeams(String teams) {
-        this.teams = teams;
-    }
-    /**
-     * Toggles <code>played</code> between 'Y' and 'N'.
-     */
-    public void setPlayed() {
-        if (this.played == 'Y') {
-            this.played = 'N';
+    
+    /* Getters */
+    
+    public String getName(Team team) {
+        if (team != null) {
+            return team.getName();
         } else {
-            this.played = 'Y';
-        }
-    }
-    /**
-     * Overload method for specifying exact property of <code>played</code>.
-     * @param in 
-     */
-    public void setPlayed(boolean in) {
-        System.out.println(in);
-        if (in == true) {
-            this.played = 'Y';
-        } else {
-            this.played = 'N';
+            return "";
         }
     }
 
@@ -199,10 +154,6 @@ public class Fixture implements Serializable{
         return venue;
     }
 
-    public void setScores(ArrayList<String> scores) {
-        this.scores = scores;
-    }
-
     public ArrayList<String> getScores() {
         return scores;
     }
@@ -232,6 +183,61 @@ public class Fixture implements Serializable{
         } else {
             return new int[]{-1,-1,-1,-1};
         }
+    }
+    
+    /* Setters */
+    
+    /**
+     * Sets <code>venue</code> to either the string passed OR:
+     * - To home teams venue if passed "home".
+     * - To away teams venue if passed "away".
+     * @param venue
+     * @return Venue name as String
+     */
+    public String setVenue(String venue) {
+        if ("home".equals(venue)) {
+            return homeTeam.getVenue();
+        } else if ("away".equals(venue)){
+            return awayTeam.getVenue();
+        } else {
+            System.err.println("VENUE: " + venue);
+            this.venue = venue;
+            return venue;
+        }
+    }
+    
+    public void setWeek(int week) {
+        this.week = week;
+    }
+
+    public void setTeams(String teams) {
+        this.teams = teams;
+    }
+    /**
+     * Toggles <code>played</code> between 'Y' and 'N'.
+     */
+    public void setPlayed() {
+        if (this.played == 'Y') {
+            this.played = 'N';
+        } else {
+            this.played = 'Y';
+        }
+    }
+    /**
+     * Overload method for specifying exact property of <code>played</code>.
+     * @param in 
+     */
+    public void setPlayed(boolean in) {
+        System.out.println(in);
+        if (in == true) {
+            this.played = 'Y';
+        } else {
+            this.played = 'N';
+        }
+    }
+    
+    public void setScores(ArrayList<String> scores) {
+        this.scores = scores;
     }
     /**
      * Changes the <code>Player</code> selection at <code>inde</code> to 

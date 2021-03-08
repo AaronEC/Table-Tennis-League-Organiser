@@ -26,6 +26,10 @@ public class Team implements Serializable{
     private int setsPlayed;
     private int setsWon;
 
+    /**
+     * Class constructor specifying name of <code>Team</code>
+     * @param name 
+     */
     public Team(String name)    {
     
         this.name = name;
@@ -40,44 +44,22 @@ public class Team implements Serializable{
         this.hasPlayed = new ArrayList<>();
         this.playersCount = 0;
     }
-    /**
-     * Should be run when class object is created, to load data into class data 
-     * structures from database.
-     * @throws IOException 
-     */
-    void initialize() throws IOException {
-
-    }
-
-    public int getPlayersCount() {
-        return playersCount;
-    }
     
-    void countPlayers()   {
+    /* Bespoke Methods */
+    
+    public void countPlayers()   {
         if (teamPlayers == null) { this.playersCount = 0; }
         else { this.playersCount = teamPlayers.size(); }
     }
 
-    void addPlayer(Player player) {
+    public void addPlayer(Player player) {
         teamPlayers.add(player);
         countPlayers();
     }
     
-    void removePlayer(Player player)  {
+    public void removePlayer(Player player)  {
         this.teamPlayers.remove(player);
         countPlayers();
-    }
-
-    ArrayList<Player> getPlayers() {
-        return this.teamPlayers;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public void setMatchesPlayed(int matchesPlayed) {
-        this.matchesPlayed = matchesPlayed;
     }
 
     public void incrementMatchesWon() {
@@ -86,14 +68,6 @@ public class Team implements Serializable{
     
     public void incrementMatchesPlayed() {
         this.matchesPlayed++;
-    }
-
-    public int getMatchesLost() {
-        return matchesPlayed - matchesWon;
-    }
-
-    public void setVenue(String venue) {
-        this.venue = venue;
     }
 
     public void addHasPlayed(Team team) {
@@ -108,6 +82,35 @@ public class Team implements Serializable{
         return hasPlayed;
     }
 
+    public void addPoints(int points) {
+        this.points += points;
+    }
+    
+    /**
+     * Resets all stats (matches/sets) to 0.
+     */
+    public void resetStats() {
+        this.matchesPlayed = 0;
+        this.matchesWon = 0;
+        this.points = 0;
+        this.setsPlayed = 0;
+        this.setsWon = 0;
+    }
+    
+    /* Getters */
+    
+    public int getPlayersCount() {
+        return playersCount;
+    }
+    
+    public ArrayList<Player> getPlayers() {
+        return this.teamPlayers;
+    }
+    
+    public int getMatchesLost() {
+        return matchesPlayed - matchesWon;
+    }
+    
     public String getName() {
         return this.name;
     }
@@ -119,11 +122,7 @@ public class Team implements Serializable{
     public int getPoints() {
         return this.points;
     }
-
-    public void addPoints(int points) {
-        this.points += points;
-    }
- 
+    
     public String getVenue() {
         return this.venue;
     }
@@ -135,28 +134,6 @@ public class Team implements Serializable{
     public int getMatchesPlayed() {
         return matchesPlayed;
     }
-    
-    public void resetStats() {
-        this.matchesPlayed = 0;
-        this.matchesWon = 0;
-        this.points = 0;
-        this.setsPlayed = 0;
-        this.setsWon = 0;
-    }
-    /**
-     * Increases sets played by the passed amount
-     * @param setsPlayed 
-     */
-    public void setSetsPlayed(int setsPlayed) {
-        this.setsPlayed += setsPlayed;
-    }
-    /**
-     * Increases sets won by the passed amount
-     * @param setsWon 
-     */
-    public void setSetsWon(int setsWon) {
-        this.setsWon += setsWon;
-    }
 
     public int getSetsPlayed() {
         return setsPlayed;
@@ -166,7 +143,33 @@ public class Team implements Serializable{
         return setsWon;
     }
     
+    /* Setters */
+        
+    public void setName(String name) {
+        this.name = name;
+    }
     
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
     
+    /**
+     * Increases <code>setsPlayed</code> by the passed amount.
+     * @param setsPlayed 
+     */
+    public void setSetsPlayed(int setsPlayed) {
+        this.setsPlayed += setsPlayed;
+    }
     
+    /**
+     * Increases <code>setsWon</code> by the passed amount
+     * @param setsWon 
+     */
+    public void setSetsWon(int setsWon) {
+        this.setsWon += setsWon;
+    }
+    
+    public void setMatchesPlayed(int matchesPlayed) {
+        this.matchesPlayed = matchesPlayed;
+    }
 }

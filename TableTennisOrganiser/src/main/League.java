@@ -1,7 +1,5 @@
 package main;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 /**
@@ -32,38 +30,11 @@ public class League implements Serializable{
         this.fixturesCount = 0;
         this.fixtures = new ArrayList<>();
     }
-
-    void setName(String name) {
-        System.out.println("Changed league name to " + this.name);
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    ArrayList<Team> getTeams() {
-        return this.teams;
-    }
     
-    ArrayList<Fixture> getFixtures() {
-        return fixtures;
-    }
-        
+    /* Bespoke Methods */
+
     public void resetFixtures() {
         this.fixtures.clear();
-    }
-
-    public int getFixturesCount() {
-        return fixturesCount;
-    }
-
-    public int getTeamsCount() {
-        return teamsCount;
-    }
-
-    void setFixtures(ArrayList<Fixture> fixtures) {
-        this.fixtures = fixtures;
     }
     
     void appendFixtures(ArrayList<Fixture> fixtures) {
@@ -122,4 +93,37 @@ public class League implements Serializable{
         if (fixtures == null) { fixturesCount = 0; }
         else { fixturesCount = fixtures.size(); }
     }
+
+    /* Getters */
+
+    public String getName() {
+        return name;
+    }
+
+    ArrayList<Team> getTeams() {
+        return this.teams;
+    }
+    
+    ArrayList<Fixture> getFixtures() {
+        return fixtures;
+    }
+    
+    public int getFixturesCount() {
+        return fixturesCount;
+    }
+
+    public int getTeamsCount() {
+        return teamsCount;
+    }   
+    
+    /* Setters */
+    
+    void setName(String name) {
+        System.out.println("Changed league name to " + this.name);
+        this.name = name;
+    }
+    
+    void setFixtures(ArrayList<Fixture> fixtures) {
+        this.fixtures = fixtures;
+    }    
 }

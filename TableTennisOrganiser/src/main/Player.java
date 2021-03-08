@@ -23,12 +23,17 @@ public class Player implements Serializable{
     public Player(String name)  {
         this.name = name;
     }
+    
+    /* Getters */
+    
+    String getName() {
+        return this.name;
+    }
 
+    /* Setters */
+    
     public void setName(String name) {
         this.name = name;
     }
 
-    String getName() {
-        return this.name;
-    }
 }
