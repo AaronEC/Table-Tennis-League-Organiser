@@ -15,6 +15,7 @@ public class Timer extends User {
             }
             
             for (Fixture fixture : league.getFixtures()) {
+                fixture.calculateWinner();
                 Team winner = fixture.getWinner();
                 Team loser = fixture.getLoser();
                 
@@ -28,5 +29,6 @@ public class Timer extends User {
                     loser.addPoints(1);
                 }
             }
+            
 	}
 }

@@ -23,6 +23,8 @@ public class Team implements Serializable{
     private int matchesPlayed;
     private int matchesWon;
     private int playersCount;
+    private int setsPlayed;
+    private int setsWon;
 
     public Team(String name)    {
     
@@ -31,9 +33,11 @@ public class Team implements Serializable{
         this.rank = 0;
         this.matchesPlayed = 0;
         this.matchesWon = 0;
+        this.setsPlayed = 0;
+        this.setsWon = 0;
         this.points = 0;
         this.teamPlayers = new ArrayList<>();
-        this.hasPlayed = new ArrayList<Team>();
+        this.hasPlayed = new ArrayList<>();
         this.playersCount = 0;
     }
     /**
@@ -136,5 +140,33 @@ public class Team implements Serializable{
         this.matchesPlayed = 0;
         this.matchesWon = 0;
         this.points = 0;
+        this.setsPlayed = 0;
+        this.setsWon = 0;
     }
+    /**
+     * Increases sets played by the passed amount
+     * @param setsPlayed 
+     */
+    public void setSetsPlayed(int setsPlayed) {
+        this.setsPlayed += setsPlayed;
+    }
+    /**
+     * Increases sets won by the passed amount
+     * @param setsWon 
+     */
+    public void setSetsWon(int setsWon) {
+        this.setsWon += setsWon;
+    }
+
+    public int getSetsPlayed() {
+        return setsPlayed;
+    }
+
+    public int getSetsWon() {
+        return setsWon;
+    }
+    
+    
+    
+    
 }

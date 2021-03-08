@@ -2,6 +2,7 @@ package main;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,12 +66,12 @@ public class ViewerController extends AdminController implements Initializable{
         }
         
         labelTeamsTabTeamInfoLabels.setText(
-                "Team Overview:\nName:\t\t\t\t\t" + team.getName() +
-                "\nHome Venue:\t\t\t\t" + team.getVenue() +
-                "\nPlayers:\t\t\t\t\t" + names.toString().strip() +
-                "\n\nTeam Statistics:\nMatches Won:\t\t\t\t" + team.getMatchesWon() +
-                "\nMatches Lost:\t\t\t\t" + team.getMatchesLost() +
-                "\nMatches Played:\t\t\t" + team.getMatchesPlayed()
+                "Team Overview:\nName:" + tabs(5) + team.getName() +
+                "\nHome Venue:" + tabs(4) + team.getVenue() +
+                "\nPlayers:" + tabs(5) + names.toString().strip() +
+                "\n\nTeam Statistics:\nMatches Won:" + tabs(4) + team.getMatchesWon() +
+                "\nMatches Lost:" + tabs(4) + team.getMatchesLost() +
+                "\nMatches Played:" + tabs(3) + team.getMatchesPlayed()
         );
     }
     
@@ -156,14 +157,16 @@ public class ViewerController extends AdminController implements Initializable{
         // Get any saved scores for this fixture
         ArrayList<String> scores = fixture.getScores();
         
-        // Create list of scores to populate GridPane (Blank if none saved)
+        // Create list of scores to populate GridPane (n/a if none saved)
         int i = 0;
         for (Node node : currentGrid) {
             Label text = new Label();
             if (scores != null) {
+                Collections.replaceAll(scores, "", "0:0");
                 text.setText("    " + scores.get(i));
+                Collections.replaceAll(scores, "0:0", "");
             } else {
-                text.setText("    0:0");
+                text.setText("    n/a");
             }
             node = (Node) text;
             newGrid.add(node);

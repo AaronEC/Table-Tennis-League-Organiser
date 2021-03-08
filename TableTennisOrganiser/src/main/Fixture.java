@@ -1,6 +1,7 @@
 package main;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -71,40 +72,48 @@ public class Fixture implements Serializable{
         int homeSets = 0;
         int awaySets = 0;
         int index = 0;
-        for (String game : scores) {
-            if (game != "") {
-                String[] score = game.split(":");
-                if (Integer.parseInt(score[0]) > Integer.parseInt(score[1])) {
-                    homeGames++;
-                } else if (Integer.parseInt(score[1]) > Integer.parseInt(score[0])) {
-                    awayGames++;
-                }
-                index++;
-                if (index == 3) {
-                    if (homeGames > awayGames) {
-                        homeSets++;
-                    } else if (homeGames < awayGames) {
-                        awaySets++;
+        try {
+            for (String game : scores) {
+                if (game != "") {
+                    String[] score = game.split(":");
+                    if (Integer.parseInt(score[0]) > Integer.parseInt(score[1])) {
+                        homeGames++;
+                    } else if (Integer.parseInt(score[1]) > Integer.parseInt(score[0])) {
+                        awayGames++;
                     }
-                    homeGames = 0;
-                    awayGames = 0;
-                    index = 0;
+                    index++;
+                    if (index == 3) {
+                        if (homeGames > awayGames) {
+                            homeSets++;
+                        } else if (homeGames < awayGames) {
+                            awaySets++;
+                        }
+                        homeGames = 0;
+                        awayGames = 0;
+                        index = 0;
+                    }
                 }
             }
+
+            result = String.format("%d : %d", homeSets, awaySets);
+            homeTeam.setSetsWon(homeSets);
+            homeTeam.setSetsPlayed(homeSets + awaySets);
+            awayTeam.setSetsWon(awaySets);
+            awayTeam.setSetsPlayed(awaySets + homeSets);
+
+            if (homeSets > awaySets) {
+                winner = homeTeam;
+                loser = awayTeam;
+            } else if (awaySets > homeSets) {
+                winner = awayTeam;
+                loser = homeTeam;
+            } else {
+                winner = null;
+            }
+            return winner;      
+        } catch (NullPointerException e) {
+            return null; 
         }
-        
-        result = String.format("%d : %d", homeSets, awaySets);
-        
-        if (homeSets > awaySets) {
-            winner = homeTeam;
-            loser = awayTeam;
-        } else if (awaySets > homeSets) {
-            winner = awayTeam;
-            loser = homeTeam;
-        } else {
-            winner = null;
-        }
-        return winner;
     }
 
     public void setWeek(int week) {

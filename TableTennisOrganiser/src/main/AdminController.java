@@ -53,7 +53,7 @@ public class AdminController extends UserController implements Initializable{
     @FXML protected TableColumn <Team, String> tableViewTeamsTabNameColumn;
     @FXML protected TableColumn <Team, Integer> tableViewTeamsTabPointsColumn;
     @FXML protected TableColumn <Team, Integer> tableViewTeamsTabPlayedColumn;
-    @FXML protected TableColumn <Team, Integer> tableViewTeamsTabPlayersColumn;
+    @FXML protected TableColumn <Team, Integer> tableViewTeamsTabSetsColumn;
     @FXML protected Label labelTeamsTabTeamInfoLabels;
     @FXML protected Label labelTeamsTabTeamInfoVariables;
     
@@ -108,7 +108,7 @@ public class AdminController extends UserController implements Initializable{
         initializeTeamsTab();
         initializeFixturesTab();
         
-        // Initialize listeners
+        // Initialize listeners (Used for mouse-click and selection events)
         
         //Listener for League selection in Choice Box.
         choiceBoxTeamsTabLeague.setOnAction((event) -> {
@@ -186,6 +186,10 @@ public class AdminController extends UserController implements Initializable{
                 updateFixtureInfo(fixtureSelection);
             }
         });
+        //Auto select first item in tables (looks nicer and can prevent some 
+        //null pointer exceptions, but they should be handled anyway).
+        tableViewTeamsTab.getSelectionModel().selectFirst();
+        tableViewFixturesTab.getSelectionModel().selectFirst();
     }
     
     /****************************/
@@ -292,7 +296,7 @@ public class AdminController extends UserController implements Initializable{
         tableViewTeamsTabNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableViewTeamsTabPointsColumn.setCellValueFactory(new PropertyValueFactory<>("points"));
         tableViewTeamsTabPlayedColumn.setCellValueFactory(new PropertyValueFactory<>("matchesPlayed"));
-        tableViewTeamsTabPlayersColumn.setCellValueFactory(new PropertyValueFactory<>("playersCount"));
+        tableViewTeamsTabSetsColumn.setCellValueFactory(new PropertyValueFactory<>("setsWon"));
         
         //Populate UI elements with data
         updateleagueChoiceBoxTeamsTab();
@@ -407,12 +411,12 @@ public class AdminController extends UserController implements Initializable{
         }
         
         labelTeamsTabTeamInfoLabels.setText(
-                "Team Overview:\nName:\t\t\t\t\t" + team.getName() +
-                "\nHome Venue:\t\t\t\t" + team.getVenue() +
-                "\nPlayers:\t\t\t\t\t" + names.toString().strip() +
-                "\n\nTeam Statistics:\nMatches Won:\t\t\t\t" + team.getMatchesWon() +
-                "\nMatches Lost:\t\t\t\t" + team.getMatchesLost() +
-                "\nMatches Played:\t\t\t" + team.getMatchesPlayed()
+                "Team Overview:\nName:" + tabs(5) + team.getName() +
+                "\nHome Venue:" + tabs(4) + team.getVenue() +
+                "\nPlayers:" + tabs(5) + names.toString().strip() +
+                "\n\nTeam Statistics:\nMatches Won:" + tabs(4) + team.getMatchesWon() +
+                "\nMatches Lost:" + tabs(4) + team.getMatchesLost() +
+                "\nMatches Played:" + tabs(3) + team.getMatchesPlayed()
         );
         
         //Populate Player ChoiceBox
@@ -481,6 +485,8 @@ public class AdminController extends UserController implements Initializable{
     public void generateTeamStatsManual() {
         System.out.println("main.AdminController.generateTeamStatsManual()");
         admin.generateTeamStats(leagueSelectionTeamsTab);
+        updateTeamsTableView();
+        admin.saveLeagues();
         popupWindowSuccess("Team Stats Generated!", "Updated statistics for all teams.", "Press OK to continue.");
     }
     
@@ -518,8 +524,7 @@ public class AdminController extends UserController implements Initializable{
         
         //Populate UI elements with data
         updateLeagueChoiceBoxFixturesTab();
-        updateFixturesTableView();
-        
+        updateFixturesTableView();        
     }
     
     public void createFixture() {
@@ -595,9 +600,10 @@ public class AdminController extends UserController implements Initializable{
             //System.out.println("League Selected: " + leagueSelectionFixturesTab.getName());
             leagueSelectionFixturesTab.resetFixtures();
             admin.generateFixtures(leagueSelectionFixturesTab, homeAway, "home");
+            admin.generateTeamStats(leagueSelectionFixturesTab);
             admin.saveLeagues();
             updateFixturesTableView();
-            updateLeaguesTableView();
+            updateTeamsTableView();
         }
     }
     /**
@@ -784,16 +790,26 @@ public class AdminController extends UserController implements Initializable{
     
     public void noPlayersErrorCheckHome(MouseEvent mouseEvent) {
         System.out.println("main.AdminController.noPlayersErrorCheckHome()");
-        if (homeTeamSelectionFixturesTab.getPlayersCount() < 2) {
-        popupWindow("No Players", "No players in team " + homeTeamSelectionFixturesTab.getName(), "Please add more players in teams tab to create a fixture");
-        } 
+        try {
+            if (homeTeamSelectionFixturesTab.getPlayersCount() < 2) {
+            popupWindow("No Players", "No players in team " + homeTeamSelectionFixturesTab.getName(), "Please add more players in teams tab to create a fixture");
+            } 
+        } catch (NullPointerException e) {
+            System.err.println("No fixture selected");
+            popupWindowSuccess("No Fixture Selected!", "Please select a fixture before slecting players", "Press OK to continue...");
+        }
     }
     
     public void noPlayersErrorCheckAway(MouseEvent mouseEvent) {
         System.out.println("main.AdminController.noPlayersErrorCheckAway()");
-        if (awayTeamSelectionFixturesTab.getPlayersCount() < 2) {
-        popupWindow("No Players", "No players in team " + awayTeamSelectionFixturesTab.getName(), "Please add more players in teams tab to create a fixture");
-        } 
+        try {
+            if (awayTeamSelectionFixturesTab.getPlayersCount() < 2) {
+            popupWindow("No Players", "No players in team " + awayTeamSelectionFixturesTab.getName(), "Please add more players in teams tab to create a fixture");
+            } 
+        } catch (NullPointerException e) {
+            System.err.println("No fixture selected");
+            popupWindowSuccess("No Fixture Selected!", "Please select a fixture before slecting players", "Press OK to continue...");
+        }
     }
     
     /* Score Calculation Methods */
@@ -823,7 +839,13 @@ public class AdminController extends UserController implements Initializable{
         }
         
         // Call Admin class logic to update Fixture scores
-        admin.modifyScoreSheet(fixtureSelection, scores);
+        try {
+            admin.modifyScoreSheet(fixtureSelection, scores);
+        } catch (NullPointerException e) {
+            System.err.println("No fixture selected");
+            popupWindow("No Fixture Selected!", "Please select a fixture before editing a score sheet", "Press OK to continue...");
+            return;
+        }
         fixtureSelection.calculateWinner();
         try {
             resultsText.setText("Winner: " 
@@ -835,7 +857,7 @@ public class AdminController extends UserController implements Initializable{
             tableViewFixturesTab.getSelectionModel().clearSelection();
             tableViewFixturesTab.getSelectionModel().select(fixtureSelection);
         } catch (NullPointerException e) {
-            System.err.println("Unable to determine winner: check input data");
+            System.err.println("Unable to determine winner: check score sheet input data");
             resultsText.setText("Please add more\nscores");
             return;
         }
@@ -914,6 +936,21 @@ public class AdminController extends UserController implements Initializable{
             error = true;
         }
         return error;
+    }
+    
+    /**
+     * Recursively returns the amount of tabs requested as a string of "\t".
+     * Used for formatting.
+     * @param size
+     * @return 
+     */
+    public String tabs(int size) {
+        String tabs = "";
+        while (size > 0) {
+            tabs += "\t";
+            tabs(--size);
+        }
+        return tabs;
     }
 
 }

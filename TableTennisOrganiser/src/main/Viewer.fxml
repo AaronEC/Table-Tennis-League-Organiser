@@ -29,16 +29,6 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ChoiceBox fx:id="choiceBoxTeamsTabLeague" layoutX="150.0" layoutY="27.0" prefHeight="26.0" prefWidth="300.0" />
-                        <TableView fx:id="tableViewTeamsTab" layoutX="35.0" layoutY="70.0" prefHeight="355.0" prefWidth="415.0" stylesheets="@admin.css">
-                           <columns>
-                              <TableColumn fx:id="tableViewTeamsTabNameColumn" prefWidth="298.5" text="Name" />
-                              <TableColumn fx:id="tableViewTeamsTabPointsColumn" minWidth="0.0" prefWidth="61.0" text="Points" />
-                              <TableColumn fx:id="tableViewTeamsTabPlayersColumn" prefWidth="54.5" text="Players" />
-                           </columns>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </TableView>
                         <AnchorPane layoutX="480.0" layoutY="5.0" prefHeight="512.0" prefWidth="486.0">
                            <children>
                               <TableView layoutX="43.0" layoutY="65.0" prefHeight="200.0" prefWidth="400.0">
@@ -53,6 +43,17 @@
                            </children>
                         </AnchorPane>
                         <Label layoutX="56.0" layoutY="35.0" prefHeight="17.0" prefWidth="101.0" text="Select League:" />
+                        <TableView fx:id="tableViewTeamsTab" layoutX="34.0" layoutY="69.0" prefHeight="356.0" prefWidth="415.0" stylesheets="@admin.css">
+                           <columns>
+                              <TableColumn fx:id="tableViewTeamsTabNameColumn" prefWidth="213.33334732055664" text="Name" />
+                              <TableColumn fx:id="tableViewTeamsTabPointsColumn" minWidth="0.0" prefWidth="71.33338928222656" text="Points" />
+                              <TableColumn fx:id="tableViewTeamsTabPlayedColumn" minWidth="0.0" prefWidth="61.333251953125" text="Played" />
+                              <TableColumn fx:id="tableViewTeamsTabSetsColumn" prefWidth="67.33336385091144" text="Sets Won" />
+                           </columns>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </TableView>
                      </children>
                   </AnchorPane>
                </content>
@@ -95,7 +96,7 @@
                                                 <Separator layoutX="1.0" layoutY="63.0" prefHeight="13.0" prefWidth="427.0" />
                                                 <Label fx:id="homeTeam" layoutX="62.0" layoutY="38.0" text="Label" />
                                                 <Label fx:id="awayTeam" layoutX="201.0" layoutY="38.0" text="Label" />
-                                                <Label fx:id="venue" layoutX="323.0" layoutY="38.0" text="Label" />
+                                                <Label fx:id="venue" layoutX="321.0" layoutY="38.0" text="Label" />
                                              </children>
                                           </AnchorPane>
                                           <GridPane fx:id="scoreGrid" hgap="40.0" layoutX="133.0" layoutY="232.0" prefHeight="188.0" prefWidth="245.0">
