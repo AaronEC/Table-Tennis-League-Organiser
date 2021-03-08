@@ -8,7 +8,7 @@ import java.io.Serializable;
  * currently only holds one variable, it is created as a class for future
  * expandability. E.G it could be expanded to hold individual player stats etc.
  * @author  Aaron Cardwell 13009941
- * @version 0.1
+ * @version 1.0
  * @since 19/12/2020
  */
 public class Player implements Serializable{
@@ -16,6 +16,10 @@ public class Player implements Serializable{
     private static final long serialVersionUID = 8604642400555460348L;
     private String name;
     
+    /**
+     * Class constructor specifying name of <code>Player</code>
+     * @param name 
+     */
     public Player(String name)  {
         this.name = name;
     }

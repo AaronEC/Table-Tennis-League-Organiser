@@ -12,14 +12,14 @@ import javafx.scene.image.Image;
  *<h1>Main Logic Class</h1>
  * Contains main() and starts the program (launches GUI from here). 
  * @author  Aaron Cardwell 13009941
- * @version 0.1
+ * @version 1.0
  * @since 06/12/2020
  */
 public class Main extends Application {
     /**
      * Creates main login window.
      * @param stage
-     * @throws IOException File will always be here
+     * @throws IOException Files will always be here
      */
     @Override
     public void start(Stage stage) throws IOException {

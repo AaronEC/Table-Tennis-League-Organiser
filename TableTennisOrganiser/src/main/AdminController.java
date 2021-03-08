@@ -124,7 +124,6 @@ public class AdminController extends UserController implements Initializable{
         //Listener for when a Team is selected in teams tab TableView.
         tableViewTeamsTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                System.out.println("New team selected");
                 teamSelection = tableViewTeamsTab.getSelectionModel().getSelectedItem();
                 displayTeamInfo(teamSelection);
             }
@@ -386,7 +385,6 @@ public class AdminController extends UserController implements Initializable{
      * @param team Selected team in <code>tableViewTeamsTab</code>.
      */
     public void displayTeamInfo(Team team)   {
-        System.out.println("main.AdminController.displayTeamInfo()");
         ArrayList<Player> players = team.getPlayers();
         String names = "";
         int length = 0;
@@ -941,7 +939,7 @@ public class AdminController extends UserController implements Initializable{
                         + "\nScore: "
                         + fixtureSelection.getResult());
             } catch (NullPointerException e) {
-                System.err.println("Unable to determine winner: check input data");
+                System.err.println("Unable to determine winner: Check user input data in score sheet.");
             }
         } else {
             resultsText.setText("");
