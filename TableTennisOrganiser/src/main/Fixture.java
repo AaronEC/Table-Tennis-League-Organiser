@@ -1,7 +1,6 @@
 package main;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -48,7 +47,13 @@ public class Fixture implements Serializable{
             return "";
         }
     }
-
+    /**
+     * Sets <code>venue</code> to either the string passed OR:
+     * - To home teams venue if passed "home".
+     * - To away teams venue if passed "away".
+     * @param venue
+     * @return Venue name as String
+     */
     public String setVenue(String venue) {
         if ("home".equals(venue)) {
             return homeTeam.getVenue();
@@ -61,7 +66,8 @@ public class Fixture implements Serializable{
         }
     }
     /**
-     * Calculates the winner of this fixture and returns the Team object.
+     * Calculates the winner of this <code>Fixture</code>. 
+     * Returns the winning <code>Team</code>.
      * Returns null if unable to calculate winner (this shouldn't happen with
      * correct inputs).
      * @return 
@@ -124,7 +130,7 @@ public class Fixture implements Serializable{
         this.teams = teams;
     }
     /**
-     * Call to toggle played status between Y and N.
+     * Toggles <code>played</code> between 'Y' and 'N'.
      */
     public void setPlayed() {
         if (this.played == 'Y') {
@@ -134,7 +140,7 @@ public class Fixture implements Serializable{
         }
     }
     /**
-     * Overload method for specifying exact property.
+     * Overload method for specifying exact property of <code>played</code>.
      * @param in 
      */
     public void setPlayed(boolean in) {
@@ -203,9 +209,10 @@ public class Fixture implements Serializable{
     }
     /**
      * Returns an integer array of index numbers. These match the index of the
-     * selected player in their respective teams Player array. If the team in
-     * this fixture does not have any players, this returns an array of all -1,
-     * which will set the ChoiceBox to blank.
+     * selected <code>Player</code> in their respective teams 
+     * <code>players</code> array. If the team in this <code>Fixture</code> does 
+     * not have any players, this returns an array of all -1, which will set the 
+     * ChoiceBox to blank.
      * @return (int)Array
      */
     public int[] getPlayerSelections() {
@@ -216,7 +223,8 @@ public class Fixture implements Serializable{
         }
     }
     /**
-     * Change the player selection at 'index' to 'value'.
+     * Changes the <code>Player</code> selection at <code>inde</code> to 
+     * <code>value</code>.
      * @param index
      * @param value 
      */
@@ -225,12 +233,18 @@ public class Fixture implements Serializable{
             this.playerSelections[index] = value;
         }
     }    
-
+    /**
+     * Also updates <code>homeTeamName</code> to <code>homeTeam.name</code>
+     * @param homeTeam 
+     */
     public void setHomeTeam(Team homeTeam) {
         this.homeTeamName = homeTeam.getName();
         this.homeTeam = homeTeam;
     }
-
+    /**
+     * Also updates <code>awayTeamName</code> to <code>awayTeam.name</code>
+     * @param awayTeam 
+     */
     public void setAwayTeam(Team awayTeam) {
         this.awayTeamName = awayTeam.getName();
         this.awayTeam = awayTeam;
