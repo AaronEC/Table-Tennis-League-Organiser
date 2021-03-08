@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * @author  Aaron Cardwell 13009941
  * @version 1.0
  * @since 06/12/2020
+ * @serial 8604642400555460347L8604642400555460347L
  */
 public class Fixture implements Serializable{
 
@@ -200,7 +201,6 @@ public class Fixture implements Serializable{
         } else if ("away".equals(venue)){
             return awayTeam.getVenue();
         } else {
-            System.err.println("VENUE: " + venue);
             this.venue = venue;
             return venue;
         }
@@ -228,7 +228,6 @@ public class Fixture implements Serializable{
      * @param in 
      */
     public void setPlayed(boolean in) {
-        System.out.println(in);
         if (in == true) {
             this.played = 'Y';
         } else {

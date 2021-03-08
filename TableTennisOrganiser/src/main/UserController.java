@@ -20,9 +20,11 @@ import javafx.stage.*;
 
 /**
  * <h1>User GUI Controller Class</h1>
- * Controls FMXL GUI elements for User super class, including login page.
+ * Handles the creation of User super class, as well as controlling FMXL GUI 
+ * elements for the user login page.
+ * 
  * @author  Aaron Cardwell 13009941
- * @version 0.1
+ * @version 1.0
  * @since 06/12/2020
  */
 public class UserController extends User implements Initializable{
@@ -30,7 +32,12 @@ public class UserController extends User implements Initializable{
     @FXML private PasswordField passwordInput;
     @FXML private ChoiceBox<String> loginSelect;
     protected final Admin admin = new Admin();
-
+    /**
+     * Initialises the UI elements (login window) and <code>User</code> data 
+     * structures.
+     * @param location
+     * @param resources 
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loginSelect.getItems().add("Secretary");
@@ -40,7 +47,8 @@ public class UserController extends User implements Initializable{
     }
     
     /**
-    * Handles login events and creation of 'Admin' or 'Viewer' interfaces.
+    * Handles login events and creation of <code>AdminController</code> or 
+    * <code>UserController</code> interfaces.
     * @param event 
     * @throws IOException File will always be present
     */
@@ -49,19 +57,22 @@ public class UserController extends User implements Initializable{
         //Verify login type **extend to include password check here**
         user.loginVerify(loginSelect.getValue(), passwordInput.getText());
         if(user.getLoginType().equalsIgnoreCase("Viewer")) {
-            createViewer(event);    }
+            createViewer(event);
+        }
         else if(user.getLoginType().equalsIgnoreCase("Admin")) {
-            createAdmin(event);     }
+            createAdmin(event);
+        }
         else if(user.getLoginType().equalsIgnoreCase("Error")) {
             popupWindow("Error", "Incorrect Login", "Please enter correct login details.");
         }
     }
     /**
-     * Creates the 'Admin' interface for the club secretary user.
+     * Creates the <code>AdminController</code> interface for the admin user.
      * @param event
      * @throws IOException File will always be present
      */
     protected void createAdmin(ActionEvent event) throws IOException {
+        System.out.println("Launching Admin Scene");
         Parent adminParent = FXMLLoader.load(getClass().getResource("Admin.fxml"));
         Scene adminScene = new Scene(adminParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -70,16 +81,17 @@ public class UserController extends User implements Initializable{
         window.show();
         window.setOnCloseRequest(new EventHandler<WindowEvent>() {
           public void handle(WindowEvent we) {
-              System.out.println("Exit Event...");
+              popupWindowChoice("Exit Program?", "Are you sure you want to exit?", "Unsaved changes will be lost...");
           }
       });             
     }
     /**
-     * Creates the 'Viewer' interface for the player users.
+     * Creates the <code>ViewerController</code> interface for the viewer user.
      * @param event
      * @throws IOException File will always be present
      */
     protected void createViewer(ActionEvent event) throws IOException    {
+        System.out.println("Launching Viewer Scene");
         Parent viewerParent = FXMLLoader.load(getClass().getResource("Viewer.fxml"));
         Scene viewerScene = new Scene(viewerParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -88,7 +100,7 @@ public class UserController extends User implements Initializable{
         window.show();
     }
     /**
-     * Creates a pop up window with the specified text.
+     * Creates a pop up error window with the passed text.
      * @param title Popup window title.
      * @param messageLarge Top message.
      * @param messageSmall Bottom message.
@@ -113,7 +125,7 @@ public class UserController extends User implements Initializable{
         alert.showAndWait();
     }
     /**
-     * Creates a default popup window with error for missing text input.
+     * Creates a default popup information window passed text.
      */
     protected void popupWindowSuccess(String title, String messageLarge, String messageSmall)    {
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -145,7 +157,9 @@ public class UserController extends User implements Initializable{
             return false;
         }
     }
-    
+    /**
+     * Displays a pop-up window with user information on fixture generation.
+     */
     protected void popupWindowInformation() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Generate Fixtures");
@@ -166,7 +180,7 @@ public class UserController extends User implements Initializable{
         alert.show();
     }
     /**
-     * Called from Admin or Viewer scenes. Returns user to the login screen.
+     * Returns user to the login screen.
      * @param event
      * @throws IOException 
      */

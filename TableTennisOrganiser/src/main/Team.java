@@ -8,8 +8,9 @@ import java.util.ArrayList;
  *<h1>Team Data Structure Class</h1>
  * This class contains the data structure for each team.
  * @author  Aaron Cardwell 13009941
- * @version 0.1
+ * @version 1.0
  * @since 18/12/2020
+ * @serial 8604642400555460346L
  */
 public class Team implements Serializable{
     

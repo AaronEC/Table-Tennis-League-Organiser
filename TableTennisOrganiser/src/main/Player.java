@@ -10,6 +10,7 @@ import java.io.Serializable;
  * @author  Aaron Cardwell 13009941
  * @version 1.0
  * @since 19/12/2020
+ * @serial 8604642400555460348L
  */
 public class Player implements Serializable{
     

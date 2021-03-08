@@ -30,7 +30,7 @@ public class Admin extends Timer {
         } catch (FileNotFoundException ex) {
             System.err.println(super.getFileName() + " not found");
         } catch (IOException ex) {
-            System.err.println("ERROR: Incorrect output");
+            System.err.println("ERROR: Unable to create output file");
         }
     } 
     /**
@@ -49,7 +49,7 @@ public class Admin extends Timer {
             System.err.println("ERROR: File " + super.getFileName() + 
                     " not found");               
         } catch (IOException ex) {
-            System.err.println("ERROR: Incorrect input loaded");
+            System.err.println("ERROR: Incompatible input file loaded");
         }
     }
     /**
@@ -60,7 +60,6 @@ public class Admin extends Timer {
      * @param name 
      */
     public void addTeam(League league, String name) {
-        System.out.println("Adding Team " + name + " to League " + league.getName());
         league.addTeam(name);
     }
     /**
@@ -70,7 +69,6 @@ public class Admin extends Timer {
      * @param team 
      */
     public void removeTeam(League league, Team team) {
-        System.out.println("Removing team "  + team.getName() + " from league "+ league.getName());
         league.removeTeam(team);
     }
     /**
@@ -81,7 +79,6 @@ public class Admin extends Timer {
      * @param name
      */
     public void addPlayer(Team team, String name) {
-        System.out.println("Adding Player " + name + " to Team " + team.getName());
         team.addPlayer(new Player(name));
     }
     /**
@@ -91,7 +88,6 @@ public class Admin extends Timer {
      * @param player
      */
     public void removePlayer(Team team, Player player) {
-        System.out.println("Removing player "  + player.getName() + " from team "+ team.getName());
         team.removePlayer(player);
     }
     /**
@@ -112,7 +108,6 @@ public class Admin extends Timer {
      */
     void generateFixtures(League league, boolean homeAndAway, String venue) {
         league.countTeams();
-        System.out.println("Generating fixtures for " + league.getTeamsCount() + " teams.");
         //How many teamsCount are in the league?
         int teamsCount = league.getTeamsCount();
         int increment;

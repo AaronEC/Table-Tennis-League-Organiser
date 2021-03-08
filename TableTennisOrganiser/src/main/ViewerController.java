@@ -14,9 +14,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * <h1>Viewer GUI Controller Class</h1>
- * Controls FMXL GUI elements for Viewer class.
+ * Controls FMXL GUI elements for Viewer scene.
  * @author  Aaron Cardwell 13009941
- * @version 0.1
+ * @version 1.0
  * @since 06/12/2020
  */
 public class ViewerController extends AdminController implements Initializable{
@@ -25,8 +25,7 @@ public class ViewerController extends AdminController implements Initializable{
     @FXML private Label homePlayer1, homePlayer2, awayPlayer1, awayPlayer2;
 
     /**
-     * initialises the UI elements and associated class data structures with
-     * data from the database files.
+     * initialises the UI elements and associated class data structures.
      * @param location
      * @param resources 
      */
@@ -51,7 +50,6 @@ public class ViewerController extends AdminController implements Initializable{
         //Listener for when a Team is selected in teams tab TableView.
         tableViewTeamsTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                System.out.println("New team selected");
                 teamSelection = tableViewTeamsTab.getSelectionModel().getSelectedItem();
                 displayTeamInfo(teamSelection);
             }
@@ -62,7 +60,6 @@ public class ViewerController extends AdminController implements Initializable{
             admin.getLeagues().forEach(league -> {
                 if (league.getName() == choiceBoxFixturesTabLeague.getSelectionModel().getSelectedItem()) {
                     leagueSelectionFixturesTab = league;
-                    //System.out.println("League selected in fixures tab: " + league.getName());
                     updateFixturesTableView();
                 }
             });
@@ -72,7 +69,6 @@ public class ViewerController extends AdminController implements Initializable{
         tableViewFixturesTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 fixtureSelection = tableViewFixturesTab.getSelectionModel().getSelectedItem();
-                //System.out.println("Fixture Selected: " + fixtureSelection.getTeams());
                 updateFixtureInfo(fixtureSelection);
             }
         });
@@ -85,9 +81,10 @@ public class ViewerController extends AdminController implements Initializable{
     }
     
     /**
-     * Updates the two team information labels (labelTeamsTabTeamInfoLabels and 
-     * labelTeamsTabTeamInfoVariables) with the selected teams information.
-     * @param team Selected team in tableViewTeamsTab.
+     * Updates <code>labelTeamsTabTeamInfoLabels</code> with information on the 
+     * team selected in <code>tableViewTeamsTab</code>.
+     * @param team Selected team
+     * Override - to avoid updating unnecessary UI elements.
      */
     @Override
     public void displayTeamInfo(Team team)   {
@@ -126,6 +123,7 @@ public class ViewerController extends AdminController implements Initializable{
     
     /**
      * initialises the UI elements and data structures in 'Fixtures' tab.
+     * Override - to avoid updating unnecessary UI elements.
      */
     @Override
     public void initializeFixturesTab() {
@@ -141,7 +139,13 @@ public class ViewerController extends AdminController implements Initializable{
         updateLeagueChoiceBoxFixturesTab();
         updateFixturesTableView();
     }
-
+    
+    /**
+     * Clears and updates all UI elements in the score sheet to match the 
+     * <code>Fixture</code> selected in <code>tableViewFixturesTab</code>.
+     * @param fixture 
+     * Override - to avoid updating unnecessary UI elements.
+     */
     @Override
     public void updateFixtureInfo(Fixture fixture) {
         
@@ -154,7 +158,6 @@ public class ViewerController extends AdminController implements Initializable{
         } catch (IndexOutOfBoundsException e) {
             homePlayer1.setText("None");
             homePlayer2.setText("None");
-            System.out.println("No home players in fixture");
         }
         try {
         awayPlayer1.setText(fixture.getAwayTeam().getPlayers().get(fixture.getPlayerSelections()[2]).getName());
@@ -162,15 +165,16 @@ public class ViewerController extends AdminController implements Initializable{
         } catch (IndexOutOfBoundsException e) {
             awayPlayer1.setText("None");
             awayPlayer2.setText("None");
-            System.out.println("No away players in fixture");
         }
         updateScoreSheetScores(fixture);
     }
 
-    
-    
+    /**
+     * Updates all score elements in the score sheet with <code>scores</code> 
+     * from passed <code>Fixture</code>.
+     * @param fixture 
+     */
     public void updateScoreSheetScores(Fixture fixture) {
-        
         // Get nodes from GridPane
         ObservableList<Node> currentGrid = scoreGrid.getChildren();
         // Empty list for return
@@ -209,7 +213,6 @@ public class ViewerController extends AdminController implements Initializable{
         }
         
         // Update results box
-        System.out.println(scores);
         if (scores != null) {
             try {
                 resultsText.setText("Winner: " 
@@ -223,6 +226,4 @@ public class ViewerController extends AdminController implements Initializable{
             resultsText.setText("");
         }
     }
-    
-    
 }
