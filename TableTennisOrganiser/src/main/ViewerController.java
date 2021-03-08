@@ -107,7 +107,8 @@ public class ViewerController extends AdminController implements Initializable{
                 "Team Overview:\nName:" + tabs(5) + team.getName() +
                 "\nHome Venue:" + tabs(4) + team.getVenue() +
                 "\nPlayers:" + tabs(5) + names.toString().strip() +
-                "\n\nTeam Statistics:\nMatches Won:" + tabs(4) + team.getMatchesWon() +
+                "\n\nTeam Statistics:\nLeague Points:" + tabs(4) + team.getPoints() +
+                "\nMatches Won:" + tabs(4) + team.getMatchesWon() +
                 "\nMatches Lost:" + tabs(4) + team.getMatchesLost() +
                 "\nMatches Played:" + tabs(3) + team.getMatchesPlayed() +
                 "\nSets Won:" + tabs(4) + team.getSetsWon() +
@@ -187,7 +188,7 @@ public class ViewerController extends AdminController implements Initializable{
         for (Node node : currentGrid) {
             Label text = new Label();
             if (scores != null) {
-                Collections.replaceAll(scores, "", "0:0");
+                Collections.replaceAll(scores, "", "np");
                 text.setText("    " + scores.get(i));
                 Collections.replaceAll(scores, "0:0", "");
             } else {

@@ -315,6 +315,9 @@ public class AdminController extends UserController implements Initializable{
             choiceBoxTeamsTabLeague.setValue("No Leagues Added");
             System.err.println("No leagues for Teams tab League choice box");
         }
+        tableViewTeamsTabPointsColumn.setSortType(TableColumn.SortType.DESCENDING);
+        tableViewTeamsTab.getSortOrder().add(tableViewTeamsTabPointsColumn);
+        tableViewTeamsTab.sort();
     }
     /**
      * Updates/refreshes <code>choiceBoxTeamsTabLeague</code> in the teams tab.
@@ -931,7 +934,7 @@ public class AdminController extends UserController implements Initializable{
                         + "\nScore: "
                         + fixtureSelection.getResult());
             } catch (NullPointerException e) {
-                System.err.println("Unable to determine winner: Check user input data in score sheet.");
+                System.err.println("Unable to determine winner: Check user input data in score sheet. Not saving.");
             }
         } else {
             resultsText.setText("");
