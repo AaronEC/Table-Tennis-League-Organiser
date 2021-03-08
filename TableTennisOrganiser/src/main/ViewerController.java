@@ -41,6 +41,47 @@ public class ViewerController extends AdminController implements Initializable{
         initializeTeamsTab();
         initializeFixturesTab();
         
+        //Listeners for teams tab.
+        //Listener for League selection in teams tab Choice Box.
+        choiceBoxTeamsTabLeague.setOnAction((event) -> {
+            updateTeamsTableView();
+            labelTeamsTabTeamInfoLabels.setText("");
+            tableViewTeamsTab.getSelectionModel().selectFirst();
+        });
+        //Listener for when a Team is selected in teams tab TableView.
+        tableViewTeamsTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                System.out.println("New team selected");
+                teamSelection = tableViewTeamsTab.getSelectionModel().getSelectedItem();
+                displayTeamInfo(teamSelection);
+            }
+        });
+        //Listeners for fixtures tab.
+        //Listener for League selection in Fixtures Tab.
+        choiceBoxFixturesTabLeague.setOnAction((event) -> {
+            admin.getLeagues().forEach(league -> {
+                if (league.getName() == choiceBoxFixturesTabLeague.getSelectionModel().getSelectedItem()) {
+                    leagueSelectionFixturesTab = league;
+                    //System.out.println("League selected in fixures tab: " + league.getName());
+                    updateFixturesTableView();
+                }
+            });
+            tableViewFixturesTab.getSelectionModel().selectFirst();
+        });
+        //Listener for when a Fixture is selected in fixtures tab TableView.
+        tableViewFixturesTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                fixtureSelection = tableViewFixturesTab.getSelectionModel().getSelectedItem();
+                //System.out.println("Fixture Selected: " + fixtureSelection.getTeams());
+                updateFixtureInfo(fixtureSelection);
+            }
+        });
+        
+        //Auto select first item in tables (looks nicer and can prevent some 
+        //null pointer exceptions, but they should be handled anyway).
+        tableViewTeamsTab.getSelectionModel().selectFirst();
+        tableViewFixturesTab.getSelectionModel().selectFirst();
+        
     }
     
     /**
@@ -71,7 +112,10 @@ public class ViewerController extends AdminController implements Initializable{
                 "\nPlayers:" + tabs(5) + names.toString().strip() +
                 "\n\nTeam Statistics:\nMatches Won:" + tabs(4) + team.getMatchesWon() +
                 "\nMatches Lost:" + tabs(4) + team.getMatchesLost() +
-                "\nMatches Played:" + tabs(3) + team.getMatchesPlayed()
+                "\nMatches Played:" + tabs(3) + team.getMatchesPlayed() +
+                "\nSets Won:" + tabs(4) + team.getSetsWon() +
+                "\nSets Lost:" + tabs(5) + (team.getSetsPlayed() - team.getSetsWon()) +
+                "\nSets Played:" + tabs(4) + team.getSetsPlayed()
         );
     }
     
@@ -96,29 +140,6 @@ public class ViewerController extends AdminController implements Initializable{
         //Populate UI elements with data
         updateLeagueChoiceBoxFixturesTab();
         updateFixturesTableView();
-        
-        //Listener for League selection in Fixtures Tab.
-        choiceBoxFixturesTabLeague.setOnAction((event) -> {
-            admin.getLeagues().forEach(league -> {
-                if (league.getName() == choiceBoxFixturesTabLeague.getSelectionModel().getSelectedItem()) {
-                    leagueSelectionFixturesTab = league;
-                    System.out.println("League selected in fixures tab: " + league.getName());
-                    updateFixturesTableView();
-                }
-            });
-            tableViewFixturesTab.getSelectionModel().selectFirst();
-        });
-        
-        
-        //Listener for when a Fixture is selected in TableView.
-        tableViewFixturesTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                fixtureSelection = tableViewFixturesTab.getSelectionModel().getSelectedItem();
-                System.out.println("Fixture Selected: " + fixtureSelection.getTeams());
-                updateFixtureInfo(fixtureSelection);
-            }
-        });
-        tableViewFixturesTab.getSelectionModel().selectFirst();
     }
 
     @Override

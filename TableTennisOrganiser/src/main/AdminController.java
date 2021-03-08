@@ -110,20 +110,21 @@ public class AdminController extends UserController implements Initializable{
         
         // Initialize listeners (Used for mouse-click and selection events)
         
-        //Listener for League selection in Choice Box.
+        //Listener for League selection in teams tab Choice Box.
         choiceBoxTeamsTabLeague.setOnAction((event) -> {
             updateTeamsTableView();
             labelTeamsTabTeamInfoLabels.setText("");
             tableViewTeamsTab.getSelectionModel().selectFirst();
         });
-        //Listener for when a Team is selected in TableView.
+        //Listener for when a Team is selected in teams tab TableView.
         tableViewTeamsTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
+                System.out.println("New team selected");
                 teamSelection = tableViewTeamsTab.getSelectionModel().getSelectedItem();
                 displayTeamInfo(teamSelection);
             }
         });
-        //Listener for League selection in Fixtures Tab.
+        //Listener for League selection in Fixtures Tab choice box.
         choiceBoxFixturesTabLeague.setOnAction((event) -> {
             admin.getLeagues().forEach(league -> {
                 if (league.getName() == choiceBoxFixturesTabLeague.getSelectionModel().getSelectedItem()) {
@@ -178,7 +179,7 @@ public class AdminController extends UserController implements Initializable{
             fixtureSelection.setPlayerSelections(3, value);
         });
         
-        //Listener for when a Fixture is selected in TableView.
+        //Listener for when a Fixture is selected in fixtures tab TableView.
         tableViewFixturesTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 fixtureSelection = tableViewFixturesTab.getSelectionModel().getSelectedItem();
@@ -206,13 +207,6 @@ public class AdminController extends UserController implements Initializable{
         tableViewLeaguesTabNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         updateLeaguesTableView();
-
-        //Listener for when a League is selected in TableView.
-        tableViewLeaguesTab.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                League selected = tableViewLeaguesTab.getSelectionModel().getSelectedItem();             
-            }
-        });
     }
     /**
      * Refreshes the League TableView JavaFX element. For use after adding or 
@@ -416,7 +410,10 @@ public class AdminController extends UserController implements Initializable{
                 "\nPlayers:" + tabs(5) + names.toString().strip() +
                 "\n\nTeam Statistics:\nMatches Won:" + tabs(4) + team.getMatchesWon() +
                 "\nMatches Lost:" + tabs(4) + team.getMatchesLost() +
-                "\nMatches Played:" + tabs(3) + team.getMatchesPlayed()
+                "\nMatches Played:" + tabs(3) + team.getMatchesPlayed() +
+                "\nSets Won:" + tabs(4) + team.getSetsWon() +
+                "\nSets Lost:" + tabs(5) + (team.getSetsPlayed() - team.getSetsWon()) +
+                "\nSets Played:" + tabs(4) + team.getSetsPlayed()
         );
         
         //Populate Player ChoiceBox
