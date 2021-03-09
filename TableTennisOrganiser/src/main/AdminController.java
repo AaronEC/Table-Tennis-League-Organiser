@@ -37,7 +37,8 @@ import javafx.util.Duration;
  */
 public class AdminController extends UserController implements Initializable{
     
-//These are PROTECTED as ViewerController sub-class requires access too.
+// These are PROTECTED as ViewerController sub-class requires access too. This 
+// Saves creating a whole new UI for Viewer, which is a stripped down admin UI.
     
     @FXML protected Label saveIcon1, saveIcon2;
     

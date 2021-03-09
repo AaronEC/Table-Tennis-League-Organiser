@@ -53,19 +53,15 @@ public class UserController extends User implements Initializable{
     * @throws IOException File will always be present
     */
     public void login(ActionEvent event) throws IOException {
-        User user = new User();     //Create new user class at logon
         //Verify login type **extend to include password check here**
-        user.loginVerify(loginSelect.getValue(), passwordInput.getText());
-        if(user.getLoginType().equalsIgnoreCase("Viewer")) {
+        admin.loginVerify(loginSelect.getValue(), passwordInput.getText());
+        if(admin.getLoginType().equalsIgnoreCase("Viewer")) {
             createViewer(event);
         }
-        else if(user.getLoginType().equalsIgnoreCase("Admin")) {
+        else if(admin.getLoginType().equalsIgnoreCase("Admin")) {
             createAdmin(event);
-            Thread t1 = new Thread(new Timer(1000));
-            t1.setDaemon(true);
-            t1.start();
         }
-        else if(user.getLoginType().equalsIgnoreCase("Error")) {
+        else if(admin.getLoginType().equalsIgnoreCase("Error")) {
             popupWindow("Error", "Incorrect Login", "Please enter correct login details.");
         }
     }
@@ -84,8 +80,9 @@ public class UserController extends User implements Initializable{
         window.show();
         window.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
-                popupWindowChoice("Exit Program?", "Are you sure you want to exit?", "Unsaved changes will be lost...");
-
+                if (popupWindowChoice("Exit Program?", "Are you sure you want to exit?", "Unsaved changes will be lost...")) {
+                    System.out.println("THREAD: Shutdown.");
+                }
             }
         });             
     }

@@ -43,8 +43,10 @@ public class Admin extends User {
         try {
             FileInputStream fis = new FileInputStream(super.getFileName());
             ObjectInputStream ois = new ObjectInputStream(fis);
-            setLeagues((ArrayList<League>) ois.readObject());
+            super.setLeagues((ArrayList<League>) ois.readObject());
             System.out.println("Leagues loaded from: " + super.getFileName());
+            // Create thread for auto stat update (now league data is loaded).
+            startThreadedTimer(100);
         } catch (FileNotFoundException ex) {
             System.err.println("ERROR: File " + super.getFileName() + 
                     " not found");               
@@ -52,6 +54,7 @@ public class Admin extends User {
             System.err.println("ERROR: Incompatible input file loaded");
         }
     }
+    
     /**
      * Adds a <code>Team</code> object to the <code>League</code> object which 
      * is passed to the function, assigns the new <code>Team</code> the 
