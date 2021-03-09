@@ -1,5 +1,7 @@
 package main;
 
+
+
 /**
  * Class which updates the team statistics every set amount of seconds (as per
  * brief).
@@ -8,30 +10,32 @@ package main;
  * @version 1.0
  * @since 06/12/2020
  */
-public class Timer extends User {
+public class Timer extends Admin implements Runnable{
 
-    private int seconds;
+    // Volaitle veriables used to prevent CPU cache issues.
+    private volatile int time;
+    private volatile boolean running = true;
 
-    protected void generateTeamStats(League league) {
+    public Timer(int time) {
+        this.time = time;
+    }
 
-        for (Team team : league.getTeams()) {
-            team.resetStats();
-        }
-
-        for (Fixture fixture : league.getFixtures()) {
-            fixture.calculateWinner();
-            Team winner = fixture.getWinner();
-            Team loser = fixture.getLoser();
-
-            if (winner != null) {
-                winner.incrementMatchesWon();
-                winner.incrementMatchesPlayed();
-                winner.addPoints(3);
+    @Override
+    public void run() {
+        System.out.println("main.Timer.run()");
+        try {
+            while (running) {
+                System.out.println("Auto generating team statistics for all Leagues");
+                generateTeamStats();
+                //This is OK to run sleep in a loop as this is a daemon thread.
+                Thread.sleep(time);
+                System.out.printf("Timer sleeping for %d seconds\n", time/1000);
             }
-            if (loser != null) {
-                loser.incrementMatchesPlayed();
-                loser.addPoints(1);
-            }
+        } catch (InterruptedException e) {
+            System.err.println("Thread interrupted");
         }
+    }
+    public void testMethod() {
+        System.out.println("main.Timer.testMethod()");
     }
 }

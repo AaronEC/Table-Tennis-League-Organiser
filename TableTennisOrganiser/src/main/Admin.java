@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @version 1.0
  * @since 06/12/2020
  */
-public class Admin extends Timer {
+public class Admin extends User {
     /**
      * Saves ALL leagues currently created by the Admin user to a serialized
      * .bin file. Gets file name from super class 'User'.

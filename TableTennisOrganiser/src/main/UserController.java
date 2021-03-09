@@ -61,6 +61,9 @@ public class UserController extends User implements Initializable{
         }
         else if(user.getLoginType().equalsIgnoreCase("Admin")) {
             createAdmin(event);
+            Thread t1 = new Thread(new Timer(1000));
+            t1.setDaemon(true);
+            t1.start();
         }
         else if(user.getLoginType().equalsIgnoreCase("Error")) {
             popupWindow("Error", "Incorrect Login", "Please enter correct login details.");
@@ -80,10 +83,11 @@ public class UserController extends User implements Initializable{
         window.setTitle("Secretary View");
         window.show();
         window.setOnCloseRequest(new EventHandler<WindowEvent>() {
-          public void handle(WindowEvent we) {
-              popupWindowChoice("Exit Program?", "Are you sure you want to exit?", "Unsaved changes will be lost...");
-          }
-      });             
+            public void handle(WindowEvent we) {
+                popupWindowChoice("Exit Program?", "Are you sure you want to exit?", "Unsaved changes will be lost...");
+
+            }
+        });             
     }
     /**
      * Creates the <code>ViewerController</code> interface for the viewer user.

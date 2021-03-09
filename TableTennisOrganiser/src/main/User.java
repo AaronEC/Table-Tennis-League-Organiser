@@ -45,7 +45,68 @@ public class User implements Serializable{
     protected void logout()    {
         loginType = null;
     } 
+    /**
+     * Generates stats for each <code>Team</code> in the passed 
+     * <code>League</code>.
+     * @param league 
+     */
+    protected void generateTeamStats(League league) {
 
+        for (Team team : league.getTeams()) {
+            team.resetStats();
+        }
+
+        for (Fixture fixture : league.getFixtures()) {
+            fixture.calculateWinner();
+            Team winner = fixture.getWinner();
+            Team loser = fixture.getLoser();
+
+            if (winner != null) {
+                winner.incrementMatchesWon();
+                winner.incrementMatchesPlayed();
+                winner.addPoints(3);
+            }
+            if (loser != null) {
+                loser.incrementMatchesPlayed();
+                loser.addPoints(1);
+            }
+        }
+    }
+    /**
+     * Overload method for generating stats for ALL <code>League</code> objects 
+     * in <code>leagues</code> array.
+     */
+    protected void generateTeamStats() {
+        System.out.println("main.User.generateTeamStats()");
+        System.out.println(getLeagues());
+        try {
+            for (League league : leagues) {
+                for (Team team : league.getTeams()) {
+                    team.resetStats();
+                }
+
+                for (Fixture fixture : league.getFixtures()) {
+                    fixture.calculateWinner();
+                    Team winner = fixture.getWinner();
+                    Team loser = fixture.getLoser();
+
+                    if (winner != null) {
+                        winner.incrementMatchesWon();
+                        winner.incrementMatchesPlayed();
+                        winner.addPoints(3);
+                    }
+                    if (loser != null) {
+                        loser.incrementMatchesPlayed();
+                        loser.addPoints(1);
+                    }
+                }
+                System.out.println("Stats generated for league: " + league.getName());
+            }
+        } catch (NullPointerException e) {
+            System.err.println("No leagues to generate stats for.");
+        }
+    }
+    
     protected void createTimer() {
 
     }
@@ -93,7 +154,4 @@ public class User implements Serializable{
     public void setLeagues(ArrayList<League> leagues) {
         this.leagues = leagues;
     }
-
-
-
 }
