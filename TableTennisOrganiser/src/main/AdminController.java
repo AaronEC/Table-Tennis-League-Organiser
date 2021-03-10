@@ -619,8 +619,10 @@ public class AdminController extends UserController implements Initializable{
     public void deleteFixtures(ActionEvent event) {
         if (popupWindowChoice("Delete " + leagueSelectionFixturesTab.getName() + " fixtures?", "This will DELETE ALL current fixtures in this league", "Are you sure?")) {
         admin.deleteFixtures(leagueSelectionFixturesTab);
+        generateTeamStats(leagueSelectionFixturesTab);
         saveLeagues();
         updateFixturesTableView();
+        updateTeamsTableView();
         updateLeaguesTableView();
         }
     }
@@ -881,8 +883,8 @@ public class AdminController extends UserController implements Initializable{
             resultsText.setText("Please add more\nscores");
             return;
         }
-        updateTeamsTableView();
         admin.generateTeamStats(leagueSelectionTeamsTab);
+        updateTeamsTableView();
         saveLeagues();
     }
     
@@ -950,8 +952,8 @@ public class AdminController extends UserController implements Initializable{
      * Displays a save notification in the top right of GUI for 3 seconds.
     */
     public void saveLeagues() {
-        
-        admin.saveLeagues();
+
+        admin.saveLeaguesData();
         saveIcon1.setVisible(true);
         PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
         PauseTransition pause2 = new PauseTransition(Duration.seconds(1));

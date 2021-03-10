@@ -1,5 +1,11 @@
 package main;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 /**
@@ -18,6 +24,45 @@ public abstract class User implements Serializable{
     private String loginType;
     private ArrayList<League> leagues = new ArrayList<League>();
     private final String fileName = "data.bin";
+    
+    
+    /**
+     * Saves ALL leagues currently created by the Admin user to a serialized
+     * .bin file. Gets file name from super class 'User'.
+     * @param super.fileName
+     */
+    void saveLeaguesData() {
+        try (FileOutputStream fos = new FileOutputStream(fileName); 
+                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                    oos.writeObject(getLeagues());
+            System.out.println("Leagues Saved to: " + fileName);
+        } catch (FileNotFoundException ex) {
+            System.err.println(fileName + " not found");
+        } catch (IOException ex) {
+            System.err.println("ERROR: Unable to create output file");
+        }
+    } 
+    /**
+     * Loads ALL leagues from a serialized .bin file. Gets file name from 
+     * super class <code>User</code> getFileName().
+     * @param super.fileName
+     * @throws ClassNotFoundException (there will always be a class here)
+     */
+    void loadLeagues() throws ClassNotFoundException {
+        try {
+            FileInputStream fis = new FileInputStream(fileName);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            setLeagues((ArrayList<League>) ois.readObject());
+            System.out.println("Leagues loaded from: " + fileName);
+            // Create thread for auto stat update (now league data is loaded).
+            startThreadedTimer(100);
+        } catch (FileNotFoundException ex) {
+            System.err.println("ERROR: File " + fileName + 
+                    " not found");               
+        } catch (IOException ex) {
+            System.err.println("ERROR: Incompatible input file loaded");
+        }
+    }
 
     /**
      * Checks username and password and verifies if login is an Admin or Viewer.
@@ -64,7 +109,6 @@ public abstract class User implements Serializable{
      * @param league 
      */
     protected void generateTeamStats(League league) {
-
         for (Team team : league.getTeams()) {
             team.resetStats();
         }
@@ -78,10 +122,14 @@ public abstract class User implements Serializable{
                 winner.incrementMatchesWon();
                 winner.incrementMatchesPlayed();
                 winner.addPoints(3);
+                winner.setSetsWon(fixture.getWinnerSets());
+                winner.setSetsPlayed(fixture.getWinnerSets()+fixture.getLoserSets());
             }
             if (loser != null) {
                 loser.incrementMatchesPlayed();
                 loser.addPoints(1);
+                loser.setSetsWon(fixture.getLoserSets());
+                loser.setSetsPlayed(fixture.getLoserSets()+fixture.getWinnerSets());
             }
         }
     }
@@ -92,6 +140,7 @@ public abstract class User implements Serializable{
     protected void generateTeamStats() {
         try {
             for (League league : leagues) {
+                System.out.println(league);
                 for (Team team : league.getTeams()) {
                     team.resetStats();
                 }
@@ -105,10 +154,14 @@ public abstract class User implements Serializable{
                         winner.incrementMatchesWon();
                         winner.incrementMatchesPlayed();
                         winner.addPoints(3);
+                        winner.setSetsWon(fixture.getWinnerSets());
+                        winner.setSetsPlayed(fixture.getWinnerSets()+fixture.getLoserSets());
                     }
                     if (loser != null) {
                         loser.incrementMatchesPlayed();
                         loser.addPoints(1);
+                        loser.setSetsWon(fixture.getLoserSets());
+                        loser.setSetsPlayed(fixture.getLoserSets()+fixture.getWinnerSets());
                     }
                 }
             }

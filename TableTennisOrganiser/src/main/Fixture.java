@@ -20,6 +20,8 @@ public class Fixture implements Serializable{
     private String venue;
     private Team homeTeam;
     private Team awayTeam;
+    private int winnerSets;
+    private int loserSets;
     private Team winner;
     private Team loser;
     private String homeTeamName;
@@ -42,6 +44,8 @@ public class Fixture implements Serializable{
         
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
+        this.winnerSets = 0;
+        this.loserSets = 0;
         this.venue = setVenue(venue);
         this.homeTeamName = getName(homeTeam);
         this.awayTeamName = getName(awayTeam);
@@ -89,17 +93,19 @@ public class Fixture implements Serializable{
             }
 
             result = String.format("%d : %d", homeSets, awaySets);
-            homeTeam.setSetsWon(homeSets);
-            homeTeam.setSetsPlayed(homeSets + awaySets);
-            awayTeam.setSetsWon(awaySets);
-            awayTeam.setSetsPlayed(awaySets + homeSets);
+            
+            
 
             if (homeSets > awaySets) {
                 winner = homeTeam;
                 loser = awayTeam;
+                winnerSets = homeSets;
+                loserSets = awaySets;
             } else if (awaySets > homeSets) {
                 winner = awayTeam;
                 loser = homeTeam;
+                winnerSets = awaySets;
+                loserSets = homeSets;
             } else {
                 winner = null;
             }
@@ -170,6 +176,15 @@ public class Fixture implements Serializable{
     public Team getLoser() {
         return loser;
     }
+
+    public int getWinnerSets() {
+        return winnerSets;
+    }
+
+    public int getLoserSets() {
+        return loserSets;
+    }
+    
     /**
      * Returns an integer array of index numbers. These match the index of the
      * selected <code>Player</code> in their respective teams 

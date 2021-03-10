@@ -186,7 +186,7 @@ public class UserController extends User implements Initializable{
      * @throws IOException 
      */
     public void logout(ActionEvent event) throws IOException {
-        admin.saveLeagues();
+        admin.saveLeaguesData();
         Parent viewerParent = FXMLLoader.load(getClass().getResource("User.fxml"));
         Scene viewerScene = new Scene(viewerParent);
         //Recalls login screen scene information

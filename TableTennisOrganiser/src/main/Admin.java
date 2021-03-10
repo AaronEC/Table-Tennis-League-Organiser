@@ -1,11 +1,5 @@
 package main;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -16,45 +10,7 @@ import java.util.ArrayList;
  * @version 1.0
  * @since 06/12/2020
  */
-public class Admin extends User {
-    /**
-     * Saves ALL leagues currently created by the Admin user to a serialized
-     * .bin file. Gets file name from super class 'User'.
-     * @param super.fileName
-     */
-    void saveLeagues() {
-        try (FileOutputStream fos = new FileOutputStream(super.getFileName()); 
-                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-                    oos.writeObject(getLeagues());
-            System.out.println("Leagues Saved to: " + super.getFileName());
-        } catch (FileNotFoundException ex) {
-            System.err.println(super.getFileName() + " not found");
-        } catch (IOException ex) {
-            System.err.println("ERROR: Unable to create output file");
-        }
-    } 
-    /**
-     * Loads ALL leagues from a serialized .bin file. Gets file name from 
-     * super class <code>User</code> getFileName().
-     * @param super.fileName
-     * @throws ClassNotFoundException (there will always be a class here)
-     */
-    void loadLeagues() throws ClassNotFoundException {
-        try {
-            FileInputStream fis = new FileInputStream(super.getFileName());
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            super.setLeagues((ArrayList<League>) ois.readObject());
-            System.out.println("Leagues loaded from: " + super.getFileName());
-            // Create thread for auto stat update (now league data is loaded).
-            startThreadedTimer(100);
-        } catch (FileNotFoundException ex) {
-            System.err.println("ERROR: File " + super.getFileName() + 
-                    " not found");               
-        } catch (IOException ex) {
-            System.err.println("ERROR: Incompatible input file loaded");
-        }
-    }
-    
+public class Admin extends User {    
     /**
      * Adds a <code>Team</code> object to the <code>League</code> object which 
      * is passed to the function, assigns the new <code>Team</code> the 

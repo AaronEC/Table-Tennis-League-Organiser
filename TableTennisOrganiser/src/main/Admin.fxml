@@ -328,7 +328,7 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Label fx:id="saveIcon1" layoutX="870.0" layoutY="7.0" text="Saving Changes..." visible="false" />
-      <Label fx:id="saveIcon2" layoutX="870.0" layoutY="7.0" text="Changes Saved!" visible="false" />
+      <Label fx:id="saveIcon1" layoutX="860.0" layoutY="7.0" text="Saving Changes..." visible="false" />
+      <Label fx:id="saveIcon2" layoutX="860.0" layoutY="7.0" text="Changes Saved!" visible="false" />
    </children>
 </AnchorPane>

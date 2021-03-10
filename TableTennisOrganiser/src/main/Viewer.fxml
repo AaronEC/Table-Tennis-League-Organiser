@@ -40,6 +40,8 @@
                               <Label fx:id="labelTeamsTabTeamInfoLabels" alignment="TOP_LEFT" layoutX="52.0" layoutY="104.0" prefHeight="239.0" prefWidth="366.0" />
                               <Label fx:id="labelTeamsTabTeamInfoVariables" alignment="TOP_LEFT" layoutX="242.0" layoutY="103.0" prefHeight="241.0" prefWidth="191.0" wrapText="true" />
                               <Button layoutX="406.0" layoutY="463.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
+                              <Button layoutX="43.0" layoutY="22.0" mnemonicParsing="false" onAction="#generateTeamStatsManual" prefHeight="26.0" prefWidth="215.0" text="Generate Team Statistics" />
+                              <Line endX="42.99993896484375" endY="1.9073486328125E-5" layoutY="35.0" startX="-30.000030517578125" startY="1.9073486328125E-5" />
                            </children>
                         </AnchorPane>
                         <Label layoutX="56.0" layoutY="35.0" prefHeight="17.0" prefWidth="101.0" text="Select League:" />
@@ -263,5 +265,7 @@
             </Tab>
          </tabs>
       </TabPane>
+      <Label fx:id="saveIcon1" layoutX="860.0" layoutY="7.0" text="Saving Changes..." visible="false" />
+      <Label fx:id="saveIcon2" layoutX="860.0" layoutY="7.0" text="Changes Saved!" visible="false" />
    </children>
 </AnchorPane>

@@ -83,16 +83,26 @@ public class League implements Serializable{
      * objects in this <code>League</code>.
      */
     void countTeams() {
-        if (teams == null) { teamsCount = 0; }
-        else { teamsCount = teams.size(); }
+        if (teams == null) { 
+            teamsCount = 0; 
+        } else { 
+            teamsCount = teams.size();
+            for (Team team : teams) {
+                if (team.getName() == "*Bye*") {
+                    teamsCount--;
+                }
+            }
+        }
     }
     /**
      * Updates the <code>fixturesCount</code> by counting all 
      * <code>Fixture</code> objects in this <code>League</code>.
      */
     void countFixtures()    {
-        if (fixtures == null) { fixturesCount = 0; }
-        else { fixturesCount = fixtures.size(); }
+        if (fixtures == null) { 
+            fixturesCount = 0; 
+        } else { fixturesCount = fixtures.size(); 
+        }
     }
 
     /* Getters */
