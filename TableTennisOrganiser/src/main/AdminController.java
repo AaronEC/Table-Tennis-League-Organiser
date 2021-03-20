@@ -147,7 +147,7 @@ public class AdminController extends UserController implements Initializable{
         
         //Listener for Home Team selection in Choice Box.
         choiceBoxFixturesTabHomeTeam.setOnAction((event) -> {
-            leagueSelectionTeamsTab.getTeams().forEach(team -> {
+            leagueSelectionFixturesTab.getTeams().forEach(team -> {
                 if (team.getName().equals(choiceBoxFixturesTabHomeTeam.getSelectionModel().getSelectedItem())) {
                     homeTeamSelectionFixturesTab = team;
                     fixtureSelection.setHomeTeam(team);
@@ -157,7 +157,7 @@ public class AdminController extends UserController implements Initializable{
         });
         //Listener for Away Team selection in Choice Box.
         choiceBoxFixturesTabAwayTeam.setOnAction((event) -> {
-            leagueSelectionTeamsTab.getTeams().forEach(team -> {
+            leagueSelectionFixturesTab.getTeams().forEach(team -> {
                 if (team.getName().equals(choiceBoxFixturesTabAwayTeam.getSelectionModel().getSelectedItem())) {
                     awayTeamSelectionFixturesTab = team;
                     fixtureSelection.setAwayTeam(team);
@@ -633,7 +633,7 @@ public class AdminController extends UserController implements Initializable{
      */
     public void removeFixture(ActionEvent event) {
         if (popupWindowChoice("Delete Fixture?", "This cannot be undone!", "Are you sure you wish to delete this fixture?")) {
-            admin.removeFixture(leagueSelectionTeamsTab, fixtureSelection);   
+            admin.removeFixture(leagueSelectionFixturesTab, fixtureSelection);   
             updateFixturesTableView();
             saveLeagues();
         }
